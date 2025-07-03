@@ -633,17 +633,17 @@
     "level": "n3",
     "kanji": "自殺",
     "furigana": "じさつ",
-    "example_sentence": "추후작업",
+    "example_sentence": "自殺を防ぐために相談窓口が作られた。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "자살",
+        "example_sentence_meaning": "자살을 막기 위해 상담 창구가 마련되었다."
       },
       {
         "language_code": "en",
         "word_meaning": "suicide",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "A counseling service was set up to prevent suicide."
       }
     ]
   },
@@ -651,17 +651,17 @@
     "level": "n3",
     "kanji": "事実",
     "furigana": "じじつ",
-    "example_sentence": "추후작업",
+    "example_sentence": "それが事実なら大変だ。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "사실",
+        "example_sentence_meaning": "그것이 사실이라면 큰일이다."
       },
       {
         "language_code": "en",
         "word_meaning": "fact, truth, reality",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "If that is true, it’s serious."
       }
     ]
   },
@@ -669,17 +669,17 @@
     "level": "n3",
     "kanji": "支出",
     "furigana": "ししゅつ",
-    "example_sentence": "추후작업",
+    "example_sentence": "毎月の支出を見直した。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "지출",
+        "example_sentence_meaning": "매달 지출을 다시 점검했다."
       },
       {
         "language_code": "en",
         "word_meaning": "expenditure, expenses",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "I reviewed my monthly expenses."
       }
     ]
   },
@@ -687,17 +687,17 @@
     "level": "n3",
     "kanji": "事情",
     "furigana": "じじょう",
-    "example_sentence": "추후작업",
+    "example_sentence": "事情があって出席できなかった。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "사정",
+        "example_sentence_meaning": "사정이 있어 참석할 수 없었다."
       },
       {
         "language_code": "en",
         "word_meaning": "circumstances, situation, reasons",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "I couldn’t attend due to circumstances."
       }
     ]
   },
@@ -705,17 +705,17 @@
     "level": "n3",
     "kanji": "詩人",
     "furigana": "しじん",
-    "example_sentence": "추후작업",
+    "example_sentence": "彼女は有名な詩人だ。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "시인",
+        "example_sentence_meaning": "그녀는 유명한 시인이다."
       },
       {
         "language_code": "en",
         "word_meaning": "poet",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "She is a famous poet."
       }
     ]
   },
@@ -723,17 +723,17 @@
     "level": "n3",
     "kanji": "自身",
     "furigana": "じしん",
-    "example_sentence": "추후작업",
+    "example_sentence": "彼女自身がそう言った。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "자신",
+        "example_sentence_meaning": "그녀 자신이 그렇게 말했다."
       },
       {
         "language_code": "en",
         "word_meaning": "oneself",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "She herself said so."
       }
     ]
   },
@@ -741,17 +741,17 @@
     "level": "n3",
     "kanji": "沈む",
     "furigana": "しずむ",
-    "example_sentence": "추후작업",
+    "example_sentence": "船が海に沈んだ。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "가라앉다",
+        "example_sentence_meaning": "배가 바다에 가라앉았다."
       },
       {
         "language_code": "en",
         "word_meaning": "to sink; to feel depressed",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "The ship sank into the sea."
       }
     ]
   },
@@ -759,17 +759,17 @@
     "level": "n3",
     "kanji": "自然",
     "furigana": "しぜん",
-    "example_sentence": "추후작업",
+    "example_sentence": "休日に自然の中を歩いた。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "자연",
+        "example_sentence_meaning": "휴일에 자연 속을 걸었다."
       },
       {
         "language_code": "en",
         "word_meaning": "nature, spontaneous",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "I walked in nature on my day off."
       }
     ]
   },
@@ -777,17 +777,17 @@
     "level": "n3",
     "kanji": "思想",
     "furigana": "しそう",
-    "example_sentence": "추후작업",
+    "example_sentence": "彼の思想は平和を重んじている。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "사상",
+        "example_sentence_meaning": "그의 사상은 평화를 중시한다."
       },
       {
         "language_code": "en",
         "word_meaning": "thought, idea",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "His thought values peace."
       }
     ]
   },
@@ -795,17 +795,17 @@
     "level": "n3",
     "kanji": "舌",
     "furigana": "した",
-    "example_sentence": "추후작업",
+    "example_sentence": "熱いスープで舌をやけどした。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "혀",
+        "example_sentence_meaning": "뜨거운 수프로 혀를 데었다."
       },
       {
         "language_code": "en",
         "word_meaning": "tongue",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "I burned my tongue with the hot soup."
       }
     ]
   },
@@ -813,17 +813,17 @@
     "level": "n3",
     "kanji": "次第",
     "furigana": "しだい",
-    "example_sentence": "추후작업",
+    "example_sentence": "天気次第で計画が変わる。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "~에 따라",
+        "example_sentence_meaning": "날씨에 따라 계획이 바뀐다."
       },
       {
         "language_code": "en",
         "word_meaning": "order; circumstances; immediate(ly)",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "The plan changes depending on the weather."
       }
     ]
   },
@@ -831,17 +831,17 @@
     "level": "n3",
     "kanji": "従う",
     "furigana": "したがう",
-    "example_sentence": "추후작업",
+    "example_sentence": "ルールに従って行動してください。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "따르다",
+        "example_sentence_meaning": "규칙에 따라 행동해 주세요."
       },
       {
         "language_code": "en",
         "word_meaning": "to abide (by the rules), to obey",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "Please act according to the rules."
       }
     ]
   },
@@ -849,17 +849,17 @@
     "level": "n3",
     "kanji": "したがって",
     "furigana": "したがって",
-    "example_sentence": "추후작업",
+    "example_sentence": "雨だった。したがって試合は中止になった。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "따라서",
+        "example_sentence_meaning": "비가 왔다. 따라서 경기는 중지되었다."
       },
       {
         "language_code": "en",
         "word_meaning": "therefore, consequently",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "It rained. Therefore, the game was canceled."
       }
     ]
   },
@@ -867,17 +867,17 @@
     "level": "n3",
     "kanji": "親しい",
     "furigana": "したしい",
-    "example_sentence": "추후작업",
+    "example_sentence": "彼とは親しい友人だ。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "친하다",
+        "example_sentence_meaning": "그와는 친한 친구다."
       },
       {
         "language_code": "en",
         "word_meaning": "intimate, close (e.g., friend)",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "He is a close friend of mine."
       }
     ]
   },
@@ -885,17 +885,17 @@
     "level": "n3",
     "kanji": "質",
     "furigana": "しつ",
-    "example_sentence": "추후작업",
+    "example_sentence": "この店は質のいい商品を売っている。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "질",
+        "example_sentence_meaning": "이 가게는 질 좋은 상품을 판다."
       },
       {
         "language_code": "en",
         "word_meaning": "quality, nature (of person)",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "This shop sells good-quality products."
       }
     ]
   },
@@ -903,17 +903,17 @@
     "level": "n3",
     "kanji": "失業",
     "furigana": "しつぎょう",
-    "example_sentence": "추후작업",
+    "example_sentence": "彼は失業して新しい仕事を探している。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "실업",
+        "example_sentence_meaning": "그는 실업하고 새 일을 찾고 있다."
       },
       {
         "language_code": "en",
         "word_meaning": "unemployment",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "He is unemployed and looking for a new job."
       }
     ]
   },
@@ -921,17 +921,17 @@
     "level": "n3",
     "kanji": "湿気",
     "furigana": "しっけ",
-    "example_sentence": "추후작업",
+    "example_sentence": "この部屋は湿気が多い。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "습기",
+        "example_sentence_meaning": "이 방은 습기가 많다."
       },
       {
         "language_code": "en",
         "word_meaning": "moisture, humidity, dampness",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "This room is very humid."
       }
     ]
   },
@@ -939,17 +939,17 @@
     "level": "n3",
     "kanji": "実験",
     "furigana": "じっけん",
-    "example_sentence": "추후작업",
+    "example_sentence": "新しい薬の実験が行われた。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "실험",
+        "example_sentence_meaning": "새 약의 실험이 실시되었다."
       },
       {
         "language_code": "en",
         "word_meaning": "lab work; experiment",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "An experiment on a new drug was conducted."
       }
     ]
   },
@@ -957,17 +957,17 @@
     "level": "n3",
     "kanji": "実現",
     "furigana": "じつげん",
-    "example_sentence": "추후작업",
+    "example_sentence": "夢が実現した。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "실현",
+        "example_sentence_meaning": "꿈이 실현되었다."
       },
       {
         "language_code": "en",
         "word_meaning": "implementation, materialization, realization",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "Dreams came true."
       }
     ]
   },
@@ -975,17 +975,17 @@
     "level": "n3",
     "kanji": "実行",
     "furigana": "じっこう",
-    "example_sentence": "추후작업",
+    "example_sentence": "彼は計画を実行した。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "실행",
+        "example_sentence_meaning": "그는 계획을 실행했다."
       },
       {
         "language_code": "en",
         "word_meaning": "practice, execution (e.g., program), realization",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "He carried out the plan."
       }
     ]
   },
@@ -993,17 +993,17 @@
     "level": "n3",
     "kanji": "実際",
     "furigana": "じっさい",
-    "example_sentence": "추후작업",
+    "example_sentence": "実際に見て確かめた。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "실제",
+        "example_sentence_meaning": "실제로 보고 확인했다."
       },
       {
         "language_code": "en",
         "word_meaning": "in fact; in actuality",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "I actually saw it and confirmed it."
       }
     ]
   },
@@ -1011,17 +1011,17 @@
     "level": "n3",
     "kanji": "実施",
     "furigana": "じっし",
-    "example_sentence": "추후작업",
+    "example_sentence": "新しい制度が実施された。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "실시",
+        "example_sentence_meaning": "새 제도가 실시되었다."
       },
       {
         "language_code": "en",
         "word_meaning": "enforcement, carry out, operation",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "A new system was carried out."
       }
     ]
   },
@@ -1029,17 +1029,17 @@
     "level": "n3",
     "kanji": "湿度",
     "furigana": "しつど",
-    "example_sentence": "추후작업",
+    "example_sentence": "今日は湿度が高い。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "습도",
+        "example_sentence_meaning": "오늘은 습도가 높다."
       },
       {
         "language_code": "en",
         "word_meaning": "humidity",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "The humidity is high today."
       }
     ]
   },
@@ -1047,17 +1047,17 @@
     "level": "n3",
     "kanji": "じっと",
     "furigana": "じっと",
-    "example_sentence": "추후작업",
+    "example_sentence": "彼はじっと窓の外を見ていた。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "가만히, 꼼짝하지 않고",
+        "example_sentence_meaning": "그는 가만히 창밖을 보고 있었다."
       },
       {
         "language_code": "en",
         "word_meaning": "patiently, quietly",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "He was quietly staring out the window."
       }
     ]
   },
@@ -1065,17 +1065,17 @@
     "level": "n3",
     "kanji": "実に",
     "furigana": "じつに",
-    "example_sentence": "추후작업",
+    "example_sentence": "彼の話は実に面白い。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "정말, 참으로",
+        "example_sentence_meaning": "그의 이야기는 정말 재미있다."
       },
       {
         "language_code": "en",
         "word_meaning": "indeed, truly, surely",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "His story is truly interesting."
       }
     ]
   },
@@ -1083,17 +1083,17 @@
     "level": "n3",
     "kanji": "実は",
     "furigana": "じつは",
-    "example_sentence": "추후작업",
+    "example_sentence": "実は昨日会ったんだ。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "사실은",
+        "example_sentence_meaning": "사실은 어제 만났어."
       },
       {
         "language_code": "en",
         "word_meaning": "actually; in fact",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "Actually, I met him yesterday."
       }
     ]
   },
@@ -1101,17 +1101,17 @@
     "level": "n3",
     "kanji": "失望",
     "furigana": "しつぼう",
-    "example_sentence": "추후작업",
+    "example_sentence": "結果に失望した。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "실망",
+        "example_sentence_meaning": "결과에 실망했다."
       },
       {
         "language_code": "en",
         "word_meaning": "disappointment, despair",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "I was disappointed with the result."
       }
     ]
   },
@@ -1119,17 +1119,17 @@
     "level": "n3",
     "kanji": "実力",
     "furigana": "じつりょく",
-    "example_sentence": "추후작업",
+    "example_sentence": "彼女は実力を見せた。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "실력",
+        "example_sentence_meaning": "그녀는 실력을 보였다."
       },
       {
         "language_code": "en",
         "word_meaning": "ability; force",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "She showed her ability."
       }
     ]
   },
@@ -1137,17 +1137,17 @@
     "level": "n3",
     "kanji": "支店",
     "furigana": "してん",
-    "example_sentence": "추후작업",
+    "example_sentence": "彼女は大阪の支店で働いている。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "지점",
+        "example_sentence_meaning": "그녀는 오사카 지점에서 일하고 있다."
       },
       {
         "language_code": "en",
         "word_meaning": "branch store (office)",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "She works at the Osaka branch."
       }
     ]
   },
@@ -1155,17 +1155,17 @@
     "level": "n3",
     "kanji": "指導",
     "furigana": "しどう",
-    "example_sentence": "추후작업",
+    "example_sentence": "先生の指導で上達した。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "지도",
+        "example_sentence_meaning": "선생님의 지도로 실력이 늘었다."
       },
       {
         "language_code": "en",
         "word_meaning": "leadership, guidance, coaching",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "I improved under my teacher’s guidance."
       }
     ]
   },
@@ -1173,17 +1173,17 @@
     "level": "n3",
     "kanji": "自動",
     "furigana": "じどう",
-    "example_sentence": "추후작업",
+    "example_sentence": "このドアは自動で開く。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "자동",
+        "example_sentence_meaning": "이 문은 자동으로 열린다."
       },
       {
         "language_code": "en",
         "word_meaning": "automatic, self-motion",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "This door opens automatically."
       }
     ]
   },
@@ -1191,17 +1191,17 @@
     "level": "n3",
     "kanji": "児童",
     "furigana": "じどう",
-    "example_sentence": "추후작업",
+    "example_sentence": "その公園は多くの児童でにぎわっていた。",
     "meanings": [
       {
         "language_code": "ko",
-        "word_meaning": "추후작업",
-        "example_sentence_meaning": "추후작업"
+        "word_meaning": "아동, 어린이",
+        "example_sentence_meaning": "그 공원은 많은 어린이들로 붐비고 있었다."
       },
       {
         "language_code": "en",
         "word_meaning": "children, juvenile",
-        "example_sentence_meaning": "추후작업"
+        "example_sentence_meaning": "The park was crowded with many children."
       }
     ]
   },
