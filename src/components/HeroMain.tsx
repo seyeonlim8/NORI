@@ -26,7 +26,7 @@ export default function HeroMain() {
         <div className="text-center text-zinc-600 text-xl font-bold font-(family-name:--font-outfit) leading-7 tracking-tight">
           Master vocabulary and grammar through flashcards,
           <br />
-          example sentences, and progress tracking.
+          example sentences, and quizzes.
         </div>
       </div>
       <motion.div
