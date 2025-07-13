@@ -67,7 +67,7 @@ export async function POST(req: Request) {
                       Verify your email to join NORI
                     </h2>
                     <p style="font-size: 15px; color: #444;">
-                      Click the button below to complete your signup and start learning Japanese with us 🍀
+                      Click the button below to complete your sign up and start learning Japanese with NORI 🍥
                     </p>
                     <div style="margin: 30px 0;">
                       <a href="${verifyUrl}" style="

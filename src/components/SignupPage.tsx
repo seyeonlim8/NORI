@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Header from "./Header";
@@ -10,6 +11,8 @@ export default function SignupPage() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const router = useRouter();
 
   const passwordValidations = {
     hasUpperCase: /[A-Z]/.test(password),
@@ -58,6 +61,7 @@ export default function SignupPage() {
       alert("❌ Something went wrong during signup.");
     } finally {
       setIsSubmitting(false); // Stop loading
+      router.push("/login") // Redirect to login page
     }
   };
 

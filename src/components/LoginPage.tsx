@@ -19,7 +19,7 @@ export default function LoginPage() {
           className="text-3xl text-center font-bold font-(family-name:--font-outfit)"
           style={{ color: "#F27D88" }}
         >
-          Log In to NORI
+          Login to NORI
         </h2>
         <input
           type="email"
