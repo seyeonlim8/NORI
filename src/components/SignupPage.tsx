@@ -9,6 +9,7 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const passwordValidations = {
     hasUpperCase: /[A-Z]/.test(password),
@@ -23,18 +24,40 @@ export default function SignupPage() {
     return /\S+@\S+\.\S+/.test(email);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const newErrors: { [key: string]: string } = {};
+
     if (!username) newErrors.username = "Username is required";
     if (!email) newErrors.email = "Email is required";
     else if (!validateEmail(email)) newErrors.email = "Invalid email format.";
     if (!password) newErrors.password = "Password is required";
     else if (!isPasswordStrong)
       newErrors.password = "Password does not meet all requirements";
+
     setErrors(newErrors);
-    if (Object.keys(newErrors).length === 0) {
-      alert("Signup successful!");
-      // CALL API HERE
+
+    if (Object.keys(newErrors).length > 0) return;
+
+    try {
+      setIsSubmitting(true); // Start loading
+
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, email, password }),
+      });
+
+      if (res.ok) {
+        alert("✅ Please check your email to verify your account.");
+      } else {
+        const data = await res.json();
+        alert(`❌ Signup failed: ${data?.error || "Unknown error"}`);
+      }
+    } catch (err) {
+      console.error("Sign Up error: ", err);
+      alert("❌ Something went wrong during signup.");
+    } finally {
+      setIsSubmitting(false); // Stop loading
     }
   };
 
@@ -128,18 +151,18 @@ export default function SignupPage() {
         </div>
 
         <motion.button
-          whileHover={{ scale: isPasswordStrong ? 1.05 : 1 }}
-          whileTap={{ scale: isPasswordStrong ? 0.95 : 1 }}
+          whileHover={{ scale: isPasswordStrong && !isSubmitting ? 1.05 : 1 }}
+          whileTap={{ scale: isPasswordStrong && !isSubmitting ? 0.95 : 1 }}
           onClick={handleSubmit}
-          disabled={!isPasswordStrong}
+          disabled={!isPasswordStrong || isSubmitting}
           className={`text-white font-bold py-3 rounded-md uppercase tracking-wide font-(family-name:--font-outfit) ${
-            isPasswordStrong
+            isPasswordStrong && !isSubmitting
               ? "cursor-pointer"
               : "cursor-not-allowed opacity-50"
           }`}
           style={{ backgroundColor: "#F27D88" }}
         >
-          Sign Up
+          {isSubmitting ? "Creating account..." : "Sign Up"}
         </motion.button>
 
         <p className="text-center text-sm text-gray-700 mt-4">

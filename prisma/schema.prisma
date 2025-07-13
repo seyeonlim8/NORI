@@ -6,10 +6,84 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int            @id @default(autoincrement())
+  email        String         @unique
+  password     String
+  username     String
+  isVerified   Boolean        @default(false)
+  verifyToken  String?        // Token for email verification
+  createdAt    DateTime       @default(now())
+
+  favorites        FavoriteWord[]
+  studyProgresses  StudyProgress[]
+  quizHistories    QuizHistory[]
+}
+
+model Word {
+  id                 Int             @id @default(autoincrement())
+  level              String
+  kanji              String
+  furigana           String
+  example_sentence   String
+  answer_in_example  String
+  createdAt          DateTime        @default(now())
+
+  meanings           WordMeaning[]
+  favorites          FavoriteWord[]
+  studyProgresses    StudyProgress[]
+  quizHistories      QuizHistory[]
+}
+
+model WordMeaning {
+  id                        Int    @id @default(autoincrement())
+  wordId                    Int
+  language_code             String
+  word_meaning              String
+  example_sentence_meaning  String
+  word                      Word   @relation(fields: [wordId], references: [id], onDelete: Cascade)
+}
+
+model FavoriteWord {
+  id      Int  @id @default(autoincrement())
+  userId  Int
+  wordId  Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  word Word @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, wordId]) // 중복 저장 방지
+}
+
+model StudyProgress {
+  id        Int     @id @default(autoincrement())
+  userId    Int
+  wordId    Int
+  type      String  // 'flashcard' | 'fill' | 'quiz'
+  lastSeen  DateTime @default(now())
+  completed Boolean  @default(false)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  word Word @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, wordId, type])
+}
+
+model QuizHistory {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  wordId      Int
+  type        String   // 'quiz' | 'fill'
+  isCorrect   Boolean
+  answeredAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  word Word @relation(fields: [wordId], references: [id], onDelete: Cascade)
 }
