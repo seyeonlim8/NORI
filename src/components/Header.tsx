@@ -12,7 +12,7 @@ export default function Header() {
       <div className="flex justify-end items-center gap-6">
         {/* STUDY with dropdown */}
         <div className="relative group cursor-pointer">
-          <div className="text-stone-800 text-sm font-bold uppercase leading-tight tracking-tight font-(family-name:--font-outfit)">
+          <div className="text-stone-800 text-sm font-bold uppercase leading-tight tracking-tight font-outfit">
             STUDY
           </div>
           <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-52 bg-white rounded-xl shadow-lg border border-gray-200 opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-50">
@@ -24,7 +24,7 @@ export default function Header() {
               ].map(({ label, href }) => (
                 <li key={label}>
                   <Link href={href}>
-                    <div className="px-5 py-3 text-sm text-gray-700 hover:bg-rose-100 hover:text-rose-500 transition font-medium">
+                    <div className="px-5 py-3 text-sm text-gray-700 hover:bg-rose-100 hover:text-rose-500 transition font-outfit">
                       {label}
                     </div>
                   </Link>
@@ -37,7 +37,7 @@ export default function Header() {
         {["ABOUT", "CONTACT"].map((item) => (
           <div
             key={item}
-            className="text-stone-800 text-sm font-bold uppercase leading-tight tracking-tight font-(family-name:--font-outfit) cursor-pointer"
+            className="text-stone-800 text-sm font-bold uppercase leading-tight tracking-tight font-outfit cursor-pointer"
           >
             {item}
           </div>
@@ -49,7 +49,7 @@ export default function Header() {
           className="px-3 pt-2 pb-1.5 bg-orange-300 rounded flex justify-center items-center gap-2.5 cursor-pointer"
         >
           <Link href="/login">
-            <div className="text-yellow-50 text-base font-bold uppercase leading-tight tracking-tight font-(family-name:--font-outfit)">
+            <div className="text-yellow-50 text-base font-bold uppercase leading-tight tracking-tight font-outfit">
               LOG IN
             </div>
           </Link>

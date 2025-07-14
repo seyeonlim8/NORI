@@ -12,18 +12,18 @@ export default function HeroMain() {
     >
       <div className="w-full max-w-3xl flex flex-col justify-start items-center gap-5">
         <div className="text-center">
-          <span className="text-black text-6xl font-bold font-(family-name:--font-outfit) leading-[70.40px]">
+          <span className="text-black text-6xl font-bold font-outfit leading-[70.40px]">
             Learn Japanese Effectively with
           </span>
           <span
-            className="text-6xl font-bold font-(family-name:--font-outfit) leading-[70.40px]"
-            style={{ color: "#F27D88" }}
+            className="text-6xl font-caprasimo leading-[70.40px]"
+            style={{ color: "#f06674ff" }}
           >
             {" "}
             NORI.
           </span>
         </div>
-        <div className="text-center text-zinc-600 text-xl font-bold font-(family-name:--font-outfit) leading-7 tracking-tight">
+        <div className="text-center text-zinc-600 text-xl font-bold font-outfit leading-7 tracking-tight">
           Master vocabulary and grammar through flashcards,
           <br />
           example sentences, and quizzes.
@@ -36,7 +36,7 @@ export default function HeroMain() {
         style={{ backgroundColor: "#F27D88" }}
       >
         <Link href="/login">
-          <div className="text-yellow-50 text-base font-bold font-(family-name:--font-outfit) uppercase leading-snug tracking-tight">
+          <div className="text-yellow-50 text-base font-bold font-outfit uppercase leading-snug tracking-tight">
             GET STARTED
           </div>
         </Link>
