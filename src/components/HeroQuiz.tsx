@@ -4,7 +4,7 @@ export default function HeroQuiz() {
       <div className="self-stretch flex flex-col justify-start items-center gap-6">
         <img
           className="w-full h-full object-cover"
-          src="test-your-skills.png"
+          src="/test-your-skills.png"
         />
       </div>
     </div>

@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <div className="w-full max-w-screen-xl p-1 sm:p-1 flex justify-between items-center mx-auto border-b border-red-800">
       <Link href="/">
-        <img className="w-43 h-15 cursor-pointer" src="nori-logo-w-text.png" />
+        <img className="w-43 h-15 cursor-pointer" src="/nori-logo-w-text.png" />
       </Link>
 
       <div className="flex justify-end items-center gap-6">
@@ -18,9 +18,9 @@ export default function Header() {
           <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-52 bg-white rounded-xl shadow-lg border border-gray-200 opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-50">
             <ul className="py-2">
               {[
-                { label: "Flashcards", href: "/flashcards" },
-                { label: "Quiz", href: "/quiz" },
-                { label: "Fill in the blank", href: "/fill-in-the-blank" },
+                { label: "Flashcards", href: "/study/flashcards" },
+                { label: "Quiz", href: "/study/quiz" },
+                { label: "Fill in the blank", href: "/study/fill-in-the-blank" },
               ].map(({ label, href }) => (
                 <li key={label}>
                   <Link href={href}>
