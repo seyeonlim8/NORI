@@ -4,11 +4,11 @@ const csv = require('csv-parser');
 
 const results = [];
 
-fs.createReadStream(path.resolve(__dirname, 'n3.csv'))
+fs.createReadStream(path.resolve(__dirname, 'n5.csv'))
   .pipe(csv())
   .on('data', (data) => {
     const word = {
-      level: 'n3',
+      level: 'n5',
       kanji: data['expression'],
       furigana: data['reading'],
       example_sentence: '추후작업',
@@ -30,9 +30,9 @@ fs.createReadStream(path.resolve(__dirname, 'n3.csv'))
   })
   .on('end', () => {
     fs.writeFileSync(
-      path.resolve(__dirname, 'n3.json'),
+      path.resolve(__dirname, 'n5.json'),
       JSON.stringify(results, null, 2),
       'utf-8'
     );
-    console.log('✅ JSON 파일 생성 완료: n3.json');
+    console.log('✅ JSON 파일 생성 완료: n5.json');
   });

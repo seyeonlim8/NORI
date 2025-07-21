@@ -1,4 +1,4 @@
-import wordsData from "./words/n3.json";
+import wordsData from "./words/n5.json";
 import { prisma } from "../lib/prisma";
 
 async function main() {
