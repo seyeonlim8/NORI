@@ -6,7 +6,8 @@
     "dev": "concurrently \"next dev\" \"nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/app/app.ts\"",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed:words": "ts-node scripts/seedWords.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.11.1",

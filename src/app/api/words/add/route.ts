@@ -4,7 +4,6 @@ import { prisma } from "../../../../../lib/prisma";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    // destructing
     const {
       level,
       kanji,
@@ -28,6 +27,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const existingWord = await prisma.word.findFirst({
+      where: { level, kanji },
+    });
+
+    if (existingWord) {
+      return NextResponse.json(
+        { error: "⚠️ This word already exists in the database." },
+        { status: 409 } // 409 Conflict
+      );
+    }
+
     const word = await prisma.word.create({
       data: {
         level,
@@ -43,9 +53,7 @@ export async function POST(req: NextRequest) {
           })),
         },
       },
-      include: {
-        meanings: true,
-      },
+      include: { meanings: true },
     });
 
     return NextResponse.json({ success: true, word });
