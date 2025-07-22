@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 // Get word with specific id
 export async function GET(_: Request, context: { params: { id: string } }) {
-  const { id } = context.params;
+  const { id } = await context.params; // await 필수
   const wordId = parseInt(id);
   const word = await prisma.word.findUnique({
     where: { id: wordId },

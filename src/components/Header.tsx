@@ -1,8 +1,34 @@
 "use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
+  const [username, setUsername] = useState<string | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await fetch("/api/user");
+        if (res.ok) {
+          const data = await res.json();
+          setUsername(data.username);
+        }
+      } catch (err) {
+        setUsername(null);
+      }
+    };
+    fetchUser();
+  }, []);
+
+  const handleLogout = async () => {
+    await fetch("/api/user/logout", { method: "POST" });
+    setUsername(null);
+    router.push("/login");
+  };
+
   return (
     <div className="w-full max-w-screen-xl p-1 sm:p-1 flex justify-between items-center mx-auto border-b border-red-800">
       <Link href="/">
@@ -20,7 +46,10 @@ export default function Header() {
               {[
                 { label: "Flashcards", href: "/study/flashcards" },
                 { label: "Quiz", href: "/study/quiz" },
-                { label: "Fill in the blank", href: "/study/fill-in-the-blank" },
+                {
+                  label: "Fill in the blank",
+                  href: "/study/fill-in-the-blank",
+                },
               ].map(({ label, href }) => (
                 <li key={label}>
                   <Link href={href}>
@@ -43,17 +72,46 @@ export default function Header() {
           </div>
         ))}
 
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="px-3 pt-2 pb-1.5 bg-orange-300 rounded flex justify-center items-center gap-2.5 cursor-pointer"
-        >
-          <Link href="/login">
-            <div className="text-yellow-50 text-base font-bold uppercase leading-tight tracking-tight font-outfit">
-              LOG IN
+        {username ? (
+          <div className="relative group cursor-pointer">
+            <div className="px-3 py-1 bg-rose-300 text-white rounded-md font-bold text-sm font-outfit">
+              Hello, {username}
             </div>
-          </Link>
-        </motion.div>
+
+            {/* Dropdown menu */}
+            <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-200 opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-50">
+              <ul className="py-2">
+                <li>
+                  <Link href="/account">
+                    <div className="px-5 py-3 text-sm text-gray-700 hover:bg-rose-100 hover:text-rose-500 transition font-outfit">
+                      My Account
+                    </div>
+                  </Link>
+                </li>
+                <li>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left px-5 py-3 text-sm text-gray-700 hover:bg-rose-100 hover:text-rose-500 transition font-outfit"
+                  >
+                    Log Out
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        ) : (
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-3 pt-2 pb-1.5 bg-orange-300 rounded flex justify-center items-center gap-2.5 cursor-pointer"
+          >
+            <Link href="/login">
+              <div className="text-yellow-50 text-base font-bold uppercase leading-tight tracking-tight font-outfit">
+                LOG IN
+              </div>
+            </Link>
+          </motion.div>
+        )}
       </div>
     </div>
   );

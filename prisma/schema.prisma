@@ -63,18 +63,23 @@ model FavoriteWord {
 }
 
 model StudyProgress {
-  id        Int     @id @default(autoincrement())
-  userId    Int
-  wordId    Int
-  type      String  // 'flashcard' | 'fill' | 'quiz'
-  lastSeen  DateTime @default(now())
-  completed Boolean  @default(false)
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  wordId       Int
+  type         String
+  level        String
+  lastSeen     DateTime @default(now())
+  completed    Boolean
+  currentIndex Int
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  word Word @relation(fields: [wordId], references: [id], onDelete: Cascade)
+  // 관계 설정
+  user User @relation(fields: [userId], references: [id], map: "fk_studyprogress_user")
+  word Word @relation(fields: [wordId], references: [id], map: "fk_studyprogress_word")
 
-  @@unique([userId, wordId, type])
+  @@unique([userId, type, level, wordId])
 }
+
+
 
 model QuizHistory {
   id          Int      @id @default(autoincrement())
