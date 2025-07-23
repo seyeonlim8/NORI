@@ -4,7 +4,13 @@ import Link from "next/link";
 
 const MotionLink = motion(Link);
 
-export default function LevelCards({ levels }: { levels: string[] }) {
+export default function LevelCards({
+  levels,
+  basePath, 
+}: {
+  levels: string[];
+  basePath: string;
+}) {
   return (
     <div className="flex flex-col gap-8 w-full">
       {[levels.slice(0, 2), levels.slice(2)].map((row, rowIndex) => (
@@ -12,7 +18,7 @@ export default function LevelCards({ levels }: { levels: string[] }) {
           {row.map((level, index) => (
             <MotionLink
               key={level}
-              href={`/study/flashcards/${level.toLowerCase()}`}
+              href={`/${basePath}/${level.toLowerCase()}`} // basePath 활용
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{

@@ -5,6 +5,6 @@ export default async function FlashcardsRoute({
 }: {
   params: { level: string };
 }) {
-  const { level } = await params; 
+  const { level } = await params;  
   return <FlashcardsPage level={level.toUpperCase()} />;
 }

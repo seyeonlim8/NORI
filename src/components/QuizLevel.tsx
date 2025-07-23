@@ -1,11 +1,10 @@
 "use client";
 import { motion } from "framer-motion";
 import Header from "./Header";
-import Footer from "./Footer";
 import LevelCards from "./LevelCards";
 
 export default function QuizLevel() {
-  const levels = ["N1", "N2", "N3", "N4", "N5"];
+  const levels = ["N1", "N2", "N3", "N4", "N5", "TEST"];
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-b from-rose-100 via-orange-100 to-rose-50 flex flex-col items-center overflow-hidden">
@@ -21,10 +20,9 @@ export default function QuizLevel() {
           ✨ Select Your JLPT Quiz Level
         </h2>
 
-        <LevelCards levels={levels} />
+        <LevelCards levels={levels} basePath="study/quiz" />
       </motion.div>
 
-      <Footer />
     </div>
   );
 }

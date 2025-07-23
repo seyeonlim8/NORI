@@ -1,7 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
 import Header from "./Header";
-import Footer from "./Footer";
 import LevelCards from "./LevelCards";
 
 export default function FlashcardsLevel() {
@@ -21,10 +20,9 @@ export default function FlashcardsLevel() {
           🌸 Select Your JLPT Flashcards Level
         </h2>
 
-        <LevelCards levels={levels} />
+        <LevelCards levels={levels} basePath="study/flashcards" />
       </motion.div>
 
-      <Footer />
     </div>
   );
 }
