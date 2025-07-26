@@ -21,7 +21,7 @@ export default function FillInTheBlankLevel() {
           ☘️ Select Your JLPT Level — Let’s Fill In the Blanks.
         </h2>
 
-        <LevelCards levels={levels} />
+        <LevelCards levels={levels} basePath="study/fill-in-the-blank" />
       </motion.div>
 
       <Footer />

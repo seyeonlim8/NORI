@@ -18,7 +18,7 @@ export default function LevelCards({
           {row.map((level, index) => (
             <MotionLink
               key={level}
-              href={`/${basePath}/${level.toLowerCase()}`} // basePath 활용
+              href={`/${basePath}/${level.toLowerCase()}`}  // basePath 활용
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{

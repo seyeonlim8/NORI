@@ -1,46 +1,74 @@
+import { BookOpen, CircleChevronDown } from "lucide-react";
+import { FloatingIcons } from "./FloatingIcons";
 import { motion } from "framer-motion";
-import Link from "next/link";
 
 export default function HeroMain() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className="w-full max-w-screen-xl px-4 sm:px-6 lg:px-44 py-36 bg-[radial-gradient(ellipse_50%_50%_at_50%_50%,_#FEB098_12%,_#FFD1B7_32%,_rgba(255,_255,_255,_0)_100%)] flex flex-col justify-start items-center gap-10 mx-auto"
-    >
-      <div className="w-full max-w-3xl flex flex-col justify-start items-center gap-5">
-        <div className="text-center">
-          <span className="text-black text-6xl font-bold font-outfit leading-[70.40px]">
-            Learn Japanese Effectively with
-          </span>
-          <span
-            className="text-6xl font-caprasimo leading-[70.40px]"
-            style={{ color: "#f06674ff" }}
-          >
-            {" "}
-            NORI.
-          </span>
-        </div>
-        <div className="text-center text-zinc-600 text-xl font-bold font-outfit leading-7 tracking-tight">
-          Master vocabulary and grammar through flashcards,
-          <br />
-          example sentences, and quizzes.
-        </div>
-      </div>
-      <motion.div
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="px-3 pt-2 pb-1.5 bg-rose-400 rounded inline-flex justify-center items-center gap-2.5 cursor-pointer"
-        style={{ backgroundColor: "#F27D88" }}
+    <section className="relative w-full h-[85vh] flex flex-col justify-center items-center text-center bg-gradient-to-b from-rose-100 to-orange-100 overflow-hidden">
+      <FloatingIcons count={25} />
+
+      {/* Title */}
+      <motion.h1
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="text-5xl md:text-7xl font-bold font-outfit bg-gradient-to-r from-[#F27D88] via-rose-400 to-orange-300 bg-clip-text text-transparent relative"
       >
-        <Link href="/login">
-          <div className="text-yellow-50 text-base font-bold font-outfit uppercase leading-snug tracking-tight">
-            GET STARTED
-          </div>
-        </Link>
+        Learn Japanese the Smart Way
+      </motion.h1>
+
+      {/* Sub text */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.6, duration: 0.8 }}
+        className="mt-6 flex items-center justify-center gap-3 text-gray-700"
+      >
+        <BookOpen className="w-8 h-8 text-rose-400" />
+        <span className="font-bold text-lg">JLPT Vocabulary & Kanji</span>
       </motion.div>
-    </motion.div>
+
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.8, duration: 1 }}
+        className="mt-6 text-lg md:text-2xl text-gray-700 max-w-xl leading-relaxed"
+      >
+        Master essential words, kanji, and sentence patterns for the JLPT.
+      </motion.p>
+
+      {/* CTA Button */}
+      <motion.a
+        href="/study/flashcards/n5"
+        whileHover={{ scale: 1.1, boxShadow: "0 0 25px #F27D88" }}
+        whileTap={{ scale: 0.95 }}
+        className="mt-10 mb-12 px-10 py-4 bg-[#F27D88] text-white font-bold rounded-full shadow-lg transition animate-pulse"
+      >
+        Start Your Journey
+      </motion.a>
+
+      {/* Scroll down icon */}
+      <motion.div
+        initial={{ opacity: 0, y: 0 }}
+        animate={{
+          opacity: [0.6, 1, 0.6],
+          y: [0, 15, 0], // little bounce
+          scale: [1, 1.1, 1], // zoom in/out
+          filter: [
+            "drop-shadow(0 0 0px rgba(242,125,136,0.5))",
+            "drop-shadow(0 0 10px rgba(242,125,136,0.8))",
+            "drop-shadow(0 0 0px rgba(242,125,136,0.5))",
+          ],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="mt-4 cursor-pointer"
+      >
+        <CircleChevronDown className="w-12 h-12 text-rose-400" />
+      </motion.div>
+    </section>
   );
 }

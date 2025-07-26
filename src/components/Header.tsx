@@ -63,14 +63,14 @@ export default function Header() {
           </div>
         </div>
 
-        {["ABOUT", "CONTACT"].map((item) => (
-          <div
-            key={item}
-            className="text-stone-800 text-sm font-bold uppercase leading-tight tracking-tight font-outfit cursor-pointer"
-          >
-            {item}
+        <Link href="about">
+          <div className="text-stone-800 text-sm font-bold uppercase leading-tight tracking-tight font-outfit cursor-pointer">
+            ABOUT
           </div>
-        ))}
+        </Link>
+        <div className="text-stone-800 text-sm font-bold uppercase leading-tight tracking-tight font-outfit cursor-pointer">
+          CONTACT
+        </div>
 
         {username ? (
           <div className="relative group cursor-pointer">
