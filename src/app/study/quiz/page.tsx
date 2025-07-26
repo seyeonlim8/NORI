@@ -1,7 +1,12 @@
+"use client";
+import { FloatingIcons } from "@/components/FloatingIcons";
 import QuizLevel from "@/components/QuizLevel";
 
 export default function SelectQuizLevel() {
-    return (
-        <QuizLevel />
-    )
-};
+  return (
+    <div>
+      <FloatingIcons count={25} />
+      <QuizLevel />
+    </div>
+  );
+}
