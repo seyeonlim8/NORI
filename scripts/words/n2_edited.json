@@ -20955,5 +20955,3330 @@
         "example_sentence_meaning": "I received a diamond ring."
       }
     ]
+  },
+  {
+    "level": "n2",
+    "kanji": "ダイヤル",
+    "furigana": "ダイヤル",
+    "example_sentence": "電話のダイヤルを回しました。",
+    "answer_in_example": "ダイヤル",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "다이얼",
+        "example_sentence_meaning": "전화 다이얼을 돌렸습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "dial",
+        "example_sentence_meaning": "I turned the telephone dial."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "対立",
+    "furigana": "たいりつ",
+    "example_sentence": "両者の意見が対立しています。",
+    "answer_in_example": "対立",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "대립",
+        "example_sentence_meaning": "양쪽의 의견이 대립하고 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "opposition, confrontation",
+        "example_sentence_meaning": "Both sides' opinions are in opposition."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "田植え",
+    "furigana": "たうえ",
+    "example_sentence": "春に田植えをしました。",
+    "answer_in_example": "田植え",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "모내기",
+        "example_sentence_meaning": "봄에 모내기를 했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "rice planting",
+        "example_sentence_meaning": "I did rice planting in spring."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "絶えず",
+    "furigana": "たえず",
+    "example_sentence": "絶えず努力を続けています。",
+    "answer_in_example": "絶えず",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "끊임없이",
+        "example_sentence_meaning": "끊임없이 노력을 계속하고 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "constantly, continuously",
+        "example_sentence_meaning": "I continue making efforts constantly."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "楕円",
+    "furigana": "だえん",
+    "example_sentence": "楕円の形を描きました。",
+    "answer_in_example": "楕円",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "타원",
+        "example_sentence_meaning": "타원 모양을 그렸습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "ellipse, oval",
+        "example_sentence_meaning": "I drew an elliptical shape."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "高める",
+    "furigana": "たかめる",
+    "example_sentence": "技術を高める努力をしています。",
+    "answer_in_example": "高める",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "높이다",
+        "example_sentence_meaning": "기술을 높이는 노력을 하고 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to raise, to enhance",
+        "example_sentence_meaning": "I'm making efforts to enhance my skills."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "耕す",
+    "furigana": "たがやす",
+    "example_sentence": "農家が畑を耕しています。",
+    "answer_in_example": "耕し",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "갈다",
+        "example_sentence_meaning": "농가가 밭을 갈고 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to plow, to till",
+        "example_sentence_meaning": "The farmer is plowing the field."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "滝",
+    "furigana": "たき",
+    "example_sentence": "山で美しい滝を見ました。",
+    "answer_in_example": "滝",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "폭포",
+        "example_sentence_meaning": "산에서 아름다운 폭포를 봤습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "waterfall",
+        "example_sentence_meaning": "I saw a beautiful waterfall in the mountains."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "蓄える",
+    "furigana": "たくわえる",
+    "example_sentence": "冬に備えて食料を蓄えました。",
+    "answer_in_example": "蓄えて",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "비축하다",
+        "example_sentence_meaning": "겨울을 대비해서 식료를 비축했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to store, to accumulate",
+        "example_sentence_meaning": "I stored food in preparation for winter."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "竹",
+    "furigana": "たけ",
+    "example_sentence": "庭に竹が生えています。",
+    "answer_in_example": "竹",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "대나무",
+        "example_sentence_meaning": "정원에 대나무가 자라고 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "bamboo",
+        "example_sentence_meaning": "Bamboo is growing in the garden."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "ただいま",
+    "furigana": "ただいま",
+    "example_sentence": "家に帰って「ただいま」と言いました。",
+    "answer_in_example": "ただいま",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "다녀왔습니다",
+        "example_sentence_meaning": "집에 돌아가서 '다녀왔습니다'라고 말했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "I'm home",
+        "example_sentence_meaning": "I came home and said 'I'm home'."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "但し",
+    "furigana": "ただし",
+    "example_sentence": "参加できます。但し、条件があります。",
+    "answer_in_example": "但し",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "단, 다만",
+        "example_sentence_meaning": "참가할 수 있습니다. 단, 조건이 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "however, but",
+        "example_sentence_meaning": "I can participate. However, there are conditions."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "畳む",
+    "furigana": "たたむ",
+    "example_sentence": "洗濯物を畳みました。",
+    "answer_in_example": "畳み",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "개다",
+        "example_sentence_meaning": "빨래를 개었습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to fold",
+        "example_sentence_meaning": "I folded the laundry."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "立ち止まる",
+    "furigana": "たちどまる",
+    "example_sentence": "信号で立ち止まりました。",
+    "answer_in_example": "立ち止まり",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "멈춰서다",
+        "example_sentence_meaning": "신호등에서 멈춰섰습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to stop, to come to a halt",
+        "example_sentence_meaning": "I stopped at the traffic light."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "たちまち",
+    "furigana": "たちまち",
+    "example_sentence": "たちまち雨が降り始めました。",
+    "answer_in_example": "たちまち",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "순식간에",
+        "example_sentence_meaning": "순식간에 비가 내리기 시작했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "at once, immediately",
+        "example_sentence_meaning": "Rain began falling at once."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "建つ",
+    "furigana": "たつ",
+    "example_sentence": "駅前に新しいビルが建ちました。",
+    "answer_in_example": "建ち",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "서다, 건설되다",
+        "example_sentence_meaning": "역 앞에 새로운 빌딩이 세워졌습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to stand, to be built",
+        "example_sentence_meaning": "A new building was built in front of the station."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "脱線",
+    "furigana": "だっせん",
+    "example_sentence": "電車が脱線する事故がありました。",
+    "answer_in_example": "脱線",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "탈선",
+        "example_sentence_meaning": "전차가 탈선하는 사고가 있었습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "derailment",
+        "example_sentence_meaning": "There was an accident where the train derailed."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "妥当",
+    "furigana": "だとう",
+    "example_sentence": "その判断は妥当だと思います。",
+    "answer_in_example": "妥当",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "타당한",
+        "example_sentence_meaning": "그 판단은 타당하다고 생각합니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "appropriate, reasonable",
+        "example_sentence_meaning": "I think that judgment is appropriate."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "例える",
+    "furigana": "たとえる",
+    "example_sentence": "人生を旅に例えました。",
+    "answer_in_example": "例えて",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "비유하다",
+        "example_sentence_meaning": "인생을 여행에 비유했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to compare, to liken",
+        "example_sentence_meaning": "I compared life to a journey."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "頼もしい",
+    "furigana": "たのもしい",
+    "example_sentence": "息子の成長が頼もしいです。",
+    "answer_in_example": "頼もしい",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "든든한",
+        "example_sentence_meaning": "아들의 성장이 든든합니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "reliable, reassuring",
+        "example_sentence_meaning": "My son's growth is reassuring."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "足袋",
+    "furigana": "たび",
+    "example_sentence": "着物に足袋を履きました。",
+    "answer_in_example": "足袋",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "다비(일본 버선)",
+        "example_sentence_meaning": "기모노에 다비를 신었습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "Japanese socks",
+        "example_sentence_meaning": "I wore Japanese socks with the kimono."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "ダブル",
+    "furigana": "ダブル",
+    "example_sentence": "ダブルベッドを買いました。",
+    "answer_in_example": "ダブル",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "더블",
+        "example_sentence_meaning": "더블 베드를 샀습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "double",
+        "example_sentence_meaning": "I bought a double bed."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "ダム",
+    "furigana": "ダム",
+    "example_sentence": "川にダムが建設されました。",
+    "answer_in_example": "ダム",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "댐",
+        "example_sentence_meaning": "강에 댐이 건설되었습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "dam",
+        "example_sentence_meaning": "A dam was built on the river."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "溜息",
+    "furigana": "ためいき",
+    "example_sentence": "疲れて溜息をつきました。",
+    "answer_in_example": "溜息",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "한숨",
+        "example_sentence_meaning": "피곤해서 한숨을 쉬었습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "sigh",
+        "example_sentence_meaning": "I sighed because I was tired."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "ためらう",
+    "furigana": "ためらう",
+    "example_sentence": "決断をためらっています。",
+    "answer_in_example": "ためらって",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "주저하다",
+        "example_sentence_meaning": "결단을 주저하고 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to hesitate",
+        "example_sentence_meaning": "I'm hesitating to make a decision."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "だらしない",
+    "furigana": "だらしない",
+    "example_sentence": "彼の服装はだらしないです。",
+    "answer_in_example": "だらしない",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "단정하지 못한",
+        "example_sentence_meaning": "그의 복장은 단정하지 못합니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "slovenly, sloppy",
+        "example_sentence_meaning": "His clothing is slovenly."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "足る",
+    "furigana": "たる",
+    "example_sentence": "これで十分足ります。",
+    "answer_in_example": "足り",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "충분하다",
+        "example_sentence_meaning": "이것으로 충분합니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to be sufficient",
+        "example_sentence_meaning": "This is sufficient."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "短～",
+    "furigana": "たん～",
+    "example_sentence": "短期間の旅行をしました。",
+    "answer_in_example": "短",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "단~, 짧은",
+        "example_sentence_meaning": "단기간의 여행을 했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "short, brief",
+        "example_sentence_meaning": "I took a short-term trip."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "段階",
+    "furigana": "だんかい",
+    "example_sentence": "計画を段階的に進めます。",
+    "answer_in_example": "段階",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "단계",
+        "example_sentence_meaning": "계획을 단계적으로 진행합니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "stage, phase",
+        "example_sentence_meaning": "We will proceed with the plan step by step."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "短期",
+    "furigana": "たんき",
+    "example_sentence": "短期間で日本語を覚えました。",
+    "answer_in_example": "短期",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "단기",
+        "example_sentence_meaning": "단기간에 일본어를 배웠습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "short term",
+        "example_sentence_meaning": "I learned Japanese in a short period."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "炭鉱",
+    "furigana": "たんこう",
+    "example_sentence": "炭鉱で石炭を掘っています。",
+    "answer_in_example": "炭鉱",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "탄광",
+        "example_sentence_meaning": "탄광에서 석탄을 캐고 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "coal mine",
+        "example_sentence_meaning": "They are mining coal at the coal mine."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "短所",
+    "furigana": "たんしょ",
+    "example_sentence": "私の短所は忘れっぽいことです。",
+    "answer_in_example": "短所",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "단점",
+        "example_sentence_meaning": "제 단점은 잘 잊는 것입니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "shortcoming, weak point",
+        "example_sentence_meaning": "My weakness is being forgetful."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "たんす",
+    "furigana": "たんす",
+    "example_sentence": "服をたんすにしまいました。",
+    "answer_in_example": "たんす",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "장롱",
+        "example_sentence_meaning": "옷을 장롱에 넣었습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "chest of drawers",
+        "example_sentence_meaning": "I put clothes in the chest of drawers."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "淡水",
+    "furigana": "たんすい",
+    "example_sentence": "淡水魚を飼っています。",
+    "answer_in_example": "淡水",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "담수",
+        "example_sentence_meaning": "담수어를 기르고 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "fresh water",
+        "example_sentence_meaning": "I'm keeping freshwater fish."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "断水",
+    "furigana": "だんすい",
+    "example_sentence": "工事のため断水しました。",
+    "answer_in_example": "断水",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "단수",
+        "example_sentence_meaning": "공사 때문에 단수되었습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "water cut-off",
+        "example_sentence_meaning": "Water was cut off due to construction."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "単数",
+    "furigana": "たんすう",
+    "example_sentence": "この動詞は単数形です。",
+    "answer_in_example": "単数",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "단수",
+        "example_sentence_meaning": "이 동사는 단수형입니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "singular number",
+        "example_sentence_meaning": "This verb is in singular form."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "団地",
+    "furigana": "だんち",
+    "example_sentence": "新しい団地に引っ越しました。",
+    "answer_in_example": "団地",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "단지",
+        "example_sentence_meaning": "새로운 단지로 이사했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "housing complex",
+        "example_sentence_meaning": "I moved to a new housing complex."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "断定",
+    "furigana": "だんてい",
+    "example_sentence": "証拠がないので断定できません。",
+    "answer_in_example": "断定",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "단정",
+        "example_sentence_meaning": "증거가 없어서 단정할 수 없습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "conclusion, judgment",
+        "example_sentence_meaning": "I can't make a conclusion without evidence."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "短編",
+    "furigana": "たんぺん",
+    "example_sentence": "短編小説を読みました。",
+    "answer_in_example": "短編",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "단편",
+        "example_sentence_meaning": "단편소설을 읽었습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "short story",
+        "example_sentence_meaning": "I read a short story."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "田ぼ",
+    "furigana": "たんぼ",
+    "example_sentence": "田ぼで稲を育てています。",
+    "answer_in_example": "田ぼ",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "논",
+        "example_sentence_meaning": "논에서 벼를 기르고 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "rice field",
+        "example_sentence_meaning": "I'm growing rice in the rice field."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "誓う",
+    "furigana": "ちかう",
+    "example_sentence": "約束を守ることを誓いました。",
+    "answer_in_example": "誓い",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "맹세하다",
+        "example_sentence_meaning": "약속을 지킬 것을 맹세했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to vow, to swear",
+        "example_sentence_meaning": "I vowed to keep my promise."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "地下水",
+    "furigana": "ちかすい",
+    "example_sentence": "地下水を井戸から汲み上げます。",
+    "answer_in_example": "地下水",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "지하수",
+        "example_sentence_meaning": "지하수를 우물에서 퍼올립니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "groundwater",
+        "example_sentence_meaning": "We pump groundwater from the well."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "近々",
+    "furigana": "ちかぢか",
+    "example_sentence": "近々結婚する予定です。",
+    "answer_in_example": "近々",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "가까운 시일 내에",
+        "example_sentence_meaning": "가까운 시일 내에 결혼할 예정입니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "soon, before long",
+        "example_sentence_meaning": "I plan to get married soon."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "近付ける",
+    "furigana": "ちかづける",
+    "example_sentence": "椅子を机に近付けました。",
+    "answer_in_example": "近付けて",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "가까이 하다",
+        "example_sentence_meaning": "의자를 책상에 가까이 했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to bring closer",
+        "example_sentence_meaning": "I brought the chair closer to the desk."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "近寄る",
+    "furigana": "ちかよる",
+    "example_sentence": "犬が私に近寄ってきました。",
+    "answer_in_example": "近寄って",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "다가가다",
+        "example_sentence_meaning": "개가 저에게 다가왔습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to approach, to come near",
+        "example_sentence_meaning": "A dog approached me."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "力強い",
+    "furigana": "ちからづよい",
+    "example_sentence": "力強い演説に感動しました。",
+    "answer_in_example": "力強い",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "힘찬",
+        "example_sentence_meaning": "힘찬 연설에 감동했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "powerful, strong",
+        "example_sentence_meaning": "I was moved by the powerful speech."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "ちぎる",
+    "furigana": "ちぎる",
+    "example_sentence": "紙をちぎって捨てました。",
+    "answer_in_example": "ちぎって",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "찢다",
+        "example_sentence_meaning": "종이를 찢어서 버렸습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to tear, to pluck",
+        "example_sentence_meaning": "I tore the paper and threw it away."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "地質",
+    "furigana": "ちしつ",
+    "example_sentence": "地質調査を行いました。",
+    "answer_in_example": "地質",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "지질",
+        "example_sentence_meaning": "지질조사를 실시했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "geology",
+        "example_sentence_meaning": "We conducted a geological survey."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "知人",
+    "furigana": "ちじん",
+    "example_sentence": "知人から手紙をもらいました。",
+    "answer_in_example": "知人",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "지인",
+        "example_sentence_meaning": "지인으로부터 편지를 받았습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "acquaintance",
+        "example_sentence_meaning": "I received a letter from an acquaintance."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "地帯",
+    "furigana": "ちたい",
+    "example_sentence": "熱帯地帯を旅行しました。",
+    "answer_in_example": "地帯",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "지대",
+        "example_sentence_meaning": "열대지대를 여행했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "zone, belt",
+        "example_sentence_meaning": "I traveled to the tropical zone."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "縮む",
+    "furigana": "ちぢむ",
+    "example_sentence": "洗濯したら服が縮みました。",
+    "answer_in_example": "縮み",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "줄어들다",
+        "example_sentence_meaning": "빨래를 하니 옷이 줄어들었습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to shrink",
+        "example_sentence_meaning": "The clothes shrank after washing."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "縮める",
+    "furigana": "ちぢめる",
+    "example_sentence": "会議の時間を縮めました。",
+    "answer_in_example": "縮めて",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "줄이다",
+        "example_sentence_meaning": "회의 시간을 줄였습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to shorten, to reduce",
+        "example_sentence_meaning": "I shortened the meeting time."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "縮れる",
+    "furigana": "ちぢれる",
+    "example_sentence": "湿気で髪が縮れました。",
+    "answer_in_example": "縮れ",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "곱슬거리다",
+        "example_sentence_meaning": "습기 때문에 머리가 곱슬거렸습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to curl, to get frizzy",
+        "example_sentence_meaning": "My hair got frizzy due to humidity."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "チップ",
+    "furigana": "チップ",
+    "example_sentence": "ウェイターにチップを渡しました。",
+    "answer_in_example": "チップ",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "팁",
+        "example_sentence_meaning": "웨이터에게 팁을 줬습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "tip, gratuity",
+        "example_sentence_meaning": "I gave a tip to the waiter."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "地点",
+    "furigana": "ちてん",
+    "example_sentence": "待ち合わせ地点に着きました。",
+    "answer_in_example": "地点",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "지점",
+        "example_sentence_meaning": "대기 장소에 도착했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "point, spot",
+        "example_sentence_meaning": "I arrived at the meeting point."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "地名",
+    "furigana": "ちめい",
+    "example_sentence": "日本の地名を覚えています。",
+    "answer_in_example": "地名",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "지명",
+        "example_sentence_meaning": "일본의 지명을 외우고 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "place name",
+        "example_sentence_meaning": "I'm memorizing Japanese place names."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "茶色い",
+    "furigana": "ちゃいろい",
+    "example_sentence": "茶色い靴を履いています。",
+    "answer_in_example": "茶色い",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "갈색인",
+        "example_sentence_meaning": "갈색 신발을 신고 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "brown",
+        "example_sentence_meaning": "I'm wearing brown shoes."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "着々",
+    "furigana": "ちゃくちゃく",
+    "example_sentence": "工事が着々と進んでいます。",
+    "answer_in_example": "着々",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "착착",
+        "example_sentence_meaning": "공사가 착착 진행되고 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "steadily, step by step",
+        "example_sentence_meaning": "Construction is progressing steadily."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "中間",
+    "furigana": "ちゅうかん",
+    "example_sentence": "中間試験が来週あります。",
+    "answer_in_example": "中間",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "중간",
+        "example_sentence_meaning": "중간시험이 다음 주에 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "middle, intermediate",
+        "example_sentence_meaning": "The midterm exam is next week."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "中旬",
+    "furigana": "ちゅうじゅん",
+    "example_sentence": "来月中旬に旅行します。",
+    "answer_in_example": "中旬",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "중순",
+        "example_sentence_meaning": "다음 달 중순에 여행합니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "middle ten days of a month",
+        "example_sentence_meaning": "I will travel in the middle of next month."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "抽象",
+    "furigana": "ちゅうしょう",
+    "example_sentence": "抽象的な概念を理解するのは難しいです。",
+    "answer_in_example": "抽象",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "추상",
+        "example_sentence_meaning": "추상적인 개념을 이해하는 것은 어렵습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "abstraction",
+        "example_sentence_meaning": "It's difficult to understand abstract concepts."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "中世",
+    "furigana": "ちゅうせい",
+    "example_sentence": "中世の歴史を勉強しています。",
+    "answer_in_example": "中世",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "중세",
+        "example_sentence_meaning": "중세 역사를 공부하고 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "medieval period",
+        "example_sentence_meaning": "I'm studying medieval history."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "中性",
+    "furigana": "ちゅうせい",
+    "example_sentence": "この物質は中性です。",
+    "answer_in_example": "中性",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "중성",
+        "example_sentence_meaning": "이 물질은 중성입니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "neutral",
+        "example_sentence_meaning": "This substance is neutral."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "中途",
+    "furigana": "ちゅうと",
+    "example_sentence": "中途で諦めてはいけません。",
+    "answer_in_example": "中途",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "중도",
+        "example_sentence_meaning": "중도에서 포기해서는 안 됩니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "halfway, midway",
+        "example_sentence_meaning": "You shouldn't give up halfway."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "中年",
+    "furigana": "ちゅうねん",
+    "example_sentence": "中年になって健康に気をつけています。",
+    "answer_in_example": "中年",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "중년",
+        "example_sentence_meaning": "중년이 되어서 건강에 신경 쓰고 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "middle age",
+        "example_sentence_meaning": "I've been paying attention to my health since middle age."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "チョーク",
+    "furigana": "チョーク",
+    "example_sentence": "先生がチョークで黒板に書きました。",
+    "answer_in_example": "チョーク",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "분필",
+        "example_sentence_meaning": "선생님이 분필로 칠판에 썼습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "chalk",
+        "example_sentence_meaning": "The teacher wrote on the blackboard with chalk."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "長～",
+    "furigana": "ちょう～",
+    "example_sentence": "長時間待たされました。",
+    "answer_in_example": "長",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "장~, 긴",
+        "example_sentence_meaning": "장시간 기다렸습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "long, chief",
+        "example_sentence_meaning": "I was kept waiting for a long time."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "超過",
+    "furigana": "ちょうか",
+    "example_sentence": "制限速度を超過しました。",
+    "answer_in_example": "超過",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "초과",
+        "example_sentence_meaning": "제한속도를 초과했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "excess, exceeding",
+        "example_sentence_meaning": "I exceeded the speed limit."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "彫刻",
+    "furigana": "ちょうこく",
+    "example_sentence": "美術館で彫刻を見ました。",
+    "answer_in_example": "彫刻",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "조각",
+        "example_sentence_meaning": "미술관에서 조각을 봤습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "sculpture",
+        "example_sentence_meaning": "I saw sculptures at the art museum."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "長所",
+    "furigana": "ちょうしょ",
+    "example_sentence": "私の長所は忍耐力があることです。",
+    "answer_in_example": "長所",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "장점",
+        "example_sentence_meaning": "제 장점은 인내력이 있는 것입니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "strong point, merit",
+        "example_sentence_meaning": "My strong point is having patience."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "長女",
+    "furigana": "ちょうじょ",
+    "example_sentence": "私は三人姉妹の長女です。",
+    "answer_in_example": "長女",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "장녀",
+        "example_sentence_meaning": "저는 삼 자매의 장녀입니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "eldest daughter",
+        "example_sentence_meaning": "I am the eldest daughter of three sisters."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "調整",
+    "furigana": "ちょうせい",
+    "example_sentence": "スケジュールを調整しました。",
+    "answer_in_example": "調整",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "조정",
+        "example_sentence_meaning": "스케줄을 조정했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "adjustment, coordination",
+        "example_sentence_meaning": "I adjusted the schedule."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "調節",
+    "furigana": "ちょうせつ",
+    "example_sentence": "エアコンの温度を調節しました。",
+    "answer_in_example": "調節",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "조절",
+        "example_sentence_meaning": "에어컨 온도를 조절했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "regulation, control",
+        "example_sentence_meaning": "I regulated the air conditioner temperature."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "長短",
+    "furigana": "ちょうたん",
+    "example_sentence": "この計画の長短を検討しました。",
+    "answer_in_example": "長短",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "장단",
+        "example_sentence_meaning": "이 계획의 장단점을 검토했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "length, pros and cons",
+        "example_sentence_meaning": "I examined the pros and cons of this plan."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "頂点",
+    "furigana": "ちょうてん",
+    "example_sentence": "山の頂点に到達しました。",
+    "answer_in_example": "頂点",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "정점",
+        "example_sentence_meaning": "산의 정점에 도달했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "summit, peak",
+        "example_sentence_meaning": "I reached the summit of the mountain."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "長男",
+    "furigana": "ちょうなん",
+    "example_sentence": "彼は家族の長男です。",
+    "answer_in_example": "長男",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "장남",
+        "example_sentence_meaning": "그는 가족의 장남입니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "eldest son",
+        "example_sentence_meaning": "He is the eldest son of the family."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "長方形",
+    "furigana": "ちょうほうけい",
+    "example_sentence": "長方形の紙を使いました。",
+    "answer_in_example": "長方形",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "직사각형",
+        "example_sentence_meaning": "직사각형 종이를 사용했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "rectangle",
+        "example_sentence_meaning": "I used rectangular paper."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "調味料",
+    "furigana": "ちょうみりょう",
+    "example_sentence": "料理に調味料を加えました。",
+    "answer_in_example": "調味料",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "조미료",
+        "example_sentence_meaning": "요리에 조미료를 넣었습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "seasoning, condiment",
+        "example_sentence_meaning": "I added seasoning to the dish."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "直後",
+    "furigana": "ちょくご",
+    "example_sentence": "会議の直後に電話がありました。",
+    "answer_in_example": "直後",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "직후",
+        "example_sentence_meaning": "회의 직후에 전화가 있었습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "immediately after",
+        "example_sentence_meaning": "There was a phone call immediately after the meeting."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "直線",
+    "furigana": "ちょくせん",
+    "example_sentence": "定規で直線を引きました。",
+    "answer_in_example": "直線",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "직선",
+        "example_sentence_meaning": "자로 직선을 그었습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "straight line",
+        "example_sentence_meaning": "I drew a straight line with a ruler."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "直前",
+    "furigana": "ちょくぜん",
+    "example_sentence": "試験の直前に復習しました。",
+    "answer_in_example": "直前",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "직전",
+        "example_sentence_meaning": "시험 직전에 복습했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "just before",
+        "example_sentence_meaning": "I reviewed just before the exam."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "直通",
+    "furigana": "ちょくつう",
+    "example_sentence": "東京まで直通電車で行きました。",
+    "answer_in_example": "直通",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "직통",
+        "example_sentence_meaning": "도쿄까지 직통전차로 갔습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "direct, non-stop",
+        "example_sentence_meaning": "I went to Tokyo by direct train."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "直流",
+    "furigana": "ちょくりゅう",
+    "example_sentence": "この機械は直流電流を使います。",
+    "answer_in_example": "直流",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "직류",
+        "example_sentence_meaning": "이 기계는 직류전류를 사용합니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "direct current",
+        "example_sentence_meaning": "This machine uses direct current."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "貯蔵",
+    "furigana": "ちょぞう",
+    "example_sentence": "食料を貯蔵庫に保管しました。",
+    "answer_in_example": "貯蔵",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "저장",
+        "example_sentence_meaning": "식료를 저장고에 보관했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "storage",
+        "example_sentence_meaning": "I stored food in the storage room."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "直角",
+    "furigana": "ちょっかく",
+    "example_sentence": "直角に曲がってください。",
+    "answer_in_example": "直角",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "직각",
+        "example_sentence_meaning": "직각으로 돌아주세요."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "right angle",
+        "example_sentence_meaning": "Please turn at a right angle."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "直径",
+    "furigana": "ちょっけい",
+    "example_sentence": "円の直径を測りました。",
+    "answer_in_example": "直径",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "지름",
+        "example_sentence_meaning": "원의 지름을 쟀습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "diameter",
+        "example_sentence_meaning": "I measured the diameter of the circle."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "散らかす",
+    "furigana": "ちらかす",
+    "example_sentence": "子供が部屋を散らかしました。",
+    "answer_in_example": "散らかし",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "어지럽히다",
+        "example_sentence_meaning": "아이가 방을 어지럽혔습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to scatter, to mess up",
+        "example_sentence_meaning": "The child messed up the room."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "散らかる",
+    "furigana": "ちらかる",
+    "example_sentence": "机の上が散らかっています。",
+    "answer_in_example": "散らかって",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "어지럽다",
+        "example_sentence_meaning": "책상 위가 어지럽습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to be scattered, to be messy",
+        "example_sentence_meaning": "The desk is messy."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "塵紙",
+    "furigana": "ちりがみ",
+    "example_sentence": "塵紙で鼻をかみました。",
+    "answer_in_example": "塵紙",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "휴지",
+        "example_sentence_meaning": "휴지로 코를 풀었습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "tissue paper",
+        "example_sentence_meaning": "I blew my nose with tissue paper."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "追加",
+    "furigana": "ついか",
+    "example_sentence": "メニューに新しい料理を追加しました。",
+    "answer_in_example": "追加",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "추가",
+        "example_sentence_meaning": "메뉴에 새로운 요리를 추가했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "addition",
+        "example_sentence_meaning": "I added a new dish to the menu."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "ついで",
+    "furigana": "ついで",
+    "example_sentence": "買い物のついでに郵便局に寄りました。",
+    "answer_in_example": "ついで",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "김에",
+        "example_sentence_meaning": "쇼핑하는 김에 우체국에 들렀습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "while doing, incidentally",
+        "example_sentence_meaning": "I stopped by the post office while shopping."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "つうか",
+    "furigana": "つうか",
+    "example_sentence": "つうか、その話は本当ですか。",
+    "answer_in_example": "つうか",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "그런데",
+        "example_sentence_meaning": "그런데, 그 이야기는 사실입니까?"
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "by the way, actually",
+        "example_sentence_meaning": "By the way, is that story true?"
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "通勤",
+    "furigana": "つうきん",
+    "example_sentence": "電車で通勤しています。",
+    "answer_in_example": "通勤",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "통근",
+        "example_sentence_meaning": "전차로 통근하고 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "commuting",
+        "example_sentence_meaning": "I commute by train."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "通ずる",
+    "furigana": "つうずる",
+    "example_sentence": "この道は駅に通じています。",
+    "answer_in_example": "通じ",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "통하다",
+        "example_sentence_meaning": "이 길은 역으로 통해 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to lead to, to connect",
+        "example_sentence_meaning": "This road leads to the station."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "通知",
+    "furigana": "つうち",
+    "example_sentence": "会議の通知を受け取りました。",
+    "answer_in_example": "通知",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "통지",
+        "example_sentence_meaning": "회의 통지를 받았습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "notice, notification",
+        "example_sentence_meaning": "I received a meeting notice."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "通帳",
+    "furigana": "つうちょう",
+    "example_sentence": "銀行で通帳を作りました。",
+    "answer_in_example": "通帳",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "통장",
+        "example_sentence_meaning": "은행에서 통장을 만들었습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "bankbook",
+        "example_sentence_meaning": "I made a bankbook at the bank."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "通訳",
+    "furigana": "つうやく",
+    "example_sentence": "会議で通訳をお願いしました。",
+    "answer_in_example": "通訳",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "통역",
+        "example_sentence_meaning": "회의에서 통역을 부탁했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "interpretation",
+        "example_sentence_meaning": "I requested interpretation for the meeting."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "通用",
+    "furigana": "つうよう",
+    "example_sentence": "この券は全国で通用します。",
+    "answer_in_example": "通用",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "통용",
+        "example_sentence_meaning": "이 표는 전국에서 통용됩니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "circulation, validity",
+        "example_sentence_meaning": "This ticket is valid nationwide."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "通路",
+    "furigana": "つうろ",
+    "example_sentence": "通路を塞がないでください。",
+    "answer_in_example": "通路",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "통로",
+        "example_sentence_meaning": "통로를 막지 마세요."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "passage, aisle",
+        "example_sentence_meaning": "Please don't block the passage."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "突き当たり",
+    "furigana": "つきあたり",
+    "example_sentence": "通りの突き当たりに学校があります。",
+    "answer_in_example": "突き当たり",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "막다른 곳",
+        "example_sentence_meaning": "길 막다른 곳에 학교가 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "dead end",
+        "example_sentence_meaning": "There is a school at the dead end of the street."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "突き当たる",
+    "furigana": "つきあたる",
+    "example_sentence": "道路が壁に突き当たっています。",
+    "answer_in_example": "突き当たって",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "막히다",
+        "example_sentence_meaning": "도로가 벽에 막혀 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to run into, to come to an end",
+        "example_sentence_meaning": "The road runs into a wall."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "月日",
+    "furigana": "つきひ",
+    "example_sentence": "月日が経つのは早いです。",
+    "answer_in_example": "月日",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "세월",
+        "example_sentence_meaning": "세월이 지나는 것은 빠릅니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "time, days and months",
+        "example_sentence_meaning": "Time passes quickly."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "次ぐ",
+    "furigana": "つぐ",
+    "example_sentence": "兄に次ぐ成績でした。",
+    "answer_in_example": "次ぐ",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "다음가다",
+        "example_sentence_meaning": "형 다음가는 성적이었습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to follow, to come next",
+        "example_sentence_meaning": "My grade was second to my brother's."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "伝わる",
+    "furigana": "つたわる",
+    "example_sentence": "日本の文化が世界に伝わりました。",
+    "answer_in_example": "伝わり",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "전해지다",
+        "example_sentence_meaning": "일본 문화가 세계에 전해졌습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to be transmitted, to be conveyed",
+        "example_sentence_meaning": "Japanese culture was transmitted to the world."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "突っ込む",
+    "furigana": "つっこむ",
+    "example_sentence": "車が店に突っ込みました。",
+    "answer_in_example": "突っ込み",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "돌진하다",
+        "example_sentence_meaning": "차가 가게에 돌진했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to rush into, to plunge",
+        "example_sentence_meaning": "A car rushed into the store."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "務める",
+    "furigana": "つとめる",
+    "example_sentence": "会社で営業を務めています。",
+    "answer_in_example": "務めて",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "맡다, 일하다",
+        "example_sentence_meaning": "회사에서 영업을 맡고 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to serve, to work",
+        "example_sentence_meaning": "I work in sales at the company."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "努める",
+    "furigana": "つとめる",
+    "example_sentence": "健康に努めています。",
+    "answer_in_example": "努めて",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "노력하다",
+        "example_sentence_meaning": "건강에 노력하고 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to strive, to endeavor",
+        "example_sentence_meaning": "I strive for health."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "綱",
+    "furigana": "つな",
+    "example_sentence": "船を綱で岸に結びました。",
+    "answer_in_example": "綱",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "밧줄",
+        "example_sentence_meaning": "배를 밧줄로 물가에 묶었습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "rope, cable",
+        "example_sentence_meaning": "I tied the boat to the shore with a rope."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "繋がり",
+    "furigana": "つながり",
+    "example_sentence": "家族との繋がりを大切にしています。",
+    "answer_in_example": "繋がり",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "연결, 관계",
+        "example_sentence_meaning": "가족과의 관계를 소중히 여기고 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "connection, relationship",
+        "example_sentence_meaning": "I value the connection with my family."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "繋がる",
+    "furigana": "つながる",
+    "example_sentence": "電話が繋がりました。",
+    "answer_in_example": "繋がり",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "연결되다",
+        "example_sentence_meaning": "전화가 연결되었습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to be connected",
+        "example_sentence_meaning": "The phone call was connected."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "粒",
+    "furigana": "つぶ",
+    "example_sentence": "米の粒が一つ落ちました。",
+    "answer_in_example": "粒",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "알갱이",
+        "example_sentence_meaning": "쌀알이 하나 떨어졌습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "grain, particle",
+        "example_sentence_meaning": "A grain of rice fell."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "潰す",
+    "furigana": "つぶす",
+    "example_sentence": "虫を潰してしまいました。",
+    "answer_in_example": "潰して",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "뭉개다",
+        "example_sentence_meaning": "벌레를 뭉개버렸습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to crush, to squash",
+        "example_sentence_meaning": "I crushed the insect."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "潰れる",
+    "furigana": "つぶれる",
+    "example_sentence": "会社が潰れました。",
+    "answer_in_example": "潰れ",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "망하다, 찌그러지다",
+        "example_sentence_meaning": "회사가 망했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to collapse, to go bankrupt",
+        "example_sentence_meaning": "The company went bankrupt."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "つまずく",
+    "furigana": "つまずく",
+    "example_sentence": "石につまずいて転びました。",
+    "answer_in_example": "つまずい",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "걸려 넘어지다",
+        "example_sentence_meaning": "돌에 걸려 넘어졌습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to stumble, to trip",
+        "example_sentence_meaning": "I tripped over a stone and fell."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "躓く",
+    "furigana": "つまずく",
+    "example_sentence": "階段で躓きそうになりました。",
+    "answer_in_example": "躓き",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "걸려 넘어지다",
+        "example_sentence_meaning": "계단에서 걸려 넘어질 뻔했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to stumble, to trip",
+        "example_sentence_meaning": "I almost tripped on the stairs."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "詰まる",
+    "furigana": "つまる",
+    "example_sentence": "道路が詰まっています。",
+    "answer_in_example": "詰まって",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "막히다",
+        "example_sentence_meaning": "도로가 막혀 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to be blocked, to be clogged",
+        "example_sentence_meaning": "The road is blocked."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "積む",
+    "furigana": "つむ",
+    "example_sentence": "本を高く積みました。",
+    "answer_in_example": "積み",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "쌓다",
+        "example_sentence_meaning": "책을 높이 쌓았습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to pile up, to stack",
+        "example_sentence_meaning": "I stacked books high."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "爪",
+    "furigana": "つめ",
+    "example_sentence": "爪を切りました。",
+    "answer_in_example": "爪",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "손톱",
+        "example_sentence_meaning": "손톱을 깎았습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "nail, claw",
+        "example_sentence_meaning": "I cut my nails."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "艶",
+    "furigana": "つや",
+    "example_sentence": "髪に艶があります。",
+    "answer_in_example": "艶",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "윤기",
+        "example_sentence_meaning": "머리에 윤기가 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "luster, gloss",
+        "example_sentence_meaning": "My hair has luster."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "強気",
+    "furigana": "つよき",
+    "example_sentence": "彼は強気な性格です。",
+    "answer_in_example": "強気",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "강기",
+        "example_sentence_meaning": "그는 강기 성격입니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "boldness, bullish",
+        "example_sentence_meaning": "He has a bold personality."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "釣り合う",
+    "furigana": "つりあう",
+    "example_sentence": "色が釣り合っています。",
+    "answer_in_example": "釣り合って",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "균형을 이루다",
+        "example_sentence_meaning": "색깔이 균형을 이루고 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to balance, to match",
+        "example_sentence_meaning": "The colors are balanced."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "吊る",
+    "furigana": "つる",
+    "example_sentence": "洗濯物をロープに吊りました。",
+    "answer_in_example": "吊り",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "매달다",
+        "example_sentence_meaning": "빨래를 로프에 매달았습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to hang, to suspend",
+        "example_sentence_meaning": "I hung the laundry on the rope."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "吊す",
+    "furigana": "つるす",
+    "example_sentence": "天井から電灯を吊しました。",
+    "answer_in_example": "吊し",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "매달다",
+        "example_sentence_meaning": "천장에서 전등을 매달았습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to hang, to suspend",
+        "example_sentence_meaning": "I hung a light from the ceiling."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "テーマ",
+    "furigana": "テーマ",
+    "example_sentence": "研究のテーマを決めました。",
+    "answer_in_example": "テーマ",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "테마",
+        "example_sentence_meaning": "연구 테마를 정했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "theme",
+        "example_sentence_meaning": "I decided on a research theme."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "手洗い",
+    "furigana": "てあらい",
+    "example_sentence": "手洗いを忘れずにしてください。",
+    "answer_in_example": "手洗い",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "손씻기",
+        "example_sentence_meaning": "손씻기를 잊지 말고 해 주세요."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "hand washing",
+        "example_sentence_meaning": "Please don't forget to wash your hands."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "低～",
+    "furigana": "てい～",
+    "example_sentence": "低温で保存してください。",
+    "answer_in_example": "低",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "저~, 낮은",
+        "example_sentence_meaning": "저온에서 보존해 주세요."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "low, short",
+        "example_sentence_meaning": "Please store at low temperature."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "定員",
+    "furigana": "ていいん",
+    "example_sentence": "バスの定員は50人です。",
+    "answer_in_example": "定員",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "정원",
+        "example_sentence_meaning": "버스의 정원은 50명입니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "capacity, quota",
+        "example_sentence_meaning": "The bus capacity is 50 people."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "定価",
+    "furigana": "ていか",
+    "example_sentence": "定価より安く買いました。",
+    "answer_in_example": "定価",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "정가",
+        "example_sentence_meaning": "정가보다 싸게 샀습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "fixed price, list price",
+        "example_sentence_meaning": "I bought it cheaper than the list price."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "低下",
+    "furigana": "ていか",
+    "example_sentence": "気温が低下しています。",
+    "answer_in_example": "低下",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "저하",
+        "example_sentence_meaning": "기온이 저하되고 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "decline, drop",
+        "example_sentence_meaning": "The temperature is declining."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "定期券",
+    "furigana": "ていきけん",
+    "example_sentence": "電車の定期券を買いました。",
+    "answer_in_example": "定期券",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "정기권",
+        "example_sentence_meaning": "전차 정기권을 샀습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "commuter pass",
+        "example_sentence_meaning": "I bought a train commuter pass."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "定休日",
+    "furigana": "ていきゅうび",
+    "example_sentence": "月曜日は定休日です。",
+    "answer_in_example": "定休日",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "정기휴일",
+        "example_sentence_meaning": "월요일은 정기휴일입니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "regular holiday",
+        "example_sentence_meaning": "Monday is a regular holiday."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "停止",
+    "furigana": "ていし",
+    "example_sentence": "機械が停止しました。",
+    "answer_in_example": "停止",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "정지",
+        "example_sentence_meaning": "기계가 정지했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "stop, halt",
+        "example_sentence_meaning": "The machine stopped."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "停車",
+    "furigana": "ていしゃ",
+    "example_sentence": "電車が駅に停車しました。",
+    "answer_in_example": "停車",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "정차",
+        "example_sentence_meaning": "전차가 역에 정차했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "stop (of vehicle)",
+        "example_sentence_meaning": "The train stopped at the station."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "停電",
+    "furigana": "ていでん",
+    "example_sentence": "台風で停電しました。",
+    "answer_in_example": "停電",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "정전",
+        "example_sentence_meaning": "태풍으로 정전되었습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "power outage",
+        "example_sentence_meaning": "There was a power outage due to the typhoon."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "出入り",
+    "furigana": "でいり",
+    "example_sentence": "建物の出入りが禁止されています。",
+    "answer_in_example": "出入り",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "출입",
+        "example_sentence_meaning": "건물의 출입이 금지되어 있습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "going in and out",
+        "example_sentence_meaning": "Going in and out of the building is prohibited."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "出入口",
+    "furigana": "でいりぐち",
+    "example_sentence": "出入口を確認してください。",
+    "answer_in_example": "出入口",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "출입구",
+        "example_sentence_meaning": "출입구를 확인해 주세요."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "entrance and exit",
+        "example_sentence_meaning": "Please check the entrance and exit."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "出入り口",
+    "furigana": "でいりぐち",
+    "example_sentence": "出入り口が混雑しています。",
+    "answer_in_example": "出入り口",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "출입구",
+        "example_sentence_meaning": "출입구가 혼잡합니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "entrance and exit",
+        "example_sentence_meaning": "The entrance and exit is crowded."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "手入れ",
+    "furigana": "ていれ",
+    "example_sentence": "庭の手入れをしました。",
+    "answer_in_example": "手入れ",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "손질",
+        "example_sentence_meaning": "정원 손질을 했습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "care, maintenance",
+        "example_sentence_meaning": "I did garden maintenance."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "出来上がり",
+    "furigana": "できあがり",
+    "example_sentence": "料理の出来上がりが楽しみです。",
+    "answer_in_example": "出来上がり",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "완성",
+        "example_sentence_meaning": "요리 완성이 기대됩니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "completion, finish",
+        "example_sentence_meaning": "I'm looking forward to the completion of the dish."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "出来上がる",
+    "furigana": "できあがる",
+    "example_sentence": "ケーキが出来上がりました。",
+    "answer_in_example": "出来上がり",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "완성되다",
+        "example_sentence_meaning": "케이크가 완성되었습니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to be completed",
+        "example_sentence_meaning": "The cake was completed."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "的確",
+    "furigana": "てきかく",
+    "example_sentence": "彼の的確な判断のおかげで問題が解決した。",
+    "answer_in_example": "的確",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "정확한, 적절한",
+        "example_sentence_meaning": "그의 정확한 판단 덕분에 문제가 해결되었다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "precise, accurate",
+        "example_sentence_meaning": "Thanks to his precise judgment, the problem was solved."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "適確",
+    "furigana": "てきかく",
+    "example_sentence": "医師の適確な診断により早期治療が可能になった。",
+    "answer_in_example": "適確",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "정확한, 적절한",
+        "example_sentence_meaning": "의사의 정확한 진단으로 조기 치료가 가능해졌다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "precise, accurate",
+        "example_sentence_meaning": "Early treatment became possible thanks to the doctor's precise diagnosis."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "手首",
+    "furigana": "てくび",
+    "example_sentence": "バスケをしていて手首を痛めてしまった。",
+    "answer_in_example": "手首",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "손목",
+        "example_sentence_meaning": "농구를 하다가 손목을 다쳤다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "wrist",
+        "example_sentence_meaning": "I hurt my wrist while playing basketball."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "凸凹",
+    "furigana": "でこぼこ",
+    "example_sentence": "この道は凸凹していて歩きにくい。",
+    "answer_in_example": "凸凹",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "울퉁불퉁함, 거칠음",
+        "example_sentence_meaning": "이 길은 울퉁불퉁해서 걷기 어렵다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "unevenness, roughness",
+        "example_sentence_meaning": "This road is uneven and difficult to walk on."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "手頃",
+    "furigana": "てごろ",
+    "example_sentence": "手頃な価格のレストランを探している。",
+    "answer_in_example": "手頃",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "적당한, 알맞은",
+        "example_sentence_meaning": "적당한 가격의 레스토랑을 찾고 있다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "moderate, reasonable",
+        "example_sentence_meaning": "I'm looking for a reasonably priced restaurant."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "手ごろ",
+    "furigana": "てごろ",
+    "example_sentence": "手ごろなサイズのかばんが欲しい。",
+    "answer_in_example": "手ごろ",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "적당한, 편리한",
+        "example_sentence_meaning": "적당한 크기의 가방이 갖고 싶다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "handy, convenient, suitable",
+        "example_sentence_meaning": "I want a handy-sized bag."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "弟子",
+    "furigana": "でし",
+    "example_sentence": "師匠は弟子に厳しく指導した。",
+    "answer_in_example": "弟子",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "제자, 도제",
+        "example_sentence_meaning": "스승은 제자에게 엄격하게 지도했다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "pupil, disciple, apprentice",
+        "example_sentence_meaning": "The master taught his disciple strictly."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "でたらめ",
+    "furigana": "でたらめ",
+    "example_sentence": "彼の話はでたらめばかりで信用できない。",
+    "answer_in_example": "でたらめ",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "엉터리, 허무맹랑한 소리",
+        "example_sentence_meaning": "그의 이야기는 엉터리뿐이라 믿을 수 없다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "nonsense, irresponsible talk",
+        "example_sentence_meaning": "His stories are all nonsense and can't be trusted."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "手帳",
+    "furigana": "てちょう",
+    "example_sentence": "スケジュールを手帳に書き込んだ。",
+    "answer_in_example": "手帳",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "수첩, 노트북",
+        "example_sentence_meaning": "스케줄을 수첩에 적었다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "notebook, handbook",
+        "example_sentence_meaning": "I wrote my schedule in my notebook."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "鉄橋",
+    "furigana": "てっきょう",
+    "example_sentence": "古い鉄橋を電車が渡っていく。",
+    "answer_in_example": "鉄橋",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "철교",
+        "example_sentence_meaning": "오래된 철교를 기차가 건너간다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "iron bridge",
+        "example_sentence_meaning": "The train crosses over the old iron bridge."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "手続き",
+    "furigana": "てつづき",
+    "example_sentence": "ビザの手続きに時間がかかった。",
+    "answer_in_example": "手続き",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "수속, 절차",
+        "example_sentence_meaning": "비자 수속에 시간이 걸렸다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "procedure, formalities",
+        "example_sentence_meaning": "The visa procedures took time."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "鉄砲",
+    "furigana": "てっぽう",
+    "example_sentence": "昔の武士は鉄砲を使って戦った。",
+    "answer_in_example": "鉄砲",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "철포, 총",
+        "example_sentence_meaning": "옛날 무사들은 철포를 사용해서 싸웠다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "gun, firearm",
+        "example_sentence_meaning": "Ancient samurai fought using guns."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "テニスコート",
+    "furigana": "テニスコート",
+    "example_sentence": "新しいテニスコートが完成した。",
+    "answer_in_example": "テニスコート",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "테니스 코트",
+        "example_sentence_meaning": "새로운 테니스 코트가 완성되었다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "tennis court",
+        "example_sentence_meaning": "The new tennis court has been completed."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "手拭い",
+    "furigana": "てぬぐい",
+    "example_sentence": "温泉で手拭いを借りた。",
+    "answer_in_example": "手拭い",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "손수건, 수건",
+        "example_sentence_meaning": "온천에서 수건을 빌렸다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "hand towel",
+        "example_sentence_meaning": "I borrowed a hand towel at the hot spring."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "手前",
+    "furigana": "てまえ",
+    "example_sentence": "信号の手前で車を停めた。",
+    "answer_in_example": "手前",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "앞쪽, 이쪽",
+        "example_sentence_meaning": "신호등 앞에서 차를 세웠다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "before, this side",
+        "example_sentence_meaning": "I stopped the car before the traffic light."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "出迎え",
+    "furigana": "でむかえ",
+    "example_sentence": "空港での出迎えをお願いします。",
+    "answer_in_example": "出迎え",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "마중, 영접",
+        "example_sentence_meaning": "공항에서의 마중을 부탁드립니다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "meeting, reception",
+        "example_sentence_meaning": "Please arrange to meet us at the airport."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "出迎える",
+    "furigana": "でむかえる",
+    "example_sentence": "友人を駅で出迎えた。",
+    "answer_in_example": "出迎え",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "마중하다, 영접하다",
+        "example_sentence_meaning": "친구를 역에서 마중했다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to meet, to greet",
+        "example_sentence_meaning": "I met my friend at the station."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "照らす",
+    "furigana": "てらす",
+    "example_sentence": "月が夜道を照らしている。",
+    "answer_in_example": "照らし",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "비추다, 조명하다",
+        "example_sentence_meaning": "달이 밤길을 비추고 있다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to shine on, to illuminate",
+        "example_sentence_meaning": "The moon is illuminating the night road."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "照る",
+    "furigana": "てる",
+    "example_sentence": "今日は太陽がよく照っている。",
+    "answer_in_example": "照っ",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "비치다, 쬐다",
+        "example_sentence_meaning": "오늘은 태양이 잘 비치고 있다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "to shine",
+        "example_sentence_meaning": "The sun is shining well today."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "展開",
+    "furigana": "てんかい",
+    "example_sentence": "物語が予想外の展開を見せた。",
+    "answer_in_example": "展開",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "전개, 발전",
+        "example_sentence_meaning": "이야기가 예상외의 전개를 보였다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "development, expansion",
+        "example_sentence_meaning": "The story showed an unexpected development."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "伝記",
+    "furigana": "でんき",
+    "example_sentence": "有名な作家の伝記を読んだ。",
+    "answer_in_example": "伝記",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "전기, 일대기",
+        "example_sentence_meaning": "유명한 작가의 전기를 읽었다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "biography, life story",
+        "example_sentence_meaning": "I read a biography of a famous writer."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "電球",
+    "furigana": "でんきゅう",
+    "example_sentence": "電球が切れたので交換した。",
+    "answer_in_example": "電球",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "전구",
+        "example_sentence_meaning": "전구가 나가서 교체했다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "light bulb",
+        "example_sentence_meaning": "The light bulb burned out, so I replaced it."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "点数",
+    "furigana": "てんすう",
+    "example_sentence": "試験の点数が思ったより良かった。",
+    "answer_in_example": "点数",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "점수",
+        "example_sentence_meaning": "시험 점수가 생각보다 좋았다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "marks, points, score",
+        "example_sentence_meaning": "The test score was better than I expected."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "伝染",
+    "furigana": "でんせん",
+    "example_sentence": "風邪が家族に伝染してしまった。",
+    "answer_in_example": "伝染",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "전염",
+        "example_sentence_meaning": "감기가 가족에게 전염되어 버렸다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "contagion, infection",
+        "example_sentence_meaning": "The cold spread to my family."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "電池",
+    "furigana": "でんち",
+    "example_sentence": "リモコンの電池を交換する必要がある。",
+    "answer_in_example": "電池",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "배터리, 전지",
+        "example_sentence_meaning": "리모컨의 배터리를 교체할 필요가 있다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "battery",
+        "example_sentence_meaning": "I need to replace the remote control batteries."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "電柱",
+    "furigana": "でんちゅう",
+    "example_sentence": "電柱に鳥が止まっている。",
+    "answer_in_example": "電柱",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "전신주",
+        "example_sentence_meaning": "전신주에 새가 앉아 있다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "telephone pole, electric pole",
+        "example_sentence_meaning": "A bird is perched on the telephone pole."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "点々",
+    "furigana": "てんてん",
+    "example_sentence": "庭に花が点々と咲いている。",
+    "answer_in_example": "点々",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "여기저기, 듬성듬성",
+        "example_sentence_meaning": "정원에 꽃이 여기저기 피어 있다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "here and there, scattered",
+        "example_sentence_meaning": "Flowers are blooming here and there in the garden."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "転々",
+    "furigana": "てんてん",
+    "example_sentence": "彼は職を転々と変えている。",
+    "answer_in_example": "転々",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "이곳저곳으로, 전전하며",
+        "example_sentence_meaning": "그는 직업을 이곳저곳 바꾸고 있다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "from one place to another",
+        "example_sentence_meaning": "He keeps changing jobs from one to another."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "天皇",
+    "furigana": "てんのう",
+    "example_sentence": "天皇陛下が式典に出席された。",
+    "answer_in_example": "天皇",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "천황",
+        "example_sentence_meaning": "천황 폐하가 식전에 참석하셨다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "Emperor of Japan",
+        "example_sentence_meaning": "His Majesty the Emperor attended the ceremony."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "電波",
+    "furigana": "でんぱ",
+    "example_sentence": "山の中では電波が弱い。",
+    "answer_in_example": "電波",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "전파",
+        "example_sentence_meaning": "산속에서는 전파가 약하다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "radio wave, signal",
+        "example_sentence_meaning": "The radio waves are weak in the mountains."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "テンポ",
+    "furigana": "テンポ",
+    "example_sentence": "この曲はテンポが速い。",
+    "answer_in_example": "テンポ",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "템포, 박자",
+        "example_sentence_meaning": "이 곡은 템포가 빠르다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "tempo, pace",
+        "example_sentence_meaning": "This song has a fast tempo."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "電流",
+    "furigana": "でんりゅう",
+    "example_sentence": "電流が流れると電球が光る。",
+    "answer_in_example": "電流",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "전류",
+        "example_sentence_meaning": "전류가 흐르면 전구가 빛난다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "electric current",
+        "example_sentence_meaning": "The light bulb glows when electric current flows."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "電力",
+    "furigana": "でんりょく",
+    "example_sentence": "この工場は大量の電力を消費する。",
+    "answer_in_example": "電力",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "전력",
+        "example_sentence_meaning": "이 공장은 대량의 전력을 소비한다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "electric power",
+        "example_sentence_meaning": "This factory consumes a large amount of electric power."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "問い合わせ",
+    "furigana": "といあわせ",
+    "example_sentence": "商品について問い合わせをした。",
+    "answer_in_example": "問い合わせ",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "문의",
+        "example_sentence_meaning": "상품에 대해 문의를 했다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "inquiry, question",
+        "example_sentence_meaning": "I made an inquiry about the product."
+      }
+    ]
+  },
+  {
+    "level": "n2",
+    "kanji": "銅",
+    "furigana": "どう",
+    "example_sentence": "この像は銅で作られている。",
+    "answer_in_example": "銅",
+    "meanings": [
+      {
+        "language_code": "ko",
+        "word_meaning": "구리",
+        "example_sentence_meaning": "이 동상은 구리로 만들어져 있다."
+      },
+      {
+        "language_code": "en",
+        "word_meaning": "copper",
+        "example_sentence_meaning": "This statue is made of copper."
+      }
+    ]
   }
 ]

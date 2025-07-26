@@ -71,7 +71,7 @@ export default function AboutPage() {
           transition={{ delay: 0.3, duration: 0.8 }}
           className="text-4xl md:text-6xl font-bold font-outfit bg-gradient-to-r from-[#F27D88] via-rose-400 to-orange-300 bg-clip-text text-transparent"
         >
-          Learn Japanese Smarter with{" "}
+          Learn Japanese Effectively with{" "}
           <span className="font-caprasimo">NORI☘️</span>
         </motion.h1>
 

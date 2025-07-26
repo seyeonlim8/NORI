@@ -17,7 +17,7 @@ export default function FillInTheBlankLevel() {
         transition={{ duration: 0.8 }}
         className="flex flex-col items-center w-full max-w-5xl px-6 pt-16 gap-12"
       >
-        <h2 className="text-4xl font-bold text-[#F27D88] font-outfit text-center">
+        <h2 className="text-4xl font-bold text-[#F27D88] font-outfit text-center relative z-10">
           ☘️ Select Your JLPT Level — Let’s Fill In the Blanks.
         </h2>
 

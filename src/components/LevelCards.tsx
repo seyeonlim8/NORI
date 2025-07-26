@@ -28,7 +28,7 @@ export default function LevelCards({
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="w-44 h-36 flex items-center justify-center rounded-2xl bg-white border border-rose-200 shadow-sm
-                         hover:border-rose-400 hover:bg-rose-50 transition-all duration-300 text-3xl font-bold text-[#F27D88] font-outfit"
+                         hover:border-rose-400 hover:bg-rose-50 transition-all duration-300 text-3xl font-bold text-[#F27D88] font-outfit relative z-10"
             >
               {level}
             </MotionLink>
