@@ -5,7 +5,7 @@ import QuizLevel from "@/components/QuizLevel";
 export default function SelectQuizLevel() {
   return (
     <div>
-      <FloatingIcons count={25} />
+      <FloatingIcons count={10} />
       <QuizLevel />
     </div>
   );

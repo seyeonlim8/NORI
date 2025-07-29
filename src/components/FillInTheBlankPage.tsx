@@ -121,38 +121,41 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
     });
     setProgress(updatedProgress);
 
-    setTimeout(() => {
-      setFeedback(null);
-      setUserAnswer("");
-      confettiFired.current = false;
-      if (nextIndex >= words.length) {
-        const unlearned = words.filter(
-          (w) => !updatedProgress[w.id] && w.id !== currentWord.id
-        );
-        if (!isCorrect) unlearned.push(currentWord);
+    setTimeout(
+      () => {
+        setFeedback(null);
+        setUserAnswer("");
+        confettiFired.current = false;
+        if (nextIndex >= words.length) {
+          const unlearned = words.filter(
+            (w) => !updatedProgress[w.id] && w.id !== currentWord.id
+          );
+          if (!isCorrect) unlearned.push(currentWord);
 
-        if (unlearned.length > 0) {
-          if (confirm(`${unlearned.length} words need review. Continue?`)) {
-            setWords(unlearned);
-            setCurrentIndex(0);
-            setReviewMode(true);
-            return;
+          if (unlearned.length > 0) {
+            if (confirm(`${unlearned.length} words need review. Continue?`)) {
+              setWords(unlearned);
+              setCurrentIndex(0);
+              setReviewMode(true);
+              return;
+            }
           }
-        }
 
-        // 모든 문제 학습 완료 시 진행도 초기화
-        fetch(`/api/study-progress/reset?type=fill&level=${level}`, {
-          method: "POST",
-          credentials: "include",
-        });
-        setProgress({});
-        setReviewMode(false);
-        alert("You completed all Fill-in-the-Blank quizzes! Progress reset.");
-        setCurrentIndex(0);
-      } else {
-        setCurrentIndex(nextIndex);
-      }
-    }, isCorrect ? 1000 : 1500); // 정답은 1초 후 이동
+          // Reset progress
+          fetch(`/api/study-progress/reset?type=fill&level=${level}`, {
+            method: "POST",
+            credentials: "include",
+          });
+          setProgress({});
+          setReviewMode(false);
+          alert("You completed all Fill-in-the-Blank quizzes! Progress reset.");
+          setCurrentIndex(0);
+        } else {
+          setCurrentIndex(nextIndex);
+        }
+      },
+      isCorrect ? 1000 : 1500
+    ); 
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -233,8 +236,8 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
                 feedback === "correct"
                   ? { scale: 1.15 }
                   : feedback === "wrong"
-                  ? { x: [0, -100, 100, -100, 0] }
-                  : { scale: 1 }
+                    ? { x: [0, -100, 100, -100, 0] }
+                    : { scale: 1 }
               }
               transition={{ duration: 0.4 }}
               whileHover={!feedback ? { scale: 1.05 } : {}}
@@ -245,15 +248,15 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
                 feedback === "wrong"
                   ? "bg-gray-400 text-white cursor-not-allowed"
                   : feedback === "correct"
-                  ? "bg-green-500 text-white cursor-not-allowed"
-                  : "bg-[#F27D88] text-white hover:opacity-90"
+                    ? "bg-green-500 text-white cursor-not-allowed"
+                    : "bg-[#F27D88] text-white hover:opacity-90"
               }`}
             >
               {feedback === "wrong"
                 ? "Incorrect🥲"
                 : feedback === "correct"
-                ? "Correct!✨"
-                : "CHECK ANSWER"}
+                  ? "Correct!✨"
+                  : "CHECK ANSWER"}
             </motion.button>
           </AnimatePresence>
         </div>

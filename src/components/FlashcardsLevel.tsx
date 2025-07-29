@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import Header from "./Header";
 import LevelCards from "./LevelCards";
+import Footer from "./Footer";
 
 export default function FlashcardsLevel() {
   const levels = ["N1", "N2", "N3", "N4", "N5", "TEST"];
@@ -14,15 +15,16 @@ export default function FlashcardsLevel() {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="flex flex-col items-center w-full max-w-5xl px-6 pt-16 gap-12"
+        className="flex flex-col items-center w-full max-w-5xl mx-auto px-6 pt-16 gap-12 flex-grow"
       >
-        <h2 className="text-4xl font-bold text-[#F27D88] font-outfit text-center relative z-10">
-          🌸 Select Your JLPT Flashcards Level
+        <h2 className="text-4xl font-bold text-black font-outfit text-center relative z-10">
+          🙌 Select Your JLPT Flashcards Level
         </h2>
 
         <LevelCards levels={levels} basePath="study/flashcards" />
       </motion.div>
 
+      <Footer />
     </div>
   );
 }

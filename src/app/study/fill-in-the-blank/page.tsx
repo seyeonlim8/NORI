@@ -5,7 +5,7 @@ import { FloatingIcons } from "@/components/FloatingIcons";
 export default function SelectFillInTheBlankLevel() {
   return (
     <div>
-      <FloatingIcons count={15} />
+      <FloatingIcons count={10} />
       <FillInTheBlankLevel />
     </div>
   );

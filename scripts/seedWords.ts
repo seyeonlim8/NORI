@@ -3,7 +3,7 @@ import { prisma } from "../lib/prisma";
 
 async function main() {
   for (const word of wordsData) {
-    const {
+    let {
       level,
       kanji,
       furigana,
@@ -11,6 +11,8 @@ async function main() {
       answer_in_example,
       meanings,
     } = word;
+
+    level = level.toUpperCase();
 
     const existingWord = await prisma.word.findFirst({
       where: { level, kanji },
@@ -20,7 +22,6 @@ async function main() {
       continue;
     }
 
-    // Create word
     await prisma.word.create({
       data: {
         level,
@@ -49,5 +50,5 @@ main()
   })
   .catch((err) => {
     console.error(err);
-    prisma.$disconnect;
+    prisma.$disconnect();
   });

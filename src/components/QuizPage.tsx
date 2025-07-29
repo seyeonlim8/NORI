@@ -1,8 +1,9 @@
 "use client";
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { useRouter, useParams } from "next/navigation";
 import Header from "@/components/Header";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import Footer from "./Footer";
 
 type Word = {
   id: number;
@@ -183,7 +184,7 @@ export default function QuizPage({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="w-full max-w-screen-2xl px-4 sm:px-6 lg:px-10 pt-32 pb-5 flex flex-col justify-start items-center gap-10 mx-auto"
+        className="w-full max-w-screen-2xl px-4 sm:px-6 lg:px-10 pt-32 pb-5 flex flex-col flex-grow justify-start items-center gap-10 mx-auto"
       >
         {/* Progress Bar */}
         <div className="w-full px-6 flex flex-col items-center">
@@ -239,6 +240,8 @@ export default function QuizPage({
           </div>
         </div>
       </motion.div>
+
+      <Footer />
     </div>
   );
 }

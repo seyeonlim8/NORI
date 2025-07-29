@@ -7,10 +7,10 @@ export default async function QuizTypeRoute({
 }: {
   params: { level: string };
 }) {
-  const { level } = params; // URL에서 레벨 추출
+  const { level } = params; // Get level from URL
   return (
     <div>
-      <FloatingIcons count={15} />
+      <FloatingIcons count={10} />
       <QuizTypePage level={level.toUpperCase()} />;
     </div>
   );
