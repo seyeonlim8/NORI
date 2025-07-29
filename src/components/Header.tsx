@@ -79,13 +79,15 @@ export default function Header() {
         </Link>
 
         {/* CONTACT */}
-        <motion.div
-          whileHover={{ scale: 1.05, color: "#F27D88" }}
-          whileTap={{ scale: 0.95 }}
-          className="relative text-stone-800 text-sm font-bold uppercase leading-tight tracking-tight font-outfit cursor-pointer z-50 after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[2px] after:bg-rose-400 hover:after:w-full after:transition-all after:duration-300"
-        >
-          CONTACT
-        </motion.div>
+        <Link href="/contact">
+          <motion.div
+            whileHover={{ scale: 1.05, color: "#F27D88" }}
+            whileTap={{ scale: 0.95 }}
+            className="relative text-stone-800 text-sm font-bold uppercase leading-tight tracking-tight font-outfit cursor-pointer z-50 after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[2px] after:bg-rose-400 hover:after:w-full after:transition-all after:duration-300"
+          >
+            CONTACT
+          </motion.div>
+        </Link>
 
         {/* 로그인 상태 */}
         {username ? (
