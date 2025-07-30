@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { PieChart, Pie, Cell, Label } from "recharts";
 import Header from "./Header";
 import Footer from "./Footer";
+import { FloatingIcons } from "./FloatingIcons";
 
 const COLORS = ["#F27D88", "#FDBA74", "#FDE68A", "#93C5FD", "#A5B4FC"];
 const LEVELS = ["N1", "N2", "N3", "N4", "N5"];
@@ -203,10 +204,11 @@ export default function AccountPage() {
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-b from-rose-100 via-orange-100 to-rose-50 flex flex-col items-center">
+      <FloatingIcons count={15} />
       <Header />
 
       {/* Tab UI */}
-      <div className="mt-32 flex flex-col items-center w-full">
+      <div className="mt-20 flex flex-col items-center w-full relative z-10">
         <div className="flex relative gap-12 border-b border-gray-200 pb-2">
           {["progress", "account"].map((tab) => (
             <button
@@ -231,7 +233,7 @@ export default function AccountPage() {
       </div>
 
       {/* Tab contents */}
-      <div className="flex flex-col w-full max-w-4xl mt-10 px-6 gap-8">
+      <div className="flex flex-col w-full max-w-4xl mt-10 px-6 gap-8 relative z-10">
         <AnimatePresence mode="wait">
           {activeTab === "progress" && (
             <motion.div

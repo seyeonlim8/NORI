@@ -6,7 +6,7 @@ const MotionLink = motion(Link);
 
 export default function LevelCards({
   levels,
-  basePath, 
+  basePath,
 }: {
   levels: string[];
   basePath: string;
@@ -18,7 +18,7 @@ export default function LevelCards({
           {row.map((level, index) => (
             <MotionLink
               key={level}
-              href={`/${basePath}/${level.toLowerCase()}`}  // basePath 활용
+              href={`/${basePath}/${level.toLowerCase()}`} // basePath 활용
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
@@ -30,7 +30,7 @@ export default function LevelCards({
               className="w-44 h-36 flex items-center justify-center rounded-2xl bg-white border border-rose-200 shadow-sm
                          hover:border-rose-400 hover:bg-rose-50 transition-all duration-300 text-3xl font-bold text-[#F27D88] font-outfit relative z-10"
             >
-              {level}
+              {level !== "favorites" ? level : "⭐️Favorites"}
             </MotionLink>
           ))}
         </div>

@@ -55,9 +55,9 @@ export default function HeroMain() {
           y: [0, 15, 0], // little bounce
           scale: [1, 1.1, 1], // zoom in/out
           filter: [
-            "drop-shadow(0 0 0px rgba(242,125,136,0.5))",
-            "drop-shadow(0 0 10px rgba(242,125,136,0.8))",
-            "drop-shadow(0 0 0px rgba(242,125,136,0.5))",
+            "drop-shadow(0 0 0px rgba(242, 201, 125, 0.5))",
+            "drop-shadow(0 0 10px rgba(242, 217, 125, 0.8))",
+            "drop-shadow(0 0 0px rgba(242, 201, 125, 0.5))",
           ],
         }}
         transition={{
@@ -67,7 +67,7 @@ export default function HeroMain() {
         }}
         className="mt-4 cursor-pointer"
       >
-        <CircleChevronDown className="w-12 h-12 text-rose-400" />
+        <CircleChevronDown className="w-12 h-12 text-orange-400" />
       </motion.div>
     </section>
   );

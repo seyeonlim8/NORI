@@ -7,5 +7,5 @@ export default async function QuizRoute({
   params: { level: string; type: string };
 }) {
   const { level, type } = await params;
-  return <QuizPage level={level.toUpperCase()} type={type.toLowerCase()} />;
+  return <QuizPage level={level} type={type.toLowerCase()} />;
 }

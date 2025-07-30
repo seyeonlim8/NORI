@@ -11,7 +11,7 @@ export default async function QuizTypeRoute({
   return (
     <div>
       <FloatingIcons count={10} />
-      <QuizTypePage level={level.toUpperCase()} />;
+      <QuizTypePage level={level} />;
     </div>
   );
 }

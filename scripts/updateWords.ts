@@ -1,5 +1,5 @@
 import { prisma } from "../lib/prisma";
-import updatedWords from "./words/n2.json";
+import updatedWords from "./words/n2_edited.json";
 
 // Script to update '추후작업'
 async function updateWords() {
