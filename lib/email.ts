@@ -9,13 +9,22 @@ export default async function sendEmail({
   subject: string;
   html: string;
 }) {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
+  let transporter;
+  if (process.env.USE_MAILHOG === "true") {
+    transporter = nodemailer.createTransport({
+      host: "localhost",
+      port: 1025,
+      secure: false,
+    });
+  } else {
+    transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+  }
 
   await transporter.sendMail({
     from: `"NORI" <${process.env.EMAIL_USER}>`,
