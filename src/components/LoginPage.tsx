@@ -70,7 +70,10 @@ export default function LoginPage() {
         </h2>
 
         {error && (
-          <div className="text-center text-red-500 text-sm font-semibold">
+          <div 
+            data-testid="credentials-error"
+            className="text-center text-red-500 text-sm font-semibold"
+          >
             {error}
           </div>
         )}
