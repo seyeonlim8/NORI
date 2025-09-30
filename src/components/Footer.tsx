@@ -1,4 +1,27 @@
+"use client";
+import { useState } from "react";
+
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const res = await fetch("/api/newsletter", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+
+    if (res.ok) {
+      setSubscribed(true);
+      setEmail("");
+    } else {
+      alert("Subscription failed. Please try again.");
+    }
+  };
+
   return (
     <footer className="w-full mt-20">
       <div className="w-full max-w-screen-xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-12 text-gray-700 font-outfit">
@@ -47,10 +70,13 @@ export default function Footer() {
           <p className="text-sm mb-4">
             Get study tips and updates straight to your inbox.
           </p>
-          <form className="flex">
+          <form className="flex" onSubmit={handleSubscribe}>
             <input
               type="email"
               placeholder="Enter your email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="flex-1 px-4 py-2 rounded-l-md bg-white border border-gray-300 focus:outline-none focus:border-rose-400 text-sm"
             />
             <button
@@ -60,6 +86,12 @@ export default function Footer() {
               Subscribe
             </button>
           </form>
+
+          {subscribed && (
+            <p className="text-sm text-green-600 mt-2">
+              Thank you for subscribing!
+            </p>
+          )}
         </div>
 
         {/* Social Links */}
