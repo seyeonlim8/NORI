@@ -93,6 +93,7 @@ export default function Header() {
         {username ? (
           <div className="relative group cursor-pointer z-50">
             <motion.div
+              data-testid="nav-hello"
               whileHover={{ scale: 1.05, backgroundColor: "#F27D88" }}
               whileTap={{ scale: 0.95 }}
               className="px-3 py-1 bg-rose-300 text-white rounded-md font-bold text-sm font-outfit"
