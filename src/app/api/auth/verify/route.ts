@@ -29,18 +29,15 @@ export async function GET(req: Request) {
   }
 
   const { searchParams } = new URL(req.url);
-  const token = searchParams.get("token");
-  if (!token) {
-    return NextResponse.json({ error: "token required" }, { status: 400 });
+  const email = searchParams.get("email");
+  if (!email) {
+    return NextResponse.json({ error: "email required" }, { status: 400 });
   }
 
-  const user = await prisma.user.findFirst({ where: { verifyToken: token } });
+  const user = await prisma.user.findUnique({ where: { email } });
   if (!user) {
     return NextResponse.json({ error: "user not found" }, { status: 404 });
   }
 
-  return NextResponse.json({
-    isVerified: !!user.isVerified,
-    email: user.email,
-  });
+  return NextResponse.json({ isVerified: !!user.isVerified });
 }
