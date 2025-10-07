@@ -112,6 +112,7 @@ export default function Header() {
                 </li>
                 <li>
                   <button
+                    data-testid='logout-btn'
                     onClick={handleLogout}
                     className="w-full text-left px-5 py-3 text-sm text-gray-700 hover:bg-rose-100 hover:text-rose-500 transition font-outfit"
                   >
