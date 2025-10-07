@@ -8,7 +8,7 @@ export async function POST(req: Request) {
   try {
     const { username, email, password } = await req.json();
 
-    // Chekc if email already exists
+    // Check if email already exists
     const exists = await prisma.user.findUnique({ where: { email } });
     if (exists) {
       return NextResponse.json(
@@ -97,6 +97,33 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Verification email sent." });
   } catch (err: any) {
     console.error("❌ Signup API Error:", err, err?.message);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const username = searchParams.get("username");
+    if (!username) {
+      return NextResponse.json(
+        { error: "Username is required." },
+        { status: 400 }
+      );
+    }
+    const exists = await prisma.user.findFirst({ where: { username } });
+    if (exists) {
+      return NextResponse.json(
+        { error: "Username already exists." },
+        { status: 400 }
+      );
+    }
+    return NextResponse.json({ available: true });
+  } catch (err: any) {
+    console.error("Username check API Error:", err, err?.message);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
