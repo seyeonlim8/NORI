@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -9,8 +9,14 @@ export default function SignupPage() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [usernameAvailable, setUsernameAvailable] = useState<null | boolean>(
+    null
+  );
+  const [usernameCheckLoading, setUsernameCheckLoading] = useState(false);
+  const [emailTouched, setEmailTouched] = useState(false);
 
   const router = useRouter();
 
@@ -22,10 +28,37 @@ export default function SignupPage() {
   };
 
   const isPasswordStrong = Object.values(passwordValidations).every(Boolean);
+  const passwordsMatch = password === confirmPassword && password.length > 0;
 
   const validateEmail = (email: string) => {
     return /\S+@\S+\.\S+/.test(email);
   };
+  const emailValid = validateEmail(email);
+
+  const usernameValid =
+    username.length >= 4 &&
+    username.length <= 19 &&
+    /^[a-zA-Z0-9]+$/.test(username); 
+
+  useEffect(() => {
+    if (!usernameValid) {
+      setUsernameAvailable(null);
+      return;
+    }
+    setUsernameCheckLoading(true);
+    const controller = new AbortController();
+    fetch(`/api/auth/signup?username=${encodeURIComponent(username)}`, {
+      method: "GET",
+      signal: controller.signal,
+    })
+      .then(async (res) => {
+        const data = await res.json();
+        setUsernameAvailable(res.ok && data.available);
+      })
+      .catch(() => setUsernameAvailable(null))
+      .finally(() => setUsernameCheckLoading(false));
+    return () => controller.abort();
+  }, [username, usernameValid]);
 
   const handleSubmit = async () => {
     const newErrors: { [key: string]: string } = {};
@@ -61,7 +94,7 @@ export default function SignupPage() {
       alert("❌ Something went wrong during signup.");
     } finally {
       setIsSubmitting(false); // Stop loading
-      router.push("/login") // Redirect to login page
+      router.push("/login"); // Redirect to login page
     }
   };
 
@@ -83,25 +116,52 @@ export default function SignupPage() {
           Create Your NORI Account
         </h2>
 
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300"
-        />
-        {errors.username && (
-          <p className="text-sm text-red-500">{errors.username}</p>
-        )}
+        <div className="flex flex-col gap-1">
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300"
+          />
+          {username.length > 0 && (
+            <p className="text-sm">
+              {!usernameValid ? (
+                <span className="text-red-500">
+                  Username must be 4-19 characters, letters and numbers only.
+                </span>
+              ) : usernameCheckLoading ? (
+                <span className="text-gray-500">Checking username...</span>
+              ) : usernameAvailable === false ? (
+                <span className="text-red-500">
+                  Username is already in use.
+                </span>
+              ) : usernameAvailable === true ? (
+                <span className="text-green-600">Username available!</span>
+              ) : null}
+            </p>
+          )}
+          {errors.username && (
+            <p className="text-sm text-red-500">{errors.username}</p>
+          )}
+        </div>
 
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          onBlur={() => setEmailTouched(true)}
           className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300"
         />
-        {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
+        {email.length > 0 && !emailValid && (
+          <p className="text-sm text-red-500 mt-[-20px]">
+            Invalid email format.
+          </p>
+        )}
+        {errors.email && !emailTouched && (
+          <p className="text-sm text-red-500">{errors.email}</p>
+        )}
 
         <div>
           <input
@@ -111,6 +171,16 @@ export default function SignupPage() {
             onChange={(e) => setPassword(e.target.value)}
             className="p-3 border rounded-md w-full focus:outline-none focus:ring-2 focus:ring-rose-300"
           />
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="p-3 border rounded-md w-full mt-2 focus:outline-none focus:ring-2 focus:ring-rose-300"
+          />
+          {confirmPassword.length > 0 && !passwordsMatch && (
+            <p className="text-sm text-red-500 mt-1">Passwords do not match.</p>
+          )}
           {errors.password && (
             <p className="text-sm text-red-500 mt-1">{errors.password}</p>
           )}
@@ -158,9 +228,19 @@ export default function SignupPage() {
           whileHover={{ scale: isPasswordStrong && !isSubmitting ? 1.05 : 1 }}
           whileTap={{ scale: isPasswordStrong && !isSubmitting ? 0.95 : 1 }}
           onClick={handleSubmit}
-          disabled={!isPasswordStrong || isSubmitting}
+          disabled={
+            !isPasswordStrong ||
+            isSubmitting ||
+            !usernameValid ||
+            usernameAvailable !== true ||
+            !passwordsMatch
+          }
           className={`text-white font-bold py-3 rounded-md uppercase tracking-wide font-(family-name:--font-outfit) ${
-            isPasswordStrong && !isSubmitting
+            isPasswordStrong &&
+            !isSubmitting &&
+            usernameValid &&
+            usernameAvailable === true &&
+            passwordsMatch
               ? "cursor-pointer"
               : "cursor-not-allowed opacity-50"
           }`}
