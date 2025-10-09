@@ -38,7 +38,7 @@ export default function SignupPage() {
   const usernameValid =
     username.length >= 4 &&
     username.length <= 19 &&
-    /^[a-zA-Z0-9]+$/.test(username); 
+    /^[a-zA-Z0-9]+$/.test(username);
 
   useEffect(() => {
     if (!usernameValid) {
@@ -122,10 +122,11 @@ export default function SignupPage() {
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            data-testid="username-input"
             className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300"
           />
           {username.length > 0 && (
-            <p className="text-sm">
+            <p data-testid="username-feedback" className="text-sm mt-[-2px]">
               {!usernameValid ? (
                 <span className="text-red-500">
                   Username must be 4-19 characters, letters and numbers only.
@@ -152,10 +153,14 @@ export default function SignupPage() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           onBlur={() => setEmailTouched(true)}
+          data-testid="email-input"
           className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300"
         />
         {email.length > 0 && !emailValid && (
-          <p className="text-sm text-red-500 mt-[-20px]">
+          <p
+            data-testid="email-error"
+            className="text-sm text-red-500 mt-[-2px]"
+          >
             Invalid email format.
           </p>
         )}
@@ -169,6 +174,7 @@ export default function SignupPage() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            data-testid="password-input"
             className="p-3 border rounded-md w-full focus:outline-none focus:ring-2 focus:ring-rose-300"
           />
           <input
@@ -176,6 +182,7 @@ export default function SignupPage() {
             placeholder="Confirm Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            data-testid="confirm-password-input"
             className="p-3 border rounded-md w-full mt-2 focus:outline-none focus:ring-2 focus:ring-rose-300"
           />
           {confirmPassword.length > 0 && !passwordsMatch && (
@@ -184,7 +191,10 @@ export default function SignupPage() {
           {errors.password && (
             <p className="text-sm text-red-500 mt-1">{errors.password}</p>
           )}
-          <ul className="text-sm mt-2 text-gray-600 space-y-1">
+          <ul
+            data-testid="password-checklist"
+            className="text-sm mt-2 text-gray-600 space-y-1"
+          >
             <li
               className={
                 passwordValidations.hasUpperCase
@@ -225,6 +235,7 @@ export default function SignupPage() {
         </div>
 
         <motion.button
+          data-testid="signup-button"
           whileHover={{ scale: isPasswordStrong && !isSubmitting ? 1.05 : 1 }}
           whileTap={{ scale: isPasswordStrong && !isSubmitting ? 0.95 : 1 }}
           onClick={handleSubmit}
@@ -253,9 +264,9 @@ export default function SignupPage() {
           Already have an account?{" "}
           <Link
             href="/login"
-            className="text-[#F27D88] font-bold hover:underline"
+            className="text-rose-500 hover:text-rose-600 font-semibold"
           >
-            Log in here
+            Log In
           </Link>
         </p>
       </motion.div>
