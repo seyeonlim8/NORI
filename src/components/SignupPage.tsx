@@ -24,6 +24,7 @@ export default function SignupPage() {
     hasUpperCase: /[A-Z]/.test(password),
     hasLowerCase: /[a-z]/.test(password),
     hasNumber: /[0-9]/.test(password),
+    hasSpecialChar: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password),
     hasMinLength: password.length >= 6,
   };
 
@@ -31,7 +32,7 @@ export default function SignupPage() {
   const passwordsMatch = password === confirmPassword && password.length > 0;
 
   const validateEmail = (email: string) => {
-    return /\S+@\S+\.\S+/.test(email);
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
   };
   const emailValid = validateEmail(email);
 
@@ -159,7 +160,7 @@ export default function SignupPage() {
         {email.length > 0 && !emailValid && (
           <p
             data-testid="email-error"
-            className="text-sm text-red-500 mt-[-2px]"
+            className="text-sm text-red-500 mt-[-20px]"
           >
             Invalid email format.
           </p>
@@ -186,7 +187,12 @@ export default function SignupPage() {
             className="p-3 border rounded-md w-full mt-2 focus:outline-none focus:ring-2 focus:ring-rose-300"
           />
           {confirmPassword.length > 0 && !passwordsMatch && (
-            <p className="text-sm text-red-500 mt-1">Passwords do not match.</p>
+            <p
+              data-testid="confirm-pw-error"
+              className="text-sm text-red-500 mt-1"
+            >
+              Passwords do not match.
+            </p>
           )}
           {errors.password && (
             <p className="text-sm text-red-500 mt-1">{errors.password}</p>
@@ -196,6 +202,7 @@ export default function SignupPage() {
             className="text-sm mt-2 text-gray-600 space-y-1"
           >
             <li
+              data-testid="pw-rule-uppercase"
               className={
                 passwordValidations.hasUpperCase
                   ? "text-green-600"
@@ -205,6 +212,7 @@ export default function SignupPage() {
               • At least one uppercase letter
             </li>
             <li
+              data-testid="pw-rule-lowercase"
               className={
                 passwordValidations.hasLowerCase
                   ? "text-green-600"
@@ -214,6 +222,7 @@ export default function SignupPage() {
               • At least one lowercase letter
             </li>
             <li
+              data-testid="pw-rule-number"
               className={
                 passwordValidations.hasNumber
                   ? "text-green-600"
@@ -223,6 +232,17 @@ export default function SignupPage() {
               • At least one number
             </li>
             <li
+              data-testid="pw-rule-special-char"
+              className={
+                passwordValidations.hasSpecialChar
+                  ? "text-green-600"
+                  : "text-red-500"
+              }
+            >
+              • At least one special character
+            </li>
+            <li
+              data-testid="pw-rule-length"
               className={
                 passwordValidations.hasMinLength
                   ? "text-green-600"
