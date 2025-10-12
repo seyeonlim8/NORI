@@ -67,7 +67,8 @@ export default function LoginPage() {
             return newAttempts;
           });
           setError(
-            `Invalid email or password. Attempts left: ${attemptsLeft - 1}`
+            `Invalid email or password. 
+            ${attemptsLeft - 1} attempts remaining.`
           );
         } else if (res.status === 403) {
           setError("Please verify your email before logging in.");
