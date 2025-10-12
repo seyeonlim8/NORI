@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Header from "./Header";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
@@ -10,11 +10,30 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [attemptsLeft, setAttemptsLeft] = useState(5);
+  const [isLocked, setIsLocked] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get("redirect") || "/"; // redirect to main by default
 
+  useEffect(() => {
+    const lockoutEnd = localStorage.getItem("lockoutEnd");
+    const currentTime = Date.now();
+
+    if (lockoutEnd && currentTime < Number(lockoutEnd)) {
+      setIsLocked(true);
+      const remainingTime = Number(lockoutEnd) - currentTime;
+      const minutes = Math.ceil(remainingTime / 60000);
+      setError(`Login is unavailable for ${minutes} minutes.`);
+    } else {
+      setIsLocked(false);
+      setAttemptsLeft(Number(localStorage.getItem("attemptsLeft")) || 5);
+    }
+  }, []);
+
   const handleLogin = async () => {
+    if (isLocked) return;
+
     if (!email || !password) {
       alert("Please enter both email and password.");
       return;
@@ -33,7 +52,23 @@ export default function LoginPage() {
 
       if (!res.ok) {
         if (res.status === 400 || res.status === 404) {
-          setError("Invalid email or password.");
+          setAttemptsLeft((prev) => {
+            const newAttempts = prev - 1;
+            localStorage.setItem("attemptsLeft", newAttempts.toString());
+            if (newAttempts <= 0) {
+              const lockoutDuration = 15 * 60 * 1000; // 15 minutes
+              localStorage.setItem(
+                "lockoutEnd",
+                (Date.now() + lockoutDuration).toString()
+              );
+              setIsLocked(true);
+              setError("Too many attempts. Please try again later.");
+            }
+            return newAttempts;
+          });
+          setError(
+            `Invalid email or password. Attempts left: ${attemptsLeft - 1}`
+          );
         } else if (res.status === 403) {
           setError("Please verify your email before logging in.");
         } else {
@@ -44,6 +79,8 @@ export default function LoginPage() {
       }
 
       // redirect to previous page after login
+      localStorage.removeItem("attemptsLeft"); // Reset attempts on successful login
+      localStorage.removeItem("lockoutEnd");
       router.push(redirectTo);
     } catch {
       setError("Something went wrong. Please try again.");
@@ -70,7 +107,7 @@ export default function LoginPage() {
         </h2>
 
         {error && (
-          <div 
+          <div
             data-testid="credentials-error"
             className="text-center text-red-500 text-sm font-semibold"
           >
@@ -93,12 +130,15 @@ export default function LoginPage() {
           className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300"
         />
         <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          disabled={isSubmitting}
+          whileHover={!isLocked && !isSubmitting ? { scale: 1.05 } : {}}
+          whileTap={!isLocked && !isSubmitting ? { scale: 0.95 } : {}}
+          disabled={isSubmitting || isLocked}
           onClick={handleLogin}
-          className="text-white font-bold py-3 rounded-md uppercase tracking-wide font-(family-name:--font-outfit)"
-          style={{ backgroundColor: "#F27D88" }}
+          className={`text-white font-bold py-3 rounded-md uppercase tracking-wide font-(family-name:--font-outfit) ${
+            isSubmitting || isLocked
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-[#F27D88]"
+          }`}
         >
           {isSubmitting ? "Logging in..." : "Log In"}
         </motion.button>
