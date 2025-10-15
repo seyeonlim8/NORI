@@ -10,8 +10,10 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState(false); // New state for success message
   const [attemptsLeft, setAttemptsLeft] = useState(5);
   const [isLocked, setIsLocked] = useState(false);
+  const [needsVerification, setNeedsVerification] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get("redirect") || "/"; // redirect to main by default
@@ -62,16 +64,20 @@ export default function LoginPage() {
                 (Date.now() + lockoutDuration).toString()
               );
               setIsLocked(true);
-              setError("Too many attempts. Please try again later.");
+              const remainingTime = Math.ceil(lockoutDuration / 60000); // Convert to minutes
+              setError(
+                `Too many attempts. Please try again later.\nRemaining lockout time: ${remainingTime} minutes.`
+              );
             }
             return newAttempts;
           });
           setError(
-            `Invalid email or password. 
-            ${attemptsLeft - 1} attempts remaining.`
+            (prev) =>
+              `Invalid email or password. ${attemptsLeft - 1} attempts remaining. ${prev || ""}`
           );
-        } else if (res.status === 403) {
-          setError("Please verify your email before logging in.");
+        } else if (res.status === 403 && data.needsVerification) {
+          setNeedsVerification(true); // Set state to show resend verification button
+          setError(data.error); // Show the error message
         } else {
           setError(data.error || "Login failed. Please try again.");
         }
@@ -79,13 +85,35 @@ export default function LoginPage() {
         return;
       }
 
-      // redirect to previous page after login
+      // Redirect to previous page after login
       localStorage.removeItem("attemptsLeft"); // Reset attempts on successful login
       localStorage.removeItem("lockoutEnd");
       router.push(redirectTo);
     } catch {
       setError("Something went wrong. Please try again.");
       setIsSubmitting(false);
+    }
+  };
+
+  const handleResendVerification = async () => {
+    try {
+      const res = await fetch("/api/auth/resend-verification", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        setError("Verification email resent! Please check your inbox.");
+        setIsSuccess(true); // Set success state
+      } else {
+        setError(data.error || "Failed to resend verification email.");
+        setIsSuccess(false); // Reset success state
+      }
+    } catch {
+      setError("Something went wrong. Please try again.");
+      setIsSuccess(false); // Reset success state
     }
   };
 
@@ -110,7 +138,7 @@ export default function LoginPage() {
         {error && (
           <div
             data-testid="credentials-error"
-            className="text-center text-red-500 text-sm font-semibold"
+            className={`text-center text-sm font-semibold ${isSuccess ? "text-green-500" : "text-red-500"}`}
           >
             {error}
           </div>
@@ -154,6 +182,21 @@ export default function LoginPage() {
             Sign up here
           </Link>
         </p>
+
+        {/* Resend verification button - shown only if login fails due to unverified email */}
+        {needsVerification && (
+          <div className="mt-4">
+            <p className="text-center text-sm text-gray-600">
+              Your email is not verified.{" "}
+              <button
+                onClick={handleResendVerification}
+                className="text-[#F27D88] font-bold hover:underline"
+              >
+                Resend verification email
+              </button>
+            </p>
+          </div>
+        )}
       </motion.div>
     </div>
   );
