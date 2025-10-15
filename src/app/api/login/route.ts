@@ -19,7 +19,10 @@ export async function POST(req: Request) {
 
   if (!user.isVerified) {
     return NextResponse.json(
-      { error: "Please verify your email first." },
+      { 
+        error: "Please verify your email first.", 
+        needsVerification: true
+      },
       { status: 403 }
     );
   }
