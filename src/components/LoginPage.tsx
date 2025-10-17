@@ -42,6 +42,7 @@ export default function LoginPage() {
     }
 
     setError(null);
+    setIsSuccess(false);
     setIsSubmitting(true);
     try {
       const res = await fetch("/api/login", {
@@ -189,6 +190,7 @@ export default function LoginPage() {
             <p className="text-center text-sm text-gray-600">
               Your email is not verified.{" "}
               <button
+                data-testid="resend-verification-btn"
                 onClick={handleResendVerification}
                 className="text-[#F27D88] font-bold hover:underline"
               >
