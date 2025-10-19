@@ -39,6 +39,7 @@ export default function Header() {
         {/* STUDY with dropdown */}
         <div className="relative group cursor-pointer z-50">
           <motion.div
+            data-testid="study-btn"
             whileHover={{ scale: 1.05, color: "#F27D88" }}
             whileTap={{ scale: 0.95 }}
             className="text-stone-800 text-sm font-bold uppercase leading-tight tracking-tight font-outfit"
@@ -112,7 +113,7 @@ export default function Header() {
                 </li>
                 <li>
                   <button
-                    data-testid='logout-btn'
+                    data-testid="logout-btn"
                     onClick={handleLogout}
                     className="w-full text-left px-5 py-3 text-sm text-gray-700 hover:bg-rose-100 hover:text-rose-500 transition font-outfit"
                   >
@@ -124,6 +125,7 @@ export default function Header() {
           </div>
         ) : (
           <motion.div
+            data-testid="login-btn"
             whileHover={{ scale: 1.05, backgroundColor: "#F27D88" }}
             whileTap={{ scale: 0.95 }}
             className="px-3 pt-2 pb-1.5 bg-orange-300 rounded flex justify-center items-center gap-2.5 cursor-pointer relative z-50"
