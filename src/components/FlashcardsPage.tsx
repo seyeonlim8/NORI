@@ -217,7 +217,10 @@ export default function FlashcardsPage({ level }: { level: string }) {
         )}
 
         {/* Card & Buttons */}
-        <div className="flex items-center justify-center gap-6 w-full">
+        <div
+          data-testid="flashcard-container"
+          className="flex items-center justify-center gap-6 w-full"
+        >
           {/* X button */}
           <button
             onClick={() => handleMark("needsReview")}
@@ -241,11 +244,19 @@ export default function FlashcardsPage({ level }: { level: string }) {
 
             {/* Card */}
             {showMeaning && (
-              <div className="text-lg text-rose-400 font-outfit -mt-2">
+              <div
+                data-testid="furigana"
+                className="text-lg text-rose-400 font-outfit -mt-2"
+              >
                 {card.furigana}
               </div>
             )}
-            <div className="text-5xl font-bold font-outfit">{card.kanji}</div>
+            <div
+              data-testid="vocabulary"
+              className="text-5xl font-bold font-outfit"
+            >
+              {card.kanji}
+            </div>
             {showMeaning && (
               <div className="text-center text-lg text-rose-400 font-outfit">
                 {englishMeaning?.word_meaning ?? ""}
