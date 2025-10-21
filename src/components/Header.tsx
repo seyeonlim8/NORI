@@ -49,16 +49,24 @@ export default function Header() {
           <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-52 bg-white rounded-xl shadow-lg border border-gray-200 opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-50">
             <ul className="py-2">
               {[
-                { label: "Flashcards", href: "/study/flashcards" },
-                { label: "Quiz", href: "/study/quiz" },
+                {
+                  label: "Flashcards",
+                  href: "/study/flashcards",
+                  testId: "flashcards-btn",
+                },
+                { label: "Quiz", href: "/study/quiz", testId: "quiz-btn" },
                 {
                   label: "Fill in the blank",
                   href: "/study/fill-in-the-blank",
+                  testId: "fill-in-the-blank-btn",
                 },
-              ].map(({ label, href }) => (
+              ].map(({ label, href, testId }) => (
                 <li key={label}>
                   <Link href={href}>
-                    <div className="px-5 py-3 text-sm text-gray-700 hover:bg-rose-100 hover:text-rose-500 transition font-outfit">
+                    <div
+                      data-testid={testId}
+                      className="px-5 py-3 text-sm text-gray-700 hover:bg-rose-100 hover:text-rose-500 transition font-outfit"
+                    >
                       {label}
                     </div>
                   </Link>
