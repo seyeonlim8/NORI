@@ -11,6 +11,7 @@
   --font-figtree: "Figtree", sans-serif;
   --font-inter: "Inter", sans-serif;
   --font-caprasimo: "Caprasimo", sans-serif;
+  --font-noto-sans-jp: "Noto Sans JP", sans-serif;
   --font-test: "Courier New", monospace;
 }
 
@@ -29,6 +30,10 @@
 
   .font-caprasimo {
     font-family: var(--font-caprasimo);
+  }
+
+  .font-noto-sans-jp {
+    font-family: var(--font-noto-sans-jp);
   }
 
   .font-test {
