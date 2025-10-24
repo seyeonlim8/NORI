@@ -155,7 +155,7 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
         }
       },
       isCorrect ? 1000 : 1500
-    ); 
+    );
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -192,7 +192,7 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
         <div className="bg-orange-50/100 border border-rose-100 rounded-2xl shadow-xl px-8 py-10 w-full flex flex-col items-center gap-6">
           {/* 예문 */}
           {feedback === "wrong" ? (
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 font-outfit">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 font-noto-sans-jp">
               {
                 currentWord.example_sentence.split(
                   currentWord.answer_in_example
@@ -208,13 +208,13 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
               }
             </h1>
           ) : (
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 font-outfit">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 font-noto-sans-jp">
               {blankSentence}
             </h1>
           )}
 
           {/* 영어 번역 */}
-          <p className="text-gray-600 text-lg">{englishMeaning}</p>
+          <p className="text-gray-600 text-lg font-outfit">{englishMeaning}</p>
 
           {/* 입력창 */}
           <input
@@ -224,7 +224,7 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
             onChange={(e) => setUserAnswer(e.target.value)}
             onKeyDown={handleKeyDown}
             disabled={!!feedback}
-            className="bg-white shadow-inner rounded-xl px-4 py-3 w-80 text-center text-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
+            className="bg-white shadow-inner rounded-xl px-4 py-3 w-80 text-center text-lg focus:outline-none focus:ring-2 focus:ring-rose-300 font-noto-sans-jp"
           />
 
           {/* 버튼 (Correct/Incorrect + Confetti) */}
