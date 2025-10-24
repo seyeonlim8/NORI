@@ -207,7 +207,7 @@ export default function QuizPage({
 
         {/* Question */}
         <div className="flex items-center justify-center gap-10 w-full">
-          <div className="relative bg-orange-50 rounded-[24px] shadow-lg px-8 py-10 min-h-[400px] flex items-center justify-center text-4xl font-bold font-outfit w-full max-w-[600px]">
+          <div className="relative bg-orange-50 rounded-[24px] shadow-lg px-8 py-10 min-h-[400px] flex items-center justify-center text-4xl font-bold font-noto-sans-jp w-full max-w-[600px]">
             {question}
           </div>
 
@@ -222,7 +222,7 @@ export default function QuizPage({
                   key={`${opt}-${idx}`} // 키는 고유하게
                   onClick={() => handleAnswer(opt)}
                   disabled={!!selected}
-                  className={`w-64 h-16 px-6 py-3 rounded-lg shadow font-outfit text-lg text-center transition-colors duration-200
+                  className={`w-64 h-16 px-6 py-3 rounded-lg shadow font-noto-sans-jp text-lg text-center transition-colors duration-200
           ${
             selected
               ? isCorrect
