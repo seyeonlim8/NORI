@@ -223,6 +223,7 @@ export default function FlashcardsPage({ level }: { level: string }) {
         >
           {/* X button */}
           <button
+            data-testid="x-btn"
             onClick={() => handleMark("needsReview")}
             className="w-16 aspect-square bg-orange-50 rounded-full shadow-md flex items-center justify-center transition-transform duration-200 hover:scale-110 active:scale-90"
           >
@@ -232,6 +233,7 @@ export default function FlashcardsPage({ level }: { level: string }) {
           <div className="relative bg-orange-50 rounded-[24px] shadow-lg px-8 py-10 min-h-[400px] flex flex-col items-center justify-center gap-4 w-full max-w-[600px]">
             {/* Favorite button */}
             <div
+              data-testid="favorite-btn"
               className="absolute top-4 right-4 cursor-pointer transition-transform duration-200 hover:scale-110 active:scale-90"
               onClick={toggleFavorite}
             >
@@ -246,14 +248,15 @@ export default function FlashcardsPage({ level }: { level: string }) {
             {showMeaning && (
               <div
                 data-testid="furigana"
-                className="text-lg text-rose-400 font-outfit -mt-2"
+                className="text-lg text-rose-400 font-noto-sans-jp -mt-2"
               >
                 {card.furigana}
               </div>
             )}
             <div
               data-testid="vocabulary"
-              className="text-5xl font-bold font-outfit"
+              data-word-id={card.id}
+              className="text-5xl font-bold font-noto-sans-jp"
             >
               {card.kanji}
             </div>
@@ -263,12 +266,12 @@ export default function FlashcardsPage({ level }: { level: string }) {
               </div>
             )}
             {showExample && (
-              <div className="text-center text-xl text-gray-600 font-outfit">
+              <div className="text-center text-xl text-gray-600 font-noto-sans-jp">
                 {card.example_sentence}
                 {showMeaning && englishMeaning?.example_sentence_meaning && (
                   <>
                     <br />
-                    <span className="text-gray-400 text-base">
+                    <span className="text-gray-400 text-base font-outfit">
                       {englishMeaning.example_sentence_meaning}
                     </span>
                   </>
@@ -279,6 +282,7 @@ export default function FlashcardsPage({ level }: { level: string }) {
 
           {/* O button */}
           <button
+            data-testid="o-btn"
             onClick={() => handleMark("remembered")}
             className="w-16 aspect-square bg-orange-50 rounded-full shadow-md flex items-center justify-center transition-transform duration-200 hover:scale-110 active:scale-90"
           >
@@ -289,6 +293,7 @@ export default function FlashcardsPage({ level }: { level: string }) {
         {/* Toggle buttons */}
         <div className="flex gap-4 mt-4">
           <button
+            data-testid="example-btn"
             onClick={() => setShowExample((prev) => !prev)}
             className="px-4 py-2 rounded text-white font-bold font-outfit text-sm transition-transform duration-200 hover:scale-110 active:scale-90"
             style={{ backgroundColor: "#F27D88" }}
@@ -296,6 +301,7 @@ export default function FlashcardsPage({ level }: { level: string }) {
             {showExample ? "Hide example sentence" : "See example sentence"}
           </button>
           <button
+            data-testid="meaning-btn"
             onClick={() => setShowMeaning((prev) => !prev)}
             className="px-4 py-2 rounded bg-orange-300 text-white font-bold font-outfit text-sm transition-transform duration-200 hover:scale-110 active:scale-90"
           >
