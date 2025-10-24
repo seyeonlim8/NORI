@@ -26,7 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link
-          href="https://fonts.googleapis.com/css2?family=Outfit&family=Figtree&family=Inter&family=Caprasimo&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Outfit&family=Figtree&family=Inter&family=Caprasimo&family=Noto+Sans+JP:wght@400;500;700&display=swap"
           rel="stylesheet"
         />
       </head>
