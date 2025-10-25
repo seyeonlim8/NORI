@@ -29,6 +29,7 @@ export default function FlashcardsPage({ level }: { level: string }) {
   const [favoritedWords, setFavoritedWords] = useState<Word[]>([]);
   const [reviewMode, setReviewMode] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const router = useRouter();
 
@@ -98,6 +99,13 @@ export default function FlashcardsPage({ level }: { level: string }) {
     fetchProgress();
   }, [level]);
 
+  // Re-enable buttons when currentIndex changes (new card is displayed)
+  useEffect(() => {
+    if (isProcessing) {
+      setIsProcessing(false);
+    }
+  }, [currentIndex]);
+
   // Toggle favorites
   const toggleFavorite = async () => {
     const word = cards[currentIndex];
@@ -125,6 +133,9 @@ export default function FlashcardsPage({ level }: { level: string }) {
 
   // Update study progress - except favorites
   const handleMark = async (type: "remembered" | "needsReview") => {
+    if (isProcessing) return; // Prevent multiple clicks
+    setIsProcessing(true); // Disable buttons
+
     if (level === "favorites") {
       setCurrentIndex((prev) => (prev + 1) % cards.length);
       return;
@@ -225,6 +236,7 @@ export default function FlashcardsPage({ level }: { level: string }) {
           <button
             data-testid="x-btn"
             onClick={() => handleMark("needsReview")}
+            disabled={isProcessing}
             className="w-16 aspect-square bg-orange-50 rounded-full shadow-md flex items-center justify-center transition-transform duration-200 hover:scale-110 active:scale-90"
           >
             <span className="text-3xl font-bold text-red-400">X</span>
@@ -284,6 +296,7 @@ export default function FlashcardsPage({ level }: { level: string }) {
           <button
             data-testid="o-btn"
             onClick={() => handleMark("remembered")}
+            disabled={isProcessing}
             className="w-16 aspect-square bg-orange-50 rounded-full shadow-md flex items-center justify-center transition-transform duration-200 hover:scale-110 active:scale-90"
           >
             <span className="text-3xl font-bold text-blue-400">O</span>
