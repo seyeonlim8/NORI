@@ -66,4 +66,6 @@ export async function DELETE(_: Request, context: { params: { id: string } }) {
   const deletedWord = await prisma.word.delete({
     where: { id: wordId },
   });
+
+  return NextResponse.json(deletedWord);
 }
