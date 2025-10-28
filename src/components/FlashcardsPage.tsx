@@ -19,8 +19,18 @@ type Word = {
   }[];
 };
 
+const shuffle = <T,>(items: T[]): T[] => {
+  const arr = [...items];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
+
 export default function FlashcardsPage({ level }: { level: string }) {
   const [cards, setCards] = useState<Word[]>([]);
+  const [fullDeck, setFullDeck] = useState<Word[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showExample, setShowExample] = useState(false);
@@ -56,15 +66,49 @@ export default function FlashcardsPage({ level }: { level: string }) {
         }
 
         const data = await res.json();
-        setCards(data);
-        setFavoritedWords(data);
-        setTotalCount(data.length);
+        const shuffledFavorites = shuffle<Word>(data);
+        setCards(shuffledFavorites);
+        setFavoritedWords(shuffledFavorites);
+        setTotalCount(shuffledFavorites.length);
         setLoading(false);
       } else {
         const res = await fetch(`/api/words?level=${level}`);
-        const data = await res.json();
-        setCards(data);
-        setTotalCount(data.length);
+        const words: Word[] = await res.json();
+        const shuffledWords = shuffle<Word>(words);
+        setFullDeck(shuffledWords);
+
+        // Try restoring a server-side review session
+        const sessRes = await fetch(
+          `/api/review-session?type=flashcard&level=${level}`,
+          {
+            credentials: "include",
+          }
+        );
+
+        if (sessRes.ok) {
+          const session = await sessRes.json();
+          if (session && Array.isArray(session.wordIds)) {
+            const dict = new Map(shuffledWords.map((w) => [w.id, w]));
+            const deck = (session.wordIds as number[])
+              .map((id) => dict.get(id))
+              .filter(Boolean) as Word[];
+            if (deck.length > 0) {
+              setCards(deck);
+              setTotalCount(shuffledWords.length);
+              setReviewMode(true);
+              setCurrentIndex(
+                Math.min(session.currentIndex ?? 0, deck.length - 1)
+              );
+              setLoading(false);
+              return;
+            }
+          }
+        }
+
+        // Fallback to normal (not in review)
+        setCards(shuffledWords);
+        setReviewMode(false);
+        setTotalCount(shuffledWords.length);
         setLoading(false);
       }
     };
@@ -87,24 +131,15 @@ export default function FlashcardsPage({ level }: { level: string }) {
         data.forEach((p: any) => (mapped[p.wordId] = p.completed));
         setProgress(mapped);
 
-        if (data.length > 0) {
-          const lastSeenRow = data.reduce((latest: any, cur: any) =>
-            new Date(cur.lastSeen) > new Date(latest.lastSeen) ? cur : latest
-          );
-          setCurrentIndex(lastSeenRow.currentIndex ?? 0);
+        if (!reviewMode && fullDeck.length > 0) {
+          const nextIndex = fullDeck.findIndex((w) => !mapped[w.id]);
+          setCurrentIndex(nextIndex >= 0 ? nextIndex : 0);
         }
       }
     };
 
     fetchProgress();
-  }, [level]);
-
-  // Re-enable buttons when currentIndex changes (new card is displayed)
-  useEffect(() => {
-    if (isProcessing) {
-      setIsProcessing(false);
-    }
-  }, [currentIndex]);
+  }, [level, reviewMode, fullDeck]);
 
   // Toggle favorites
   const toggleFavorite = async () => {
@@ -136,61 +171,127 @@ export default function FlashcardsPage({ level }: { level: string }) {
     if (isProcessing) return; // Prevent multiple clicks
     setIsProcessing(true); // Disable buttons
 
-    if (level === "favorites") {
-      setCurrentIndex((prev) => (prev + 1) % cards.length);
-      return;
-    }
+    try {
+      if (cards.length === 0) return;
 
-    const currentWord = cards[currentIndex];
-    const completed = type === "remembered";
-    const nextIndex = currentIndex + 1;
-
-    await fetch("/api/study-progress", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({
-        wordId: currentWord.id,
-        completed,
-        currentIndex: nextIndex >= cards.length ? 0 : nextIndex,
-        type: "flashcard",
-        level,
-      }),
-    });
-
-    setProgress((prev) => ({ ...prev, [currentWord.id]: completed }));
-
-    if (nextIndex >= cards.length) {
-      const unlearned = cards.filter(
-        (c) => !progress[c.id] && c.id !== currentWord.id
-      );
-      if (!completed) unlearned.push(currentWord);
-
-      if (unlearned.length > 0) {
-        if (confirm(`${unlearned.length} words still need review. Continue?`)) {
-          setCards(unlearned);
-          setCurrentIndex(0);
-          setReviewMode(true);
-          return;
-        }
+      if (level === "favorites") {
+        setCurrentIndex((prev) => (cards.length > 0 ? (prev + 1) % cards.length : 0));
+        return;
       }
 
-      await fetch(`/api/study-progress/reset?type=flashcard&level=${level}`, {
+      const currentWord = cards[currentIndex];
+      if (!currentWord) return;
+
+      const completed = type === "remembered";
+      const nextIndex = currentIndex + 1;
+
+      await fetch("/api/study-progress", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
+        body: JSON.stringify({
+          wordId: currentWord.id,
+          completed,
+          currentIndex: nextIndex >= cards.length ? 0 : nextIndex,
+          type: "flashcard",
+          level,
+        }),
       });
-      setProgress({});
-      setReviewMode(false);
-      alert("You studied all the flashcards! Progress has been reset.");
-      setCurrentIndex(0);
-    } else {
-      setCurrentIndex(nextIndex);
+
+      const updatedProgress = { ...progress, [currentWord.id]: completed };
+      setProgress(updatedProgress);
+
+      if (nextIndex >= cards.length) {
+        const unlearned = cards.filter(
+          (c) => !updatedProgress[c.id] && c.id !== currentWord.id
+        );
+        if (!completed) unlearned.push(currentWord);
+
+        // When entering review mode
+        if (unlearned.length > 0) {
+          const proceed = confirm(
+            `${unlearned.length} words still need review. Continue?`
+          );
+          if (proceed) {
+            const randomizedReviewDeck = shuffle(unlearned);
+            setCards(randomizedReviewDeck);
+            setCurrentIndex(0);
+            setReviewMode(true);
+            await fetch("/api/review-session", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              credentials: "include",
+              body: JSON.stringify({
+                type: "flashcard",
+                level,
+                wordIds: randomizedReviewDeck.map((w) => w.id),
+                currentIndex: 0,
+              }),
+            });
+            return;
+          }
+        }
+
+        // On reset, clear the session
+        await fetch(`/api/study-progress/reset?type=flashcard&level=${level}`, {
+          method: "POST",
+          credentials: "include",
+        });
+        await fetch(`/api/review-session?type=flashcard&level=${level}`, {
+          method: "DELETE",
+          credentials: "include",
+        });
+
+        setProgress({});
+        setReviewMode(false);
+        alert("You studied all the flashcards! Progress has been reset.");
+        const reshuffledFullDeck = shuffle(fullDeck);
+        setFullDeck(reshuffledFullDeck);
+        setCards(reshuffledFullDeck);
+        setTotalCount(reshuffledFullDeck.length);
+        setCurrentIndex(0);
+      } else {
+        setCurrentIndex(nextIndex);
+      }
+    } catch (error) {
+      console.error("Failed to update study progress", error);
+    } finally {
+      setIsProcessing(false);
     }
   };
 
+  // Keep session currentIndex in sync while in review mode
+  useEffect(() => {
+    if (!reviewMode) return;
+    const save = async () => {
+      const wordIds = cards.map((w) => w.id);
+      await fetch("/api/review-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          type: "flashcard",
+          level,
+          wordIds,
+          currentIndex,
+        }),
+      });
+    };
+    save();
+  }, [reviewMode, currentIndex, cards, level]);
+
   const completedCount = Object.values(progress).filter(Boolean).length;
-  const progressPercentage =
-    totalCount > 0 ? (completedCount / totalCount) * 100 : 0;
+  const reviewProgressPercentage =
+    reviewMode && cards.length > 0
+      ? (currentIndex / cards.length) * 100
+      : 0;
+  const studyProgressPercentage =
+    !reviewMode && totalCount > 0
+      ? (completedCount / totalCount) * 100
+      : 0;
+  const progressPercentage = reviewMode
+    ? reviewProgressPercentage
+    : studyProgressPercentage;
 
   if (loading) return <div className="text-center mt-40">Loading...</div>;
   if (cards.length === 0)
@@ -222,7 +323,9 @@ export default function FlashcardsPage({ level }: { level: string }) {
               />
             </div>
             <p className="mt-1 font-bold font-outfit text-sm text-gray-700">
-              {completedCount} / {totalCount} {reviewMode && "(Review Mode)"}
+              {reviewMode
+                ? `${Math.min(currentIndex, cards.length)} / ${cards.length} (Review Mode)`
+                : `${completedCount} / ${totalCount}`}
             </p>
           </div>
         )}
