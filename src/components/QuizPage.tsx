@@ -12,6 +12,15 @@ type Word = {
   furigana: string;
 };
 
+const shuffle = <T,>(items: T[]): T[] => {
+  const arr = [...items];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
+
 export default function QuizPage({
   level,
   type,
@@ -21,7 +30,8 @@ export default function QuizPage({
 }) {
   const router = useRouter();
 
-  const [words, setWords] = useState<Word[]>([]);
+  const [deck, setDeck] = useState<Word[]>([]);
+  const [fullDeck, setFullDeck] = useState<Word[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [options, setOptions] = useState<string[]>([]);
@@ -39,75 +49,118 @@ export default function QuizPage({
   }, [router]);
 
   useEffect(() => {
+    const loadWords = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`/api/words?level=${level}`);
+        const data: Word[] = await res.json();
+        const shuffled = shuffle<Word>(data);
+        setFullDeck(shuffled);
+
+        const sessRes = await fetch(
+          `/api/review-session?type=quiz&level=${level}`,
+          {
+            credentials: "include",
+          }
+        );
+
+        if (sessRes.ok) {
+          const session = await sessRes.json();
+          if (session && Array.isArray(session.wordIds)) {
+            const dict = new Map(shuffled.map((w) => [w.id, w]));
+            const sessionDeck = (session.wordIds as number[])
+              .map((id) => dict.get(id))
+              .filter(Boolean) as Word[];
+            if (sessionDeck.length > 0) {
+              setDeck(sessionDeck);
+              setTotalCount(shuffled.length);
+              setReviewMode(true);
+              setCurrentIndex(
+                Math.min(session.currentIndex ?? 0, sessionDeck.length - 1)
+              );
+              setSelected(null);
+              setLoading(false);
+              return;
+            }
+          }
+        }
+
+        setDeck(shuffled);
+        setReviewMode(false);
+        setTotalCount(shuffled.length);
+        setCurrentIndex(0);
+        setSelected(null);
+      } catch (error) {
+        console.error("Failed to load quiz deck", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadWords();
+  }, [level]);
+
+  useEffect(() => {
     const fetchProgress = async () => {
       const res = await fetch(`/api/study-progress?type=quiz&level=${level}`, {
         credentials: "include",
       });
-      if (res.ok) {
-        const data = await res.json();
-        const mapped: Record<number, boolean> = {};
-        data.forEach((p: any) => (mapped[p.wordId] = p.completed));
-        setProgress(mapped);
+      if (!res.ok) return;
 
-        if (data.length > 0) {
-          const lastSeenRow = data.reduce((latest: any, cur: any) =>
-            new Date(cur.lastSeen) > new Date(latest.lastSeen) ? cur : latest
-          );
-          setCurrentIndex(lastSeenRow.currentIndex ?? 0);
-        }
+      const data = await res.json();
+      const mapped: Record<number, boolean> = {};
+      data.forEach((p: any) => (mapped[p.wordId] = p.completed));
+      setProgress(mapped);
+
+      if (!reviewMode && fullDeck.length > 0) {
+        const nextIndex = fullDeck.findIndex((w) => !mapped[w.id]);
+        setCurrentIndex(nextIndex >= 0 ? nextIndex : 0);
       }
     };
+
     fetchProgress();
-  }, [level]);
+  }, [level, reviewMode, fullDeck]);
 
-  useEffect(() => {
-    const loadWords = async () => {
-      setLoading(true);
-      const res = await fetch(`/api/words?level=${level}`);
-      const data = await res.json();
-      setWords(data);
-      setTotalCount(data.length); // 전체 단어 수 따로 저장
-      setLoading(false);
-    };
-    loadWords();
-  }, [level]);
+  const generateOptions = (word: Word, source: Word[]) => {
+    const correct =
+      type === "kanji-to-furigana" ? word.furigana : word.kanji;
+    const pool = source.length > 0 ? source : deck;
 
-  const generateOptions = (word: Word) => {
-    const correct = type === "kanji-to-furigana" ? word.furigana : word.kanji;
-
-    // 후보: 중복 제거 후 무작위 셔플
     let candidates = Array.from(
       new Set(
-        words
+        pool
           .filter((w) => w.id !== word.id)
           .map((w) => (type === "kanji-to-furigana" ? w.furigana : w.kanji))
       )
     ).sort(() => Math.random() - 0.5);
 
-    // 후보가 부족하면 강제로 채워서 3개 맞춤
     while (candidates.length < 3) {
-      candidates.push(correct); // 부족하면 정답을 중복으로라도 넣음
+      candidates.push(correct);
     }
 
-    // 정확히 3개로 자르고 정답 포함해서 4개 만들기
     const opts = [...candidates.slice(0, 3), correct].sort(
       () => Math.random() - 0.5
     );
 
-    // 이전 상태랑 합치지 않고, 항상 새 배열로 덮어쓰기
     setOptions(opts);
   };
 
   useEffect(() => {
-    if (words.length > 0 && currentIndex < words.length) {
-      generateOptions(words[currentIndex]);
+    if (deck.length > 0 && currentIndex < deck.length) {
+      const word = deck[currentIndex];
+      const sourcePool = fullDeck.length > 0 ? fullDeck : deck;
+      generateOptions(word, sourcePool);
     } else {
-      setOptions([]); // 단어가 없으면 보기 초기화
+      setOptions([]);
     }
-  }, [words, currentIndex, type]);
+  }, [deck, fullDeck, currentIndex, type]);
 
   const handleAnswer = async (choice: string) => {
-    const currentWord = words[currentIndex];
+    if (selected || deck.length === 0) return;
+
+    const currentWord = deck[currentIndex];
+    if (!currentWord) return;
+
     const correct =
       type === "kanji-to-furigana" ? currentWord.furigana : currentWord.kanji;
     const isCorrect = choice === correct;
@@ -115,7 +168,7 @@ export default function QuizPage({
     setSelected(choice);
 
     const nextIndex = currentIndex + 1;
-    const nextProgress = { ...progress, [currentWord.id]: isCorrect }; // 미리 업데이트
+    const nextProgress = { ...progress, [currentWord.id]: isCorrect };
 
     await fetch("/api/study-progress", {
       method: "POST",
@@ -124,37 +177,65 @@ export default function QuizPage({
       body: JSON.stringify({
         wordId: currentWord.id,
         completed: isCorrect,
-        currentIndex: nextIndex >= words.length ? 0 : nextIndex,
+        currentIndex: nextIndex >= deck.length ? 0 : nextIndex,
         type: "quiz",
         level,
       }),
     });
+
     setProgress(nextProgress);
 
-    setTimeout(() => {
+    setTimeout(async () => {
       setSelected(null);
-      if (nextIndex >= words.length) {
-        const unlearned = words.filter(
+
+      if (nextIndex >= deck.length) {
+        const unlearned = deck.filter(
           (w) => !nextProgress[w.id] && w.id !== currentWord.id
-        ); // 최신 progress로 필터링
+        );
         if (!isCorrect) unlearned.push(currentWord);
 
         if (unlearned.length > 0) {
-          if (confirm(`${unlearned.length} words need review. Continue?`)) {
-            setWords(unlearned);
+          const proceed = confirm(
+            `${unlearned.length} words need review. Continue?`
+          );
+          if (proceed) {
+            const randomizedReviewDeck = shuffle<Word>(unlearned);
+            setDeck(randomizedReviewDeck);
             setCurrentIndex(0);
             setReviewMode(true);
+            await fetch("/api/review-session", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              credentials: "include",
+              body: JSON.stringify({
+                type: "quiz",
+                level,
+                wordIds: randomizedReviewDeck.map((w) => w.id),
+                currentIndex: 0,
+              }),
+            });
             return;
           }
         }
 
-        fetch(`/api/study-progress/reset?type=quiz&level=${level}`, {
+        await fetch(`/api/study-progress/reset?type=quiz&level=${level}`, {
           method: "POST",
           credentials: "include",
         });
+        await fetch(`/api/review-session?type=quiz&level=${level}`, {
+          method: "DELETE",
+          credentials: "include",
+        });
+
         setProgress({});
         setReviewMode(false);
         alert("Quiz completed! Progress reset.");
+
+        const baseDeck = fullDeck.length > 0 ? fullDeck : deck;
+        const reshuffledFullDeck = shuffle<Word>(baseDeck);
+        setFullDeck(reshuffledFullDeck);
+        setDeck(reshuffledFullDeck);
+        setTotalCount(reshuffledFullDeck.length);
         setCurrentIndex(0);
       } else {
         setCurrentIndex(nextIndex);
@@ -162,17 +243,47 @@ export default function QuizPage({
     }, 500);
   };
 
+  useEffect(() => {
+    if (!reviewMode) return;
+    const saveSession = async () => {
+      await fetch("/api/review-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          type: "quiz",
+          level,
+          wordIds: deck.map((w) => w.id),
+          currentIndex,
+        }),
+      });
+    };
+    saveSession();
+  }, [reviewMode, currentIndex, deck, level]);
+
   const completedCount = Object.values(progress).filter(Boolean).length;
-  const progressText = `${completedCount} / ${totalCount}`;
+  const reviewProgressPercentage =
+    reviewMode && deck.length > 0
+      ? (currentIndex / deck.length) * 100
+      : 0;
+  const studyProgressPercentage =
+    !reviewMode && totalCount > 0
+      ? (completedCount / totalCount) * 100
+      : 0;
+  const progressPercentage = reviewMode
+    ? reviewProgressPercentage
+    : studyProgressPercentage;
+  const progressText = reviewMode
+    ? `${Math.min(currentIndex, deck.length)} / ${deck.length}`
+    : `${completedCount} / ${totalCount}`;
 
   if (loading) return <div className="text-center mt-40">Loading...</div>;
-  if (words.length === 0)
+  if (deck.length === 0)
     return <div className="text-center mt-40">No words.</div>;
 
-  const currentWord = words[currentIndex];
+  const currentWord = deck[currentIndex];
   const question =
     type === "kanji-to-furigana" ? currentWord.kanji : currentWord.furigana;
-
   const correctAnswer =
     type === "kanji-to-furigana" ? currentWord.furigana : currentWord.kanji;
 
@@ -186,14 +297,13 @@ export default function QuizPage({
         transition={{ duration: 0.6 }}
         className="w-full max-w-screen-2xl px-4 sm:px-6 lg:px-10 pt-32 pb-5 flex flex-col flex-grow justify-start items-center gap-10 mx-auto"
       >
-        {/* Progress Bar */}
         <div className="w-full px-6 flex flex-col items-center">
           <div className="w-md bg-orange-50 rounded-full h-3 relative">
             <div
               className="h-3 rounded-full transition-all duration-300"
               style={{
                 backgroundColor: "#F27D88",
-                width: `${(completedCount / totalCount) * 100}%`,
+                width: `${progressPercentage}%`,
               }}
             />
           </div>
@@ -205,13 +315,11 @@ export default function QuizPage({
           </p>
         </div>
 
-        {/* Question */}
         <div className="flex items-center justify-center gap-10 w-full">
           <div className="relative bg-orange-50 rounded-[24px] shadow-lg px-8 py-10 min-h-[400px] flex items-center justify-center text-4xl font-bold font-noto-sans-jp w-full max-w-[600px]">
             {question}
           </div>
 
-          {/* Options */}
           <div className="flex flex-col gap-10">
             {options.map((opt, idx) => {
               const isCorrect = opt === correctAnswer;
@@ -219,7 +327,7 @@ export default function QuizPage({
 
               return (
                 <button
-                  key={`${opt}-${idx}`} // 키는 고유하게
+                  key={`${opt}-${idx}`}
                   onClick={() => handleAnswer(opt)}
                   disabled={!!selected}
                   className={`w-64 h-16 px-6 py-3 rounded-lg shadow font-noto-sans-jp text-lg text-center transition-colors duration-200
@@ -233,7 +341,7 @@ export default function QuizPage({
               : "bg-orange-50 hover:bg-orange-100"
           }`}
                 >
-                  {`${idx + 1}. ${opt}`} {/* 번호 붙여서 표시 */}
+                  {`${idx + 1}. ${opt}`}
                 </button>
               );
             })}
