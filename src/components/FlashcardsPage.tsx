@@ -79,7 +79,7 @@ export default function FlashcardsPage({ level }: { level: string }) {
 
         // Try restoring a server-side review session
         const sessRes = await fetch(
-          `/api/review-session?type=flashcard&level=${level}`,
+          `/api/review-session?type=flashcards&level=${level}`,
           {
             credentials: "include",
           }
@@ -122,7 +122,7 @@ export default function FlashcardsPage({ level }: { level: string }) {
 
     const fetchProgress = async () => {
       const res = await fetch(
-        `/api/study-progress?type=flashcard&level=${level}`,
+        `/api/study-progress?type=flashcards&level=${level}`,
         { credentials: "include" }
       );
       if (res.ok) {
@@ -193,7 +193,7 @@ export default function FlashcardsPage({ level }: { level: string }) {
           wordId: currentWord.id,
           completed,
           currentIndex: nextIndex >= cards.length ? 0 : nextIndex,
-          type: "flashcard",
+          type: "flashcards",
           level,
         }),
       });
@@ -222,7 +222,7 @@ export default function FlashcardsPage({ level }: { level: string }) {
               headers: { "Content-Type": "application/json" },
               credentials: "include",
               body: JSON.stringify({
-                type: "flashcard",
+                type: "flashcards",
                 level,
                 wordIds: randomizedReviewDeck.map((w) => w.id),
                 currentIndex: 0,
@@ -233,11 +233,11 @@ export default function FlashcardsPage({ level }: { level: string }) {
         }
 
         // On reset, clear the session
-        await fetch(`/api/study-progress/reset?type=flashcard&level=${level}`, {
+        await fetch(`/api/study-progress/reset?type=flashcards&level=${level}`, {
           method: "POST",
           credentials: "include",
         });
-        await fetch(`/api/review-session?type=flashcard&level=${level}`, {
+        await fetch(`/api/review-session?type=flashcards&level=${level}`, {
           method: "DELETE",
           credentials: "include",
         });
@@ -270,7 +270,7 @@ export default function FlashcardsPage({ level }: { level: string }) {
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({
-          type: "flashcard",
+          type: "flashcards",
           level,
           wordIds,
           currentIndex,
