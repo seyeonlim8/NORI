@@ -8,7 +8,7 @@ export async function POST(req: Request) {
 
   const { userId } = jwt.verify(token, process.env.JWT_SECRET!) as { userId: number };
   const url = new URL(req.url);
-  const type = url.searchParams.get("type") || "flashcard";
+  const type = url.searchParams.get("type") || "flashcards";
   const level = url.searchParams.get("level") || "";
 
   await prisma.studyProgress.deleteMany({
