@@ -7,7 +7,7 @@ export async function POST(req: Request) {
     wordId,
     completed,
     currentIndex,
-    type = "flashcard",
+    type = "flashcards",
     level,
   } = await req.json();
 
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
-  const type = url.searchParams.get("type") ?? "flashcard";
+  const type = url.searchParams.get("type") ?? "flashcards";
   const level = url.searchParams.get("level");
   const wordId = url.searchParams.get("wordId");
 
@@ -54,6 +54,11 @@ export async function GET(req: Request) {
     const { userId } = jwt.verify(token, process.env.JWT_SECRET!) as {
       userId: number;
     };
+
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 401 });
+    }
 
     // Check if wordId is provided to get specific word's progress
     if (wordId) {
