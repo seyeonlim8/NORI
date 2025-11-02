@@ -8,7 +8,7 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const url = new URL(req.url);
-  const type = url.searchParams.get("type") ?? "flashcard";
+  const type = url.searchParams.get("type") ?? "flashcards";
   const level = url.searchParams.get("level");
   if (!level) {
     return NextResponse.json(
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const {
-    type = "flashcard",
+    type = "flashcards",
     level,
     wordIds,
     currentIndex = 0,
@@ -74,7 +74,7 @@ export async function DELETE(req: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const url = new URL(req.url);
-  const type = url.searchParams.get("type") ?? "flashcard";
+  const type = url.searchParams.get("type") ?? "flashcards";
   const level = url.searchParams.get("level");
   if (!level) {
     return NextResponse.json(
