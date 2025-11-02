@@ -13,7 +13,7 @@ type ProgressItem = {
   wordId: number;
   completed: boolean;
   level: string; // "N1" ~ "N5"
-  type: string; // flashcard | quiz | fill
+  type: string; // flashcards | quiz | fill
 };
 
 type SummaryResponse = {
@@ -64,7 +64,7 @@ export default function AccountPage() {
   useEffect(() => {
     const fetchProgress = async () => {
       setProgressLoading(true);
-      const types = ["flashcard", "quiz", "fill"];
+      const types = ["flashcards", "quiz", "fill"];
 
       const results = await Promise.all(
         types.map(async (type) => {
@@ -248,7 +248,7 @@ export default function AccountPage() {
                 <p className="text-center text-gray-600">Loading progress...</p>
               ) : (
                 <>
-                  {renderProgressSection("Flashcards", progressData.flashcard)}
+                  {renderProgressSection("Flashcards", progressData.flashcards)}
                   {renderProgressSection("Quizzes", progressData.quiz)}
                   {renderProgressSection(
                     "Fill-in-the-Blank",
