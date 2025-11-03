@@ -8,12 +8,18 @@ import { FloatingIcons } from "./FloatingIcons";
 
 const COLORS = ["#F27D88", "#FDBA74", "#FDE68A", "#93C5FD", "#A5B4FC"];
 const LEVELS = ["N1", "N2", "N3", "N4", "N5"];
+const PROGRESS_TYPES = [
+  { key: "flashcards", title: "Flashcards" },
+  { key: "quiz-kanji-to-furigana", title: "Quiz (Kanji → Furigana)" },
+  { key: "quiz-furigana-to-kanji", title: "Quiz (Furigana → Kanji)" },
+  { key: "fill", title: "Fill-in-the-Blank" },
+];
 
 type ProgressItem = {
   wordId: number;
   completed: boolean;
   level: string; // "N1" ~ "N5"
-  type: string; // flashcards | quiz | fill
+  type: string; // flashcards | quiz-kanji-to-furigana | quiz-furigana-to-kanji | fill
 };
 
 type SummaryResponse = {
@@ -64,10 +70,8 @@ export default function AccountPage() {
   useEffect(() => {
     const fetchProgress = async () => {
       setProgressLoading(true);
-      const types = ["flashcards", "quiz", "fill"];
-
       const results = await Promise.all(
-        types.map(async (type) => {
+        PROGRESS_TYPES.map(async ({ key: type }) => {
           const [progressRes, wordsRes] = await Promise.all([
             fetch(`/api/study-progress?type=${type}`, {
               credentials: "include",
@@ -248,11 +252,8 @@ export default function AccountPage() {
                 <p className="text-center text-gray-600">Loading progress...</p>
               ) : (
                 <>
-                  {renderProgressSection("Flashcards", progressData.flashcards)}
-                  {renderProgressSection("Quizzes", progressData.quiz)}
-                  {renderProgressSection(
-                    "Fill-in-the-Blank",
-                    progressData.fill
+                  {PROGRESS_TYPES.map(({ key, title }) =>
+                    renderProgressSection(title, progressData[key])
                   )}
                 </>
               )}
