@@ -39,6 +39,7 @@ export default function QuizPage({
   const [progress, setProgress] = useState<Record<number, boolean>>({});
   const [reviewMode, setReviewMode] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
+  const progressType = `quiz-${type}`;
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -58,7 +59,7 @@ export default function QuizPage({
         setFullDeck(shuffled);
 
         const sessRes = await fetch(
-          `/api/review-session?type=quiz&level=${level}`,
+          `/api/review-session?type=${progressType}&level=${level}`,
           {
             credentials: "include",
           }
@@ -98,13 +99,16 @@ export default function QuizPage({
     };
 
     loadWords();
-  }, [level]);
+  }, [level, progressType]);
 
   useEffect(() => {
     const fetchProgress = async () => {
-      const res = await fetch(`/api/study-progress?type=quiz&level=${level}`, {
-        credentials: "include",
-      });
+      const res = await fetch(
+        `/api/study-progress?type=${progressType}&level=${level}`,
+        {
+          credentials: "include",
+        }
+      );
       if (!res.ok) return;
 
       const data = await res.json();
@@ -119,7 +123,7 @@ export default function QuizPage({
     };
 
     fetchProgress();
-  }, [level, reviewMode, fullDeck]);
+  }, [level, progressType, reviewMode, fullDeck]);
 
   const generateOptions = (word: Word, source: Word[]) => {
     const correct =
@@ -178,7 +182,7 @@ export default function QuizPage({
         wordId: currentWord.id,
         completed: isCorrect,
         currentIndex: nextIndex >= deck.length ? 0 : nextIndex,
-        type: "quiz",
+        type: progressType,
         level,
       }),
     });
@@ -208,7 +212,7 @@ export default function QuizPage({
               headers: { "Content-Type": "application/json" },
               credentials: "include",
               body: JSON.stringify({
-                type: "quiz",
+                type: progressType,
                 level,
                 wordIds: randomizedReviewDeck.map((w) => w.id),
                 currentIndex: 0,
@@ -218,11 +222,14 @@ export default function QuizPage({
           }
         }
 
-        await fetch(`/api/study-progress/reset?type=quiz&level=${level}`, {
-          method: "POST",
-          credentials: "include",
-        });
-        await fetch(`/api/review-session?type=quiz&level=${level}`, {
+        await fetch(
+          `/api/study-progress/reset?type=${progressType}&level=${level}`,
+          {
+            method: "POST",
+            credentials: "include",
+          }
+        );
+        await fetch(`/api/review-session?type=${progressType}&level=${level}`, {
           method: "DELETE",
           credentials: "include",
         });
@@ -251,7 +258,7 @@ export default function QuizPage({
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({
-          type: "quiz",
+          type: progressType,
           level,
           wordIds: deck.map((w) => w.id),
           currentIndex,
@@ -259,7 +266,7 @@ export default function QuizPage({
       });
     };
     saveSession();
-  }, [reviewMode, currentIndex, deck, level]);
+  }, [reviewMode, currentIndex, deck, level, progressType]);
 
   const completedCount = Object.values(progress).filter(Boolean).length;
   const reviewProgressPercentage =
@@ -316,7 +323,10 @@ export default function QuizPage({
         </div>
 
         <div className="flex items-center justify-center gap-10 w-full">
-          <div className="relative bg-orange-50 rounded-[24px] shadow-lg px-8 py-10 min-h-[400px] flex items-center justify-center text-4xl font-bold font-noto-sans-jp w-full max-w-[600px]">
+          <div 
+          data-testid='question-box'
+          data-word-id={`${currentWord.id}`}
+          className="relative bg-orange-50 rounded-[24px] shadow-lg px-8 py-10 min-h-[400px] flex items-center justify-center text-4xl font-bold font-noto-sans-jp w-full max-w-[600px]">
             {question}
           </div>
 
@@ -328,6 +338,8 @@ export default function QuizPage({
               return (
                 <button
                   key={`${opt}-${idx}`}
+                  data-testid={`answer-${idx + 1}`}
+                  data-answer-text={opt}
                   onClick={() => handleAnswer(opt)}
                   disabled={!!selected}
                   className={`w-64 h-16 px-6 py-3 rounded-lg shadow font-noto-sans-jp text-lg text-center transition-colors duration-200
