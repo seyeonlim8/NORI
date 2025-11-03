@@ -30,6 +30,7 @@ export default function QuizTypePage({ level }: { level: string }) {
           {types.map((type, index) => (
             <MotionLink
               key={type.key}
+              data-testid={`${type.key}-btn`}
               href={`/study/quiz/${level}/${type.key}`} // 레벨 포함해서 라우팅
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -49,7 +50,6 @@ export default function QuizTypePage({ level }: { level: string }) {
       </motion.div>
 
       <Footer />
-
     </div>
   );
 }
