@@ -62,12 +62,13 @@ export async function DELETE(req: Request) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
 
   try {
-    // Delete data related to other tables
-    await prisma.studyProgress.deleteMany({ where: { userId } });
-    await prisma.favoriteWord.deleteMany({ where: { userId } });
-
-    // Then delete user
-    await prisma.user.delete({ where: { id: userId } });
+    // Delete all dependent data in a single transaction to satisfy FKs
+    await prisma.$transaction([
+      prisma.reviewSession.deleteMany({ where: { userId } }),
+      prisma.studyProgress.deleteMany({ where: { userId } }),
+      prisma.favoriteWord.deleteMany({ where: { userId } }),
+      prisma.user.delete({ where: { id: userId } }),
+    ]);
 
     // Delete cookies
     const res = NextResponse.json({ success: true });
