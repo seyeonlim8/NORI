@@ -15,5 +15,15 @@ export async function POST(req: Request) {
     where: { userId, type, level },
   });
 
+  await prisma.reviewSession.deleteMany({
+    where: { userId, type, level },
+  });
+
+  if (type === "flashcards") {
+    await prisma.reviewSession.deleteMany({
+      where: { userId, type: "flashcards-base", level },
+    });
+  }
+
   return NextResponse.json({ success: true });
 }
