@@ -108,20 +108,34 @@ export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const username = searchParams.get("username");
-    if (!username) {
-      return NextResponse.json(
-        { error: "Username is required." },
-        { status: 400 }
-      );
+    const email = searchParams.get("email");
+
+    if (username) {
+      const exists = await prisma.user.findFirst({ where: { username } });
+      if (exists) {
+        return NextResponse.json(
+          { error: "Username already exists." },
+          { status: 400 }
+        );
+      }
+      return NextResponse.json({ available: true });
     }
-    const exists = await prisma.user.findFirst({ where: { username } });
-    if (exists) {
-      return NextResponse.json(
-        { error: "Username already exists." },
-        { status: 400 }
-      );
+
+    if (email) {
+      const exists = await prisma.user.findUnique({ where: { email } });
+      if (exists) {
+        return NextResponse.json(
+          { error: "Email already exists." },
+          { status: 400 }
+        );
+      }
+      return NextResponse.json({ available: true });
     }
-    return NextResponse.json({ available: true });
+
+    return NextResponse.json(
+      { error: "username or email is required." },
+      { status: 400 }
+    );
   } catch (err: any) {
     console.error("Username check API Error:", err, err?.message);
     return NextResponse.json(
