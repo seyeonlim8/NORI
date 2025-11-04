@@ -28,6 +28,8 @@ const shuffle = <T,>(items: T[]): T[] => {
   return arr;
 };
 
+const BASE_SESSION_TYPE = "flashcards-base";
+
 export default function FlashcardsPage({ level }: { level: string }) {
   const [cards, setCards] = useState<Word[]>([]);
   const [fullDeck, setFullDeck] = useState<Word[]>([]);
@@ -42,6 +44,40 @@ export default function FlashcardsPage({ level }: { level: string }) {
   const [isProcessing, setIsProcessing] = useState(false);
 
   const router = useRouter();
+  const persistBaseDeck = async (deckWords: Word[], currentIdx = 0) => {
+    try {
+      await fetch("/api/review-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          type: BASE_SESSION_TYPE,
+          level,
+          wordIds: deckWords.map((w) => w.id),
+          currentIndex: currentIdx,
+        }),
+      });
+    } catch (error) {
+      console.error("Failed to persist base flashcards order", error);
+    }
+  };
+const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
+  try {
+    await fetch("/api/review-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({
+        type: "flashcards",
+        level,
+        wordIds,
+        currentIndex: nextIndex,
+      }),
+    });
+  } catch (error) {
+    console.error("Failed to persist review session", error);
+  }
+  };
 
   // Check login
   useEffect(() => {
@@ -74,8 +110,55 @@ export default function FlashcardsPage({ level }: { level: string }) {
       } else {
         const res = await fetch(`/api/words?level=${level}`);
         const words: Word[] = await res.json();
-        const shuffledWords = shuffle<Word>(words);
-        setFullDeck(shuffledWords);
+        const wordMap = new Map(words.map((w) => [w.id, w]));
+        let baseDeck: Word[] = [];
+        let needsPersist = false;
+
+        try {
+          const baseSessionRes = await fetch(
+            `/api/review-session?type=${BASE_SESSION_TYPE}&level=${level}`,
+            { credentials: "include" }
+          );
+          if (baseSessionRes.ok) {
+            const baseSession = await baseSessionRes.json();
+            if (baseSession && Array.isArray(baseSession.wordIds)) {
+              const baseSessionIds = baseSession.wordIds as number[];
+              const ordered = baseSessionIds
+                .map((id) => wordMap.get(id))
+                .filter(Boolean) as Word[];
+              const orderedIds = new Set(ordered.map((w) => w.id));
+              const missing = words.filter((w) => !orderedIds.has(w.id));
+              const combinedDeck = [...ordered, ...missing];
+              if (combinedDeck.length === words.length) {
+                baseDeck = combinedDeck;
+                if (
+                  missing.length > 0 ||
+                  ordered.length !== baseSessionIds.length
+                ) {
+                  needsPersist = true;
+                }
+              }
+            }
+          }
+        } catch (error) {
+          console.error("Failed to load base flashcards order", error);
+        }
+
+        if (baseDeck.length === 0) {
+          baseDeck = shuffle<Word>(words);
+          needsPersist = true;
+        }
+
+        if (baseDeck.length !== words.length) {
+          baseDeck = [...words];
+          needsPersist = true;
+        }
+
+        if (needsPersist) {
+          await persistBaseDeck(baseDeck, 0);
+        }
+
+        setFullDeck(baseDeck);
 
         // Try restoring a server-side review session
         const sessRes = await fetch(
@@ -88,17 +171,17 @@ export default function FlashcardsPage({ level }: { level: string }) {
         if (sessRes.ok) {
           const session = await sessRes.json();
           if (session && Array.isArray(session.wordIds)) {
-            const dict = new Map(shuffledWords.map((w) => [w.id, w]));
+            const dict = new Map(baseDeck.map((w) => [w.id, w]));
             const deck = (session.wordIds as number[])
               .map((id) => dict.get(id))
               .filter(Boolean) as Word[];
             if (deck.length > 0) {
               setCards(deck);
-              setTotalCount(shuffledWords.length);
+              setTotalCount(baseDeck.length);
               setReviewMode(true);
-              setCurrentIndex(
-                Math.min(session.currentIndex ?? 0, deck.length - 1)
-              );
+              const idx = typeof session.currentIndex === "number" ? session.currentIndex : 0;
+              const resumeIndex = Math.min(Math.max(0, idx), deck.length - 1);
+              setCurrentIndex(resumeIndex);
               setLoading(false);
               return;
             }
@@ -106,9 +189,9 @@ export default function FlashcardsPage({ level }: { level: string }) {
         }
 
         // Fallback to normal (not in review)
-        setCards(shuffledWords);
+        setCards(baseDeck);
         setReviewMode(false);
-        setTotalCount(shuffledWords.length);
+        setTotalCount(baseDeck.length);
         setLoading(false);
       }
     };
@@ -118,7 +201,7 @@ export default function FlashcardsPage({ level }: { level: string }) {
 
   // Get study progress - exclude favorites
   useEffect(() => {
-    if (level === "favorites") return;
+    if (level === "favorites" || loading) return;
 
     const fetchProgress = async () => {
       const res = await fetch(
@@ -139,7 +222,7 @@ export default function FlashcardsPage({ level }: { level: string }) {
     };
 
     fetchProgress();
-  }, [level, reviewMode, fullDeck]);
+  }, [level, reviewMode, fullDeck, loading]);
 
   // Toggle favorites
   const toggleFavorite = async () => {
@@ -201,6 +284,8 @@ export default function FlashcardsPage({ level }: { level: string }) {
       const updatedProgress = { ...progress, [currentWord.id]: completed };
       setProgress(updatedProgress);
 
+      const deckWordIds = cards.map((w) => w.id);
+
       if (nextIndex >= cards.length) {
         const unlearned = cards.filter(
           (c) => !updatedProgress[c.id] && c.id !== currentWord.id
@@ -213,21 +298,12 @@ export default function FlashcardsPage({ level }: { level: string }) {
             `${unlearned.length} words still need review. Continue?`
           );
           if (proceed) {
-            const randomizedReviewDeck = shuffle(unlearned);
+            const randomizedReviewDeck = shuffle<Word>(unlearned);
+            const reviewIds = randomizedReviewDeck.map((w) => w.id);
             setCards(randomizedReviewDeck);
             setCurrentIndex(0);
             setReviewMode(true);
-            await fetch("/api/review-session", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              credentials: "include",
-              body: JSON.stringify({
-                type: "flashcards",
-                level,
-                wordIds: randomizedReviewDeck.map((w) => w.id),
-                currentIndex: 0,
-              }),
-            });
+            await saveReviewSession(reviewIds, 0);
             return;
           }
         }
@@ -245,13 +321,17 @@ export default function FlashcardsPage({ level }: { level: string }) {
         setProgress({});
         setReviewMode(false);
         alert("You studied all the flashcards! Progress has been reset.");
-        const reshuffledFullDeck = shuffle(fullDeck);
+        const reshuffledFullDeck = shuffle<Word>(fullDeck);
         setFullDeck(reshuffledFullDeck);
         setCards(reshuffledFullDeck);
         setTotalCount(reshuffledFullDeck.length);
         setCurrentIndex(0);
+        await persistBaseDeck(reshuffledFullDeck, 0);
       } else {
         setCurrentIndex(nextIndex);
+        if (reviewMode) {
+          await saveReviewSession(deckWordIds, nextIndex);
+        }
       }
     } catch (error) {
       console.error("Failed to update study progress", error);
@@ -260,30 +340,13 @@ export default function FlashcardsPage({ level }: { level: string }) {
     }
   };
 
-  // Keep session currentIndex in sync while in review mode
-  useEffect(() => {
-    if (!reviewMode) return;
-    const save = async () => {
-      const wordIds = cards.map((w) => w.id);
-      await fetch("/api/review-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({
-          type: "flashcards",
-          level,
-          wordIds,
-          currentIndex,
-        }),
-      });
-    };
-    save();
-  }, [reviewMode, currentIndex, cards, level]);
-
   const completedCount = Object.values(progress).filter(Boolean).length;
+  const reviewCompletedCount = reviewMode
+    ? cards.reduce((acc, w) => acc + (progress[w.id] ? 1 : 0), 0)
+    : 0;
   const reviewProgressPercentage =
     reviewMode && cards.length > 0
-      ? (currentIndex / cards.length) * 100
+      ? (reviewCompletedCount / cards.length) * 100
       : 0;
   const studyProgressPercentage =
     !reviewMode && totalCount > 0
@@ -324,7 +387,7 @@ export default function FlashcardsPage({ level }: { level: string }) {
             </div>
             <p className="mt-1 font-bold font-outfit text-sm text-gray-700">
               {reviewMode
-                ? `${Math.min(currentIndex, cards.length)} / ${cards.length} (Review Mode)`
+                ? `${reviewCompletedCount} / ${cards.length} (Review Mode)`
                 : `${completedCount} / ${totalCount}`}
             </p>
           </div>
