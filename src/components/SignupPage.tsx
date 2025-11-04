@@ -17,6 +17,8 @@ export default function SignupPage() {
   );
   const [usernameCheckLoading, setUsernameCheckLoading] = useState(false);
   const [emailTouched, setEmailTouched] = useState(false);
+  const [emailAvailable, setEmailAvailable] = useState<null | boolean>(null);
+  const [emailCheckLoading, setEmailCheckLoading] = useState(false);
 
   const router = useRouter();
 
@@ -60,6 +62,27 @@ export default function SignupPage() {
       .finally(() => setUsernameCheckLoading(false));
     return () => controller.abort();
   }, [username, usernameValid]);
+
+  // Email availability check
+  useEffect(() => {
+    if (!emailValid) {
+      setEmailAvailable(null);
+      return;
+    }
+    setEmailCheckLoading(true);
+    const controller = new AbortController();
+    fetch(`/api/auth/signup?email=${encodeURIComponent(email)}`, {
+      method: "GET",
+      signal: controller.signal,
+    })
+      .then(async (res) => {
+        const data = await res.json();
+        setEmailAvailable(res.ok && data.available);
+      })
+      .catch(() => setEmailAvailable(null))
+      .finally(() => setEmailCheckLoading(false));
+    return () => controller.abort();
+  }, [email, emailValid]);
 
   const handleSubmit = async () => {
     const newErrors: { [key: string]: string } = {};
@@ -148,26 +171,33 @@ export default function SignupPage() {
           )}
         </div>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          onBlur={() => setEmailTouched(true)}
-          data-testid="email-input"
-          className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300"
-        />
-        {email.length > 0 && !emailValid && (
-          <p
-            data-testid="email-error"
-            className="text-sm text-red-500 mt-[-20px]"
-          >
-            Invalid email format.
-          </p>
-        )}
-        {errors.email && !emailTouched && (
-          <p className="text-sm text-red-500">{errors.email}</p>
-        )}
+        <div className="flex flex-col gap-1">
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onBlur={() => setEmailTouched(true)}
+            data-testid="email-input"
+            className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300"
+          />
+          {email.length > 0 && (
+            <p data-testid="email-feedback" className="text-sm mt-[-2px]">
+              {!emailValid ? (
+                <span className="text-red-500">Invalid email format.</span>
+              ) : emailCheckLoading ? (
+                <span className="text-gray-500">Checking email...</span>
+              ) : emailAvailable === false ? (
+                <span className="text-red-500">Email is already in use.</span>
+              ) : emailAvailable === true ? (
+                <span className="text-green-600">Email available!</span>
+              ) : null}
+            </p>
+          )}
+          {errors.email && !emailTouched && (
+            <p className="text-sm text-red-500">{errors.email}</p>
+          )}
+        </div>
 
         <div>
           <input
@@ -264,6 +294,8 @@ export default function SignupPage() {
             isSubmitting ||
             !usernameValid ||
             usernameAvailable !== true ||
+            !emailValid ||
+            emailAvailable !== true ||
             !passwordsMatch
           }
           className={`text-white font-bold py-3 rounded-md uppercase tracking-wide font-(family-name:--font-outfit) ${
@@ -271,6 +303,8 @@ export default function SignupPage() {
             !isSubmitting &&
             usernameValid &&
             usernameAvailable === true &&
+            emailValid &&
+            emailAvailable === true &&
             passwordsMatch
               ? "cursor-pointer"
               : "cursor-not-allowed opacity-50"
