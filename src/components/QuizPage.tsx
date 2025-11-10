@@ -126,8 +126,7 @@ export default function QuizPage({
   }, [level, progressType, reviewMode, fullDeck]);
 
   const generateOptions = (word: Word, source: Word[]) => {
-    const correct =
-      type === "kanji-to-furigana" ? word.furigana : word.kanji;
+    const correct = type === "kanji-to-furigana" ? word.furigana : word.kanji;
     const pool = source.length > 0 ? source : deck;
 
     let candidates = Array.from(
@@ -189,6 +188,9 @@ export default function QuizPage({
 
     setProgress(nextProgress);
 
+    const deckWordIds = deck.map((w) => w.id);
+    let canceledReviewPrompt = false;
+
     setTimeout(async () => {
       setSelected(null);
 
@@ -200,10 +202,11 @@ export default function QuizPage({
 
         if (unlearned.length > 0) {
           const proceed = confirm(
-            `${unlearned.length} words need review. Continue?`
+            `${unlearned.length} words need review. Continue?\nIf you don't enter Review Mode now, your progress will be reset.`
           );
           if (proceed) {
             const randomizedReviewDeck = shuffle<Word>(unlearned);
+            const reviewIds = randomizedReviewDeck.map((w) => w.id);
             setDeck(randomizedReviewDeck);
             setCurrentIndex(0);
             setReviewMode(true);
@@ -214,11 +217,13 @@ export default function QuizPage({
               body: JSON.stringify({
                 type: progressType,
                 level,
-                wordIds: randomizedReviewDeck.map((w) => w.id),
+                wordIds: reviewIds,
                 currentIndex: 0,
               }),
             });
             return;
+          } else {
+            canceledReviewPrompt = true;
           }
         }
 
@@ -236,7 +241,6 @@ export default function QuizPage({
 
         setProgress({});
         setReviewMode(false);
-        alert("Quiz completed! Progress reset.");
 
         const baseDeck = fullDeck.length > 0 ? fullDeck : deck;
         const reshuffledFullDeck = shuffle<Word>(baseDeck);
@@ -244,8 +248,26 @@ export default function QuizPage({
         setDeck(reshuffledFullDeck);
         setTotalCount(reshuffledFullDeck.length);
         setCurrentIndex(0);
+        if (canceledReviewPrompt) {
+          router.push("/study/quiz");
+          return;
+        }
+        alert("Quiz completed! Progress reset.");
       } else {
         setCurrentIndex(nextIndex);
+        if (reviewMode) {
+          await fetch("/api/review-session", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({
+              type: progressType,
+              level,
+              wordIds: deckWordIds,
+              currentIndex: nextIndex,
+            }),
+          });
+        }
       }
     }, 500);
   };
@@ -270,13 +292,9 @@ export default function QuizPage({
 
   const completedCount = Object.values(progress).filter(Boolean).length;
   const reviewProgressPercentage =
-    reviewMode && deck.length > 0
-      ? (currentIndex / deck.length) * 100
-      : 0;
+    reviewMode && deck.length > 0 ? (currentIndex / deck.length) * 100 : 0;
   const studyProgressPercentage =
-    !reviewMode && totalCount > 0
-      ? (completedCount / totalCount) * 100
-      : 0;
+    !reviewMode && totalCount > 0 ? (completedCount / totalCount) * 100 : 0;
   const progressPercentage = reviewMode
     ? reviewProgressPercentage
     : studyProgressPercentage;
@@ -315,6 +333,7 @@ export default function QuizPage({
             />
           </div>
           <p
+            data-testid="progress-counter"
             className="mt-1 font-bold font-outfit text-sm"
             style={{ color: "#503b3dff" }}
           >
@@ -323,10 +342,11 @@ export default function QuizPage({
         </div>
 
         <div className="flex items-center justify-center gap-10 w-full">
-          <div 
-          data-testid='question-box'
-          data-word-id={`${currentWord.id}`}
-          className="relative bg-orange-50 rounded-[24px] shadow-lg px-8 py-10 min-h-[400px] flex items-center justify-center text-4xl font-bold font-noto-sans-jp w-full max-w-[600px]">
+          <div
+            data-testid="question-box"
+            data-word-id={`${currentWord.id}`}
+            className="relative bg-orange-50 rounded-[24px] shadow-lg px-8 py-10 min-h-[400px] flex items-center justify-center text-4xl font-bold font-noto-sans-jp w-full max-w-[600px]"
+          >
             {question}
           </div>
 
