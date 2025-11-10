@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import Header from "./Header";
 import Footer from "./Footer";
+import { useRouter } from "next/navigation";
 
 type Word = {
   id: number;
@@ -25,6 +26,13 @@ const shuffle = <T,>(items: T[]): T[] => {
   return arr;
 };
 
+const clampIndex = (idx: number, length: number) => {
+  if (length === 0) return 0;
+  return Math.min(Math.max(idx, 0), length - 1);
+};
+
+const normalizeAnswer = (value: string) => value.trim().normalize("NFKC");
+
 export default function FillInTheBlankPage({ level }: { level: string }) {
   const [deck, setDeck] = useState<Word[]>([]);
   const [fullDeck, setFullDeck] = useState<Word[]>([]);
@@ -36,6 +44,24 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
   const [reviewMode, setReviewMode] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const confettiFired = useRef(false);
+  const router = useRouter();
+  const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
+    try {
+      await fetch("/api/review-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          type: "fill",
+          level,
+          wordIds,
+          currentIndex: nextIndex,
+        }),
+      });
+    } catch (error) {
+      console.error("Failed to persist fill-in-the-blank session", error);
+    }
+  };
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -70,9 +96,13 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
               setDeck(sessionDeck);
               setTotalCount(shuffled.length);
               setReviewMode(true);
-              setCurrentIndex(
-                Math.min(session.currentIndex ?? 0, sessionDeck.length - 1)
+              const resumeIndex = clampIndex(
+                typeof session.currentIndex === "number"
+                  ? session.currentIndex
+                  : 0,
+                sessionDeck.length
               );
+              setCurrentIndex(resumeIndex);
               setUserAnswer("");
               setFeedback(null);
               setLoading(false);
@@ -98,6 +128,7 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
   }, [level]);
 
   useEffect(() => {
+    if (loading) return;
     const fetchProgress = async () => {
       const res = await fetch(`/api/study-progress?type=fill&level=${level}`, {
         credentials: "include",
@@ -116,22 +147,28 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
     };
 
     fetchProgress();
-  }, [level, reviewMode, fullDeck]);
+  }, [level, reviewMode, fullDeck, loading]);
 
+  useEffect(() => {
+    if (deck.length === 0) return;
+    setCurrentIndex((idx) => clampIndex(idx, deck.length));
+  }, [deck]);
+
+  const reviewCompletedCount = reviewMode
+    ? deck.reduce((acc, w) => acc + (progress[w.id] ? 1 : 0), 0)
+    : 0;
   const reviewProgressPercentage =
     reviewMode && deck.length > 0
-      ? (currentIndex / deck.length) * 100
+      ? (reviewCompletedCount / deck.length) * 100
       : 0;
   const completedCount = Object.values(progress).filter(Boolean).length;
   const studyProgressPercentage =
-    !reviewMode && totalCount > 0
-      ? (completedCount / totalCount) * 100
-      : 0;
+    !reviewMode && totalCount > 0 ? (completedCount / totalCount) * 100 : 0;
   const progressPercentage = reviewMode
     ? reviewProgressPercentage
     : studyProgressPercentage;
   const progressText = reviewMode
-    ? `${Math.min(currentIndex, deck.length)} / ${deck.length}`
+    ? `${reviewCompletedCount} / ${deck.length}`
     : `${completedCount} / ${totalCount}`;
 
   const fireConfetti = () => {
@@ -151,7 +188,9 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
     const currentWord = deck[currentIndex];
     if (!currentWord) return;
 
-    const isCorrect = userAnswer.trim() === currentWord.answer_in_example;
+    const isCorrect =
+      normalizeAnswer(userAnswer) ===
+      normalizeAnswer(currentWord.answer_in_example);
     setFeedback(isCorrect ? "correct" : "wrong");
 
     if (isCorrect) {
@@ -161,6 +200,8 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
 
     const nextIndex = currentIndex + 1;
     const updatedProgress = { ...progress, [currentWord.id]: isCorrect };
+    const deckWordIds = deck.map((w) => w.id);
+    let canceledReviewPrompt = false;
 
     await fetch("/api/study-progress", {
       method: "POST",
@@ -176,88 +217,73 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
     });
     setProgress(updatedProgress);
 
-    setTimeout(async () => {
-      setFeedback(null);
-      setUserAnswer("");
-      confettiFired.current = false;
+    setTimeout(
+      async () => {
+        setFeedback(null);
+        setUserAnswer("");
+        confettiFired.current = false;
 
-      if (nextIndex >= deck.length) {
-        const unlearned = deck.filter(
-          (w) => !updatedProgress[w.id] && w.id !== currentWord.id
-        );
-        if (!isCorrect) unlearned.push(currentWord);
-
-        if (unlearned.length > 0) {
-          const proceed = confirm(
-            `${unlearned.length} words need review. Continue?`
+        if (nextIndex >= deck.length) {
+          const unlearned = deck.filter(
+            (w) => !updatedProgress[w.id] && w.id !== currentWord.id
           );
-          if (proceed) {
-            const randomizedReviewDeck = shuffle<Word>(unlearned);
-            setDeck(randomizedReviewDeck);
-            setCurrentIndex(0);
-            setReviewMode(true);
-            await fetch("/api/review-session", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              credentials: "include",
-              body: JSON.stringify({
-                type: "fill",
-                level,
-                wordIds: randomizedReviewDeck.map((w) => w.id),
-                currentIndex: 0,
-              }),
-            });
+          if (!isCorrect) unlearned.push(currentWord);
+
+          if (unlearned.length > 0) {
+            const proceed = confirm(
+              `${unlearned.length} words need review. Continue?\nIf you don't enter Review Mode now, your progress will be reset.`
+            );
+            if (proceed) {
+              const randomizedReviewDeck = shuffle<Word>(unlearned);
+              setDeck(randomizedReviewDeck);
+              setCurrentIndex(0);
+              setReviewMode(true);
+              await saveReviewSession(
+                randomizedReviewDeck.map((w) => w.id),
+                0
+              );
+              return;
+            } else {
+              canceledReviewPrompt = true;
+            }
+          }
+
+          await fetch(`/api/study-progress/reset?type=fill&level=${level}`, {
+            method: "POST",
+            credentials: "include",
+          });
+          await fetch(`/api/review-session?type=fill&level=${level}`, {
+            method: "DELETE",
+            credentials: "include",
+          });
+
+          setProgress({});
+          setReviewMode(false);
+          const baseDeck = fullDeck.length > 0 ? fullDeck : deck;
+          const reshuffledFullDeck = shuffle<Word>(baseDeck);
+          setFullDeck(reshuffledFullDeck);
+          setDeck(reshuffledFullDeck);
+          setTotalCount(reshuffledFullDeck.length);
+          setCurrentIndex(0);
+          if (canceledReviewPrompt) {
+            router.push("/study/fill-in-the-blank");
             return;
           }
+          alert("You completed all Fill-in-the-Blank quizzes! Progress reset.");
+        } else {
+          setCurrentIndex(nextIndex);
+          if (reviewMode) {
+            await saveReviewSession(deckWordIds, nextIndex);
+          }
         }
-
-        await fetch(`/api/study-progress/reset?type=fill&level=${level}`, {
-          method: "POST",
-          credentials: "include",
-        });
-        await fetch(`/api/review-session?type=fill&level=${level}`, {
-          method: "DELETE",
-          credentials: "include",
-        });
-
-        setProgress({});
-        setReviewMode(false);
-        alert(
-          "You completed all Fill-in-the-Blank quizzes! Progress reset."
-        );
-        const baseDeck = fullDeck.length > 0 ? fullDeck : deck;
-        const reshuffledFullDeck = shuffle<Word>(baseDeck);
-        setFullDeck(reshuffledFullDeck);
-        setDeck(reshuffledFullDeck);
-        setTotalCount(reshuffledFullDeck.length);
-        setCurrentIndex(0);
-      } else {
-        setCurrentIndex(nextIndex);
-      }
-    }, isCorrect ? 1000 : 1500);
+      },
+      isCorrect ? 1000 : 1500
+    );
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") handleCheck();
   };
-
-  useEffect(() => {
-    if (!reviewMode) return;
-    const saveSession = async () => {
-      await fetch("/api/review-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({
-          type: "fill",
-          level,
-          wordIds: deck.map((w) => w.id),
-          currentIndex,
-        }),
-      });
-    };
-    saveSession();
-  }, [reviewMode, currentIndex, deck, level]);
 
   if (loading) return <div className="text-center mt-40">Loading...</div>;
   if (deck.length === 0)
@@ -288,6 +314,7 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
             />
           </div>
           <p
+            data-testid="progress-counter"
             className="mt-2 font-bold font-outfit text-sm"
             style={{ color: "#503b3dff" }}
           >
@@ -295,7 +322,11 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
           </p>
         </div>
 
-        <div className="bg-orange-50/100 border border-rose-100 rounded-2xl shadow-xl px-8 py-10 w-full flex flex-col items-center gap-6">
+        <div
+          data-testid="fill-box"
+          data-word-id={currentWord.id}
+          className="bg-orange-50/100 border border-rose-100 rounded-2xl shadow-xl px-8 py-10 w-full flex flex-col items-center gap-6"
+        >
           {feedback === "wrong" ? (
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800 font-noto-sans-jp">
               {
@@ -318,11 +349,15 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
             </h1>
           )}
 
-          <p className="text-gray-600 text-lg font-outfit">
+          <p
+            data-testid="english-meaning"
+            className="text-gray-600 text-lg font-outfit"
+          >
             {englishMeaning}
           </p>
 
           <input
+            data-testid="input-box"
             type="text"
             placeholder="Type your answer in Japanese."
             value={userAnswer}
@@ -334,6 +369,7 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
 
           <AnimatePresence>
             <motion.button
+              data-testid="submit-btn"
               key={feedback || "default"}
               initial={{ scale: 1 }}
               animate={
