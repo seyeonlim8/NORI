@@ -285,6 +285,7 @@ const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
       setProgress(updatedProgress);
 
       const deckWordIds = cards.map((w) => w.id);
+      let canceledReviewPrompt = false;
 
       if (nextIndex >= cards.length) {
         const unlearned = cards.filter(
@@ -295,7 +296,7 @@ const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
         // When entering review mode
         if (unlearned.length > 0) {
           const proceed = confirm(
-            `${unlearned.length} words still need review. Continue?`
+            `${unlearned.length} words still need review. Continue?\nIf you don't enter Review Mode now, your progress will be reset.`
           );
           if (proceed) {
             const randomizedReviewDeck = shuffle<Word>(unlearned);
@@ -305,6 +306,8 @@ const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
             setReviewMode(true);
             await saveReviewSession(reviewIds, 0);
             return;
+          } else {
+            canceledReviewPrompt = true;
           }
         }
 
@@ -320,13 +323,17 @@ const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
 
         setProgress({});
         setReviewMode(false);
-        alert("You studied all the flashcards! Progress has been reset.");
         const reshuffledFullDeck = shuffle<Word>(fullDeck);
         setFullDeck(reshuffledFullDeck);
         setCards(reshuffledFullDeck);
         setTotalCount(reshuffledFullDeck.length);
         setCurrentIndex(0);
         await persistBaseDeck(reshuffledFullDeck, 0);
+        if (canceledReviewPrompt) {
+          router.push("/study/flashcards");
+          return;
+        }
+        alert("You studied all the flashcards! Progress has been reset.");
       } else {
         setCurrentIndex(nextIndex);
         if (reviewMode) {
@@ -385,7 +392,10 @@ const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
                 }}
               />
             </div>
-            <p className="mt-1 font-bold font-outfit text-sm text-gray-700">
+            <p
+              data-testid="progress-counter"
+              className="mt-1 font-bold font-outfit text-sm text-gray-700"
+            >
               {reviewMode
                 ? `${reviewCompletedCount} / ${cards.length} (Review Mode)`
                 : `${completedCount} / ${totalCount}`}
