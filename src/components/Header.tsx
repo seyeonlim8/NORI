@@ -54,11 +54,15 @@ export default function Header() {
                   href: "/study/flashcards",
                   testId: "flashcards-btn",
                 },
-                { label: "Quiz", href: "/study/quiz", testId: "quiz-btn" },
+                { 
+                  label: "Quiz", 
+                  href: "/study/quiz", 
+                  testId: "quiz-btn" 
+                },
                 {
                   label: "Fill in the blank",
                   href: "/study/fill-in-the-blank",
-                  testId: "fill-in-the-blank-btn",
+                  testId: "fill-btn",
                 },
               ].map(({ label, href, testId }) => (
                 <li key={label}>
