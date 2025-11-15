@@ -1,17 +1,16 @@
-"use client";
 import { FloatingIcons } from "@/components/FloatingIcons";
 import QuizTypePage from "@/components/QuizType";
 
 export default async function QuizTypeRoute({
   params,
 }: {
-  params: { level: string };
+  params: Promise<{ level: string }>;
 }) {
-  const { level } = params; // Get level from URL
+  const { level } = await params;
   return (
     <div>
       <FloatingIcons count={10} />
-      <QuizTypePage level={level} />;
+      <QuizTypePage level={level} />
     </div>
   );
 }
