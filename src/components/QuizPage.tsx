@@ -302,6 +302,20 @@ export default function QuizPage({
     ? `${Math.min(currentIndex, deck.length)} / ${deck.length}`
     : `${completedCount} / ${totalCount}`;
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (selected) return;
+      const numeric = parseInt(event.key, 10);
+      if (Number.isNaN(numeric)) return;
+      const optionIndex = numeric - 1;
+      if (optionIndex < 0 || optionIndex >= options.length) return;
+      handleAnswer(options[optionIndex]);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [options, selected, handleAnswer]);
+
   if (loading) return <div className="text-center mt-40">Loading...</div>;
   if (deck.length === 0)
     return <div className="text-center mt-40">No words.</div>;
