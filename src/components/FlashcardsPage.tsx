@@ -215,8 +215,19 @@ const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
         setProgress(mapped);
 
         if (!reviewMode && fullDeck.length > 0) {
-          const nextIndex = fullDeck.findIndex((w) => !mapped[w.id]);
-          setCurrentIndex(nextIndex >= 0 ? nextIndex : 0);
+          if (data.length > 0) {
+            const lastSeenRow = data.reduce((latest: any, cur: any) =>
+              new Date(cur.lastSeen) > new Date(latest.lastSeen) ? cur : latest
+            );
+            const resumeIndex = Math.min(
+              lastSeenRow.currentIndex ?? 0,
+              fullDeck.length - 1
+            );
+            setCurrentIndex(Math.max(0, resumeIndex));
+          } else {
+            const nextIndex = fullDeck.findIndex((w) => !mapped[w.id]);
+            setCurrentIndex(nextIndex >= 0 ? nextIndex : 0);
+          }
         }
       }
     };
