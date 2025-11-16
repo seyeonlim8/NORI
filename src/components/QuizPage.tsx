@@ -40,6 +40,43 @@ export default function QuizPage({
   const [reviewMode, setReviewMode] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const progressType = `quiz-${type}`;
+  const baseSessionType = `${progressType}-base`;
+
+  const persistBaseDeck = async (deckWords: Word[], currentIdx = 0) => {
+    try {
+      await fetch("/api/review-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          type: baseSessionType,
+          level,
+          wordIds: deckWords.map((w) => w.id),
+          currentIndex: currentIdx,
+        }),
+      });
+    } catch (error) {
+      console.error("Failed to persist quiz base deck", error);
+    }
+  };
+
+  const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
+    try {
+      await fetch("/api/review-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          type: progressType,
+          level,
+          wordIds,
+          currentIndex: nextIndex,
+        }),
+      });
+    } catch (error) {
+      console.error("Failed to persist quiz review session", error);
+    }
+  };
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -55,8 +92,57 @@ export default function QuizPage({
       try {
         const res = await fetch(`/api/words?level=${level}`);
         const data: Word[] = await res.json();
-        const shuffled = shuffle<Word>(data);
-        setFullDeck(shuffled);
+        const wordMap = new Map(data.map((w) => [w.id, w]));
+        let baseDeck: Word[] = [];
+        let needsPersist = false;
+
+        try {
+          const baseSessionRes = await fetch(
+            `/api/review-session?type=${baseSessionType}&level=${level}`,
+            {
+              credentials: "include",
+            }
+          );
+          if (baseSessionRes.ok) {
+            const baseSession = await baseSessionRes.json();
+            if (baseSession && Array.isArray(baseSession.wordIds)) {
+              const baseSessionIds = baseSession.wordIds as number[];
+              const ordered = baseSessionIds
+                .map((id) => wordMap.get(id))
+                .filter(Boolean) as Word[];
+              const orderedIds = new Set(ordered.map((w) => w.id));
+              const missing = data.filter((w) => !orderedIds.has(w.id));
+              const combinedDeck = [...ordered, ...missing];
+              if (combinedDeck.length === data.length) {
+                baseDeck = combinedDeck;
+                if (
+                  missing.length > 0 ||
+                  ordered.length !== baseSessionIds.length
+                ) {
+                  needsPersist = true;
+                }
+              }
+            }
+          }
+        } catch (error) {
+          console.error("Failed to load quiz base deck order", error);
+        }
+
+        if (baseDeck.length === 0) {
+          baseDeck = shuffle<Word>(data);
+          needsPersist = true;
+        }
+
+        if (baseDeck.length !== data.length) {
+          baseDeck = [...data];
+          needsPersist = true;
+        }
+
+        if (needsPersist) {
+          await persistBaseDeck(baseDeck, 0);
+        }
+
+        setFullDeck(baseDeck);
 
         const sessRes = await fetch(
           `/api/review-session?type=${progressType}&level=${level}`,
@@ -68,13 +154,13 @@ export default function QuizPage({
         if (sessRes.ok) {
           const session = await sessRes.json();
           if (session && Array.isArray(session.wordIds)) {
-            const dict = new Map(shuffled.map((w) => [w.id, w]));
+            const dict = new Map(baseDeck.map((w) => [w.id, w]));
             const sessionDeck = (session.wordIds as number[])
               .map((id) => dict.get(id))
               .filter(Boolean) as Word[];
             if (sessionDeck.length > 0) {
               setDeck(sessionDeck);
-              setTotalCount(shuffled.length);
+              setTotalCount(baseDeck.length);
               setReviewMode(true);
               setCurrentIndex(
                 Math.min(session.currentIndex ?? 0, sessionDeck.length - 1)
@@ -86,9 +172,9 @@ export default function QuizPage({
           }
         }
 
-        setDeck(shuffled);
+        setDeck(baseDeck);
         setReviewMode(false);
-        setTotalCount(shuffled.length);
+        setTotalCount(baseDeck.length);
         setCurrentIndex(0);
         setSelected(null);
       } catch (error) {
@@ -99,7 +185,7 @@ export default function QuizPage({
     };
 
     loadWords();
-  }, [level, progressType]);
+  }, [level, progressType, baseSessionType]);
 
   useEffect(() => {
     const fetchProgress = async () => {
@@ -116,9 +202,15 @@ export default function QuizPage({
       data.forEach((p: any) => (mapped[p.wordId] = p.completed));
       setProgress(mapped);
 
-      if (!reviewMode && fullDeck.length > 0) {
-        const nextIndex = fullDeck.findIndex((w) => !mapped[w.id]);
-        setCurrentIndex(nextIndex >= 0 ? nextIndex : 0);
+      if (!reviewMode && fullDeck.length > 0 && data.length > 0) {
+        const lastSeenRow = data.reduce((latest: any, cur: any) =>
+          new Date(cur.lastSeen) > new Date(latest.lastSeen) ? cur : latest
+        );
+        const resumeIndex = Math.min(
+          lastSeenRow.currentIndex ?? 0,
+          fullDeck.length - 1
+        );
+        setCurrentIndex(Math.max(0, resumeIndex));
       }
     };
 
@@ -210,17 +302,7 @@ export default function QuizPage({
             setDeck(randomizedReviewDeck);
             setCurrentIndex(0);
             setReviewMode(true);
-            await fetch("/api/review-session", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              credentials: "include",
-              body: JSON.stringify({
-                type: progressType,
-                level,
-                wordIds: reviewIds,
-                currentIndex: 0,
-              }),
-            });
+            await saveReviewSession(reviewIds, 0);
             return;
           } else {
             canceledReviewPrompt = true;
@@ -248,6 +330,7 @@ export default function QuizPage({
         setDeck(reshuffledFullDeck);
         setTotalCount(reshuffledFullDeck.length);
         setCurrentIndex(0);
+        await persistBaseDeck(reshuffledFullDeck, 0);
         if (canceledReviewPrompt) {
           router.push("/study/quiz");
           return;
@@ -256,39 +339,11 @@ export default function QuizPage({
       } else {
         setCurrentIndex(nextIndex);
         if (reviewMode) {
-          await fetch("/api/review-session", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-            body: JSON.stringify({
-              type: progressType,
-              level,
-              wordIds: deckWordIds,
-              currentIndex: nextIndex,
-            }),
-          });
+          await saveReviewSession(deckWordIds, nextIndex);
         }
       }
     }, 500);
   };
-
-  useEffect(() => {
-    if (!reviewMode) return;
-    const saveSession = async () => {
-      await fetch("/api/review-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({
-          type: progressType,
-          level,
-          wordIds: deck.map((w) => w.id),
-          currentIndex,
-        }),
-      });
-    };
-    saveSession();
-  }, [reviewMode, currentIndex, deck, level, progressType]);
 
   const completedCount = Object.values(progress).filter(Boolean).length;
   const reviewProgressPercentage =
