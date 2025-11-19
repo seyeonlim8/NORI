@@ -394,6 +394,7 @@ export default function QuizPage({
         <div className="w-full px-6 flex flex-col items-center">
           <div className="w-md bg-orange-50 rounded-full h-3 relative">
             <div
+              data-testid="progress-bar-inner"
               className="h-3 rounded-full transition-all duration-300"
               style={{
                 backgroundColor: "#F27D88",
