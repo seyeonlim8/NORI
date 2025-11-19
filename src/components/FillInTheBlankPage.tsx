@@ -45,6 +45,25 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
   const [totalCount, setTotalCount] = useState(0);
   const confettiFired = useRef(false);
   const router = useRouter();
+  const baseSessionType = "fill-base";
+  const persistBaseDeck = async (deckWords: Word[], currentIdx = 0) => {
+    try {
+      await fetch("/api/review-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          type: baseSessionType,
+          level,
+          wordIds: deckWords.map((w) => w.id),
+          currentIndex: currentIdx,
+        }),
+      });
+    } catch (error) {
+      console.error("Failed to persist fill-in-the-blank base deck", error);
+    }
+  };
+
   const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
     try {
       await fetch("/api/review-session", {
@@ -77,8 +96,55 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
       try {
         const res = await fetch(`/api/words?level=${level}`);
         const data: Word[] = await res.json();
-        const shuffled = shuffle<Word>(data);
-        setFullDeck(shuffled);
+        const wordMap = new Map(data.map((w) => [w.id, w]));
+        let baseDeck: Word[] = [];
+        let needsPersist = false;
+
+        try {
+          const baseSessionRes = await fetch(
+            `/api/review-session?type=${baseSessionType}&level=${level}`,
+            { credentials: "include" }
+          );
+          if (baseSessionRes.ok) {
+            const baseSession = await baseSessionRes.json();
+            if (baseSession && Array.isArray(baseSession.wordIds)) {
+              const baseSessionIds = baseSession.wordIds as number[];
+              const ordered = baseSessionIds
+                .map((id) => wordMap.get(id))
+                .filter(Boolean) as Word[];
+              const orderedIds = new Set(ordered.map((w) => w.id));
+              const missing = data.filter((w) => !orderedIds.has(w.id));
+              const combinedDeck = [...ordered, ...missing];
+              if (combinedDeck.length === data.length) {
+                baseDeck = combinedDeck;
+                if (
+                  missing.length > 0 ||
+                  ordered.length !== baseSessionIds.length
+                ) {
+                  needsPersist = true;
+                }
+              }
+            }
+          }
+        } catch (error) {
+          console.error("Failed to load fill base deck order", error);
+        }
+
+        if (baseDeck.length === 0) {
+          baseDeck = shuffle<Word>(data);
+          needsPersist = true;
+        }
+
+        if (baseDeck.length !== data.length) {
+          baseDeck = [...data];
+          needsPersist = true;
+        }
+
+        if (needsPersist) {
+          await persistBaseDeck(baseDeck, 0);
+        }
+
+        setFullDeck(baseDeck);
 
         const sessRes = await fetch(
           `/api/review-session?type=fill&level=${level}`,
@@ -88,13 +154,13 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
         if (sessRes.ok) {
           const session = await sessRes.json();
           if (session && Array.isArray(session.wordIds)) {
-            const dict = new Map(shuffled.map((w) => [w.id, w]));
+            const dict = new Map(baseDeck.map((w) => [w.id, w]));
             const sessionDeck = (session.wordIds as number[])
               .map((id) => dict.get(id))
               .filter(Boolean) as Word[];
             if (sessionDeck.length > 0) {
               setDeck(sessionDeck);
-              setTotalCount(shuffled.length);
+              setTotalCount(baseDeck.length);
               setReviewMode(true);
               const resumeIndex = clampIndex(
                 typeof session.currentIndex === "number"
@@ -111,9 +177,9 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
           }
         }
 
-        setDeck(shuffled);
+        setDeck(baseDeck);
         setReviewMode(false);
-        setTotalCount(shuffled.length);
+        setTotalCount(baseDeck.length);
         setCurrentIndex(0);
         setUserAnswer("");
         setFeedback(null);
@@ -141,8 +207,19 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
       setProgress(mapped);
 
       if (!reviewMode && fullDeck.length > 0) {
-        const nextIndex = fullDeck.findIndex((w) => !mapped[w.id]);
-        setCurrentIndex(nextIndex >= 0 ? nextIndex : 0);
+        if (data.length > 0) {
+          const lastSeenRow = data.reduce((latest: any, cur: any) =>
+            new Date(cur.lastSeen) > new Date(latest.lastSeen) ? cur : latest
+          );
+          const resumeIndex = Math.min(
+            lastSeenRow.currentIndex ?? 0,
+            fullDeck.length - 1
+          );
+          setCurrentIndex(Math.max(0, resumeIndex));
+        } else {
+          const nextIndex = fullDeck.findIndex((w) => !mapped[w.id]);
+          setCurrentIndex(nextIndex >= 0 ? nextIndex : 0);
+        }
       }
     };
 
@@ -260,11 +337,12 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
           setProgress({});
           setReviewMode(false);
           const baseDeck = fullDeck.length > 0 ? fullDeck : deck;
-          const reshuffledFullDeck = shuffle<Word>(baseDeck);
-          setFullDeck(reshuffledFullDeck);
-          setDeck(reshuffledFullDeck);
-          setTotalCount(reshuffledFullDeck.length);
-          setCurrentIndex(0);
+        const reshuffledFullDeck = shuffle<Word>(baseDeck);
+        setFullDeck(reshuffledFullDeck);
+        setDeck(reshuffledFullDeck);
+        setTotalCount(reshuffledFullDeck.length);
+        setCurrentIndex(0);
+        await persistBaseDeck(reshuffledFullDeck, 0);
           if (canceledReviewPrompt) {
             router.push("/study/fill-in-the-blank");
             return;
@@ -304,8 +382,12 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
       <Header />
       <div className="flex flex-col items-center justify-center flex-grow gap-8 mt-20 text-center px-6 w-full max-w-3xl">
         <div className="w-full px-6 flex flex-col items-center">
-          <div className="w-full max-w-md bg-orange-50 rounded-full h-3 relative shadow-inner">
+          <div
+            data-testid="progress-bar-outer"
+            className="w-full max-w-md bg-orange-50 rounded-full h-3 relative shadow-inner"
+          >
             <div
+              data-testid="progress-bar-inner"
               className="h-3 rounded-full transition-all duration-300"
               style={{
                 backgroundColor: "#F27D88",
@@ -327,14 +409,22 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
           data-word-id={currentWord.id}
           className="bg-orange-50/100 border border-rose-100 rounded-2xl shadow-xl px-8 py-10 w-full flex flex-col items-center gap-6"
         >
-          {feedback === "wrong" ? (
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 font-noto-sans-jp">
+          {feedback === "correct" || feedback === "wrong" ? (
+            <h1
+              data-testid="blank-sentence"
+              className="text-3xl md:text-4xl font-bold text-gray-800 font-noto-sans-jp"
+            >
               {
                 currentWord.example_sentence.split(
                   currentWord.answer_in_example
                 )[0]
               }
-              <span className="text-red-500">
+              <span
+                data-testid="fill-answer"
+                className={
+                  feedback === "correct" ? "text-green-500" : "text-red-500"
+                }
+              >
                 {currentWord.answer_in_example}
               </span>
               {
