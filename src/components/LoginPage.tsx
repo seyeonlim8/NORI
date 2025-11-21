@@ -160,6 +160,7 @@ export default function LoginPage() {
           className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300"
         />
         <motion.button
+          data-testid="login-btn"
           whileHover={!isLocked && !isSubmitting ? { scale: 1.05 } : {}}
           whileTap={!isLocked && !isSubmitting ? { scale: 0.95 } : {}}
           disabled={isSubmitting || isLocked}
