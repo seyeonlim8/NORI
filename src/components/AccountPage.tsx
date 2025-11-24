@@ -176,28 +176,46 @@ export default function AccountPage() {
 
   const renderProgressSection = (
     title: string,
+    key: string,
     data?: { overall: number; levels: number[] }
   ) => {
     if (!data) return null;
     return (
-      <div className="bg-white rounded-2xl shadow-lg p-6 flex flex-col gap-6">
+      <div
+        data-testid={`progress-chart-container-${key}`}
+        className="bg-white rounded-2xl shadow-lg p-6 flex flex-col gap-6"
+      >
         <h2 className="text-xl font-bold text-[#F27D88] font-outfit">
           {title}
         </h2>
         <div className="flex flex-wrap gap-6 items-center">
           <div className="flex flex-col items-center">
             <ProgressPie percentage={data.overall} size={180} />
-            <p className="text-sm mt-2 text-gray-600">Total</p>
+            <p
+              data-testid="progress-total"
+              className="text-sm mt-2 text-gray-600"
+            >
+              Total
+            </p>
           </div>
           <div className="flex flex-wrap gap-4">
             {data.levels.map((val, idx) => (
-              <div key={idx} className="flex flex-col items-center">
+              <div
+                data-testid={`progress-pie-n${idx + 1}`}
+                key={idx}
+                className="flex flex-col items-center"
+              >
                 <ProgressPie
                   percentage={val}
                   size={100}
                   color={COLORS[idx % COLORS.length]}
                 />
-                <p className="text-xs mt-1 text-gray-600">N{idx + 1}</p>
+                <p
+                  data-testid={`progress-level-n${idx + 1}`}
+                  className="text-xs mt-1 text-gray-600"
+                >
+                  N{idx + 1}
+                </p>
               </div>
             ))}
           </div>
@@ -217,6 +235,11 @@ export default function AccountPage() {
           {["progress", "account"].map((tab) => (
             <button
               key={tab}
+              data-testid={
+                tab === "progress"
+                  ? "study-progress-tab"
+                  : "account-settings-tab"
+              }
               onClick={() => setActiveTab(tab as "progress" | "account")}
               className={`relative font-bold text-lg transition-colors ${activeTab === tab ? "text-[#F27D88]" : "text-gray-500 hover:text-[#F27D88]"}`}
             >
@@ -252,9 +275,11 @@ export default function AccountPage() {
                 <p className="text-center text-gray-600">Loading progress...</p>
               ) : (
                 <>
-                  {PROGRESS_TYPES.map(({ key, title }) =>
-                    renderProgressSection(title, progressData[key])
-                  )}
+                  {PROGRESS_TYPES.map(({ key, title }) => (
+                    <div key={key}>
+                      {renderProgressSection(title, key, progressData[key])}
+                    </div>
+                  ))}
                 </>
               )}
             </motion.div>
