@@ -285,7 +285,7 @@ export default function SignupPage() {
         </div>
 
         <motion.button
-          data-testid="signup-button"
+          data-testid="signup-btn"
           whileHover={{ scale: isPasswordStrong && !isSubmitting ? 1.05 : 1 }}
           whileTap={{ scale: isPasswordStrong && !isSubmitting ? 0.95 : 1 }}
           onClick={handleSubmit}
