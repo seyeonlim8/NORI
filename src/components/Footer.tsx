@@ -97,7 +97,7 @@ export default function Footer() {
 
         {/* Social Links */}
         <div>
-          <h3 className="font-bold text-gray-900 mb-4">Follow Us</h3>
+          <h3 className="font-bold text-gray-900 mb-4">Follow Me</h3>
           <div className="flex gap-4">
             {[
               {
