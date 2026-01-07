@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NORI
 
-## Getting Started
+NORI is a Japanese learning web app focused on JLPT vocabulary and kanji. It delivers bite-sized study flows (flashcards, quizzes, fill-in-the-blank) with accounts, progress tracking, and favorites to help learners build consistent momentum.
 
-First, run the development server:
+## What It Does
+
+- JLPT-focused study modes: flashcards, quizzes, and fill-in-the-blank practice
+- Vocabulary and kanji content organized by level (N1 to N5)
+- Favorites list for quick review
+- Progress tracking per mode/level and resume-able review sessions
+- Email-based signup with verification and JWT cookie sessions
+- Contact form for user feedback
+
+## Main Pages
+
+- Home landing page with study entry points
+- Study selection pages for flashcards/quiz/fill-in-the-blank
+- Login, signup, and email verification flows
+- Account management (profile update, password change, account deletion)
+- Contact page
+
+## API Highlights
+
+- Auth: signup with email verification, resend verification, login, logout
+- Words: list words, word details, add words (for data seeding/admin)
+- Progress: save study progress, reset progress, review session persistence
+- Favorites: add/remove and list favorites
+- Contact: send support messages via email
+
+## Tech Stack
+
+- Next.js 15 (App Router), React 19, TypeScript
+- Tailwind CSS for styling
+- Prisma ORM with MySQL
+- JWT auth stored in HttpOnly cookies
+- Nodemailer for verification and contact emails
+- Framer Motion animations, Swiper, Recharts, Lucide icons
+- Express dev server (runs alongside Next.js during `npm run dev`)
+
+## Local Development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Other scripts:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run build
+npm run start
+npm run lint
+npm run seed:words
+```
