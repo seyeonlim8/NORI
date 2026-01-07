@@ -34,7 +34,7 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Invalid token" }, { status: 401 });
   }
 }
@@ -99,7 +99,7 @@ export async function GET(req: Request) {
     });
 
     return NextResponse.json(progressList);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Invalid token" }, { status: 401 });
   }
 }
