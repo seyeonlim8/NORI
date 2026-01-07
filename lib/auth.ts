@@ -14,7 +14,7 @@ export async function getUserFromRequest(req: NextRequest) {
       where: { id: decoded.userId },
     });
     return user;
-  } catch (err) {
+  } catch {
     return null;
   }
 }
