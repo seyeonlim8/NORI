@@ -1,9 +1,9 @@
 import { prisma } from "../../../../../../lib/prisma";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export async function PATCH(
-  request: NextRequest,
-  { params }: { params: { id: string } }
+  request: Request,
+  context: { params: { id: string } }
 ) {
   try {
     const body = await request.json();
@@ -14,7 +14,7 @@ export async function PATCH(
         { status: 400 }
       );
     }
-    const wordId = parseInt(params.id);
+    const wordId = parseInt(context.params.id);
     if (Number.isNaN(wordId)) {
       return NextResponse.json(
         { success: false, message: "Invalid word id" },
@@ -38,7 +38,7 @@ export async function PATCH(
           language_code: m.language_code,
           word_meaning: m.word_meaning,
           example_sentence_meaning: m.example_sentence_meaning,
-        wordId,
+          wordId,
         })
       ),
     });
