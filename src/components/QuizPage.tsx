@@ -2,7 +2,7 @@
 import Header from "@/components/Header";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Footer from "./Footer";
 
 type Word = {
@@ -48,7 +48,7 @@ export default function QuizPage({
   const progressType = `quiz-${type}`;
   const baseSessionType = `${progressType}-base`;
 
-  const persistBaseDeck = async (deckWords: Word[], currentIdx = 0) => {
+  const persistBaseDeck = useCallback(async (deckWords: Word[], currentIdx = 0) => {
     try {
       await fetch("/api/review-session", {
         method: "POST",
@@ -64,9 +64,9 @@ export default function QuizPage({
     } catch (error) {
       console.error("Failed to persist quiz base deck", error);
     }
-  };
+  }, [baseSessionType, level]);
 
-  const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
+  const saveReviewSession = useCallback(async (wordIds: number[], nextIndex: number) => {
     try {
       await fetch("/api/review-session", {
         method: "POST",
@@ -82,7 +82,7 @@ export default function QuizPage({
     } catch (error) {
       console.error("Failed to persist quiz review session", error);
     }
-  };
+  }, [progressType, level]);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -256,7 +256,7 @@ export default function QuizPage({
     }
   }, [deck, fullDeck, currentIndex, type]);
 
-  const handleAnswer = async (choice: string) => {
+  const handleAnswer = useCallback(async (choice: string) => {
     if (selected || deck.length === 0) return;
 
     const currentWord = deck[currentIndex];
@@ -349,7 +349,19 @@ export default function QuizPage({
         }
       }
     }, 500);
-  };
+  }, [
+    selected,
+    deck,
+    currentIndex,
+    progress,
+    progressType,
+    level,
+    reviewMode,
+    fullDeck,
+    router,
+    persistBaseDeck,
+    saveReviewSession,
+  ]);
 
   const completedCount = Object.values(progress).filter(Boolean).length;
   const reviewProgressPercentage =
