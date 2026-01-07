@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function Footer() {
@@ -39,27 +40,27 @@ export default function Footer() {
           <h3 className="font-bold text-gray-900 mb-4">Explore</h3>
           <ul className="flex flex-col gap-2 text-sm">
             <li>
-              <a href="/about" className="hover:text-rose-500 transition">
+              <Link href="/about" className="hover:text-rose-500 transition">
                 About
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="/study/flashcards"
                 className="hover:text-rose-500 transition"
               >
                 Flashcards
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/study/quiz" className="hover:text-rose-500 transition">
+              <Link href="/study/quiz" className="hover:text-rose-500 transition">
                 Quizzes
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/contact" className="hover:text-rose-500 transition">
+              <Link href="/contact" className="hover:text-rose-500 transition">
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -155,15 +156,14 @@ export default function Footer() {
       {/* Bottom Copyright */}
       <div className="pt-6 text-center text-xs text-gray-500 font-outfit mb-10">
         © 2025 NORI. All rights reserved. |
-        <a href="/privacy" className="hover:text-rose-400">
+        <Link href="/privacy" className="hover:text-rose-400">
           {" "}
           Privacy Policy
-        </a>{" "}
-        |
-        <a href="/terms" className="hover:text-rose-400">
-          {" "}
+        </Link>{" "}
+        |{" "}
+        <Link href="/terms" className="hover:text-rose-400">
           Terms of Service
-        </a>
+        </Link>
       </div>
     </footer>
   );
