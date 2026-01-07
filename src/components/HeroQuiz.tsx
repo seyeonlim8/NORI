@@ -6,7 +6,6 @@ import { PencilLine } from "lucide-react";
 export default function HeroQuiz() {
   const [selected, setSelected] = useState<number | null>(null);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
-  const [progress, setProgress] = useState(28);
   const correctId = 3;
 
   const choices = [
@@ -25,7 +24,6 @@ export default function HeroQuiz() {
     setTimeout(() => {
       setSelected(null);
       setFeedback(null);
-      setProgress((p) => (p + 10 > 100 ? 0 : p + 10));
     }, 1500);
   };
 
