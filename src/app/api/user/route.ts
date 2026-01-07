@@ -42,7 +42,7 @@ export async function PATCH(req: Request) {
 
   const { username, password } = await req.json();
 
-  const updateData: any = {};
+  const updateData: { username?: string; password?: string } = {};
   if (username) updateData.username = username;
   if (password) updateData.password = await bcrypt.hash(password, 10);
 
