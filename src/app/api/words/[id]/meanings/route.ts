@@ -1,9 +1,9 @@
 import { prisma } from "../../../../../../lib/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(
-  request: Request,
-  context: { params: { id: string } }
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const body = await request.json();
@@ -14,7 +14,8 @@ export async function PATCH(
         { status: 400 }
       );
     }
-    const wordId = parseInt(context.params.id);
+    const { id } = await context.params;
+    const wordId = parseInt(id, 10);
     if (Number.isNaN(wordId)) {
       return NextResponse.json(
         { success: false, message: "Invalid word id" },
