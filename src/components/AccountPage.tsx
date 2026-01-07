@@ -95,7 +95,7 @@ export default function AccountPage() {
           });
 
           progress.forEach((item) => {
-            const lvl = item.level;
+            const lvl = item.level.toUpperCase();
             if (!totalsByLevel[lvl]) {
               totalsByLevel[lvl] = { total: 0, completed: 0 };
             }
