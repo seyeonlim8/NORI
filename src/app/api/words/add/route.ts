@@ -3,7 +3,18 @@ import { prisma } from "../../../../../lib/prisma";
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    const body = (await req.json()) as {
+      level?: string;
+      kanji?: string;
+      furigana?: string;
+      example_sentence?: string;
+      answer_in_example?: string;
+      meanings?: Array<{
+        language_code: string;
+        word_meaning: string;
+        example_sentence_meaning: string;
+      }>;
+    };
     const {
       level,
       kanji,
@@ -46,7 +57,7 @@ export async function POST(req: NextRequest) {
         example_sentence,
         answer_in_example,
         meanings: {
-          create: meanings.map((meaning: any) => ({
+          create: meanings.map((meaning) => ({
             language_code: meaning.language_code,
             word_meaning: meaning.word_meaning,
             example_sentence_meaning: meaning.example_sentence_meaning,
