@@ -16,7 +16,7 @@ export default function Header() {
           const data = await res.json();
           setUsername(data.username);
         }
-      } catch (err) {
+      } catch {
         setUsername(null);
       }
     };
@@ -32,7 +32,11 @@ export default function Header() {
   return (
     <div className="w-full max-w-screen-xl p-1 sm:p-1 flex justify-between items-center mx-auto border-b border-red-800 relative z-50">
       <Link href="/">
-        <img className="w-43 h-15 cursor-pointer" src="/nori-logo-w-text.png" />
+        <img
+          className="w-43 h-15 cursor-pointer"
+          src="/nori-logo-w-text.png"
+          alt="NORI logo"
+        />
       </Link>
 
       <div className="flex justify-end items-center gap-6">
