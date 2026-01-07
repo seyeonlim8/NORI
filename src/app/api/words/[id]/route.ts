@@ -1,10 +1,13 @@
 import { prisma } from "../../../../../lib/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 /* api/words/[id] */
 
 // Get word with specific id
-export async function GET(_: Request, context: { params: { id: string } }) {
+export async function GET(
+  _: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
   const { id } = await context.params; // await 필수
   const wordId = parseInt(id);
   const word = await prisma.word.findUnique({
@@ -21,11 +24,11 @@ export async function GET(_: Request, context: { params: { id: string } }) {
 
 // Update the whole word
 export async function PUT(
-  request: Request,
-  context: { params: { id: string } }
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
 ) {
   const data = await request.json();
-  const { id } = context.params;
+  const { id } = await context.params;
   const wordId = parseInt(id);
 
   const updatedWord = await prisma.word.update({
@@ -45,11 +48,11 @@ export async function PUT(
 
 // Update specified fields only - Except 'meanings'
 export async function PATCH(
-  request: Request,
-  context: { params: { id: string } }
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
 ) {
   const data = await request.json();
-  const { id } = context.params;
+  const { id } = await context.params;
   const wordId = parseInt(id);
 
   const updatedWord = await prisma.word.update({
@@ -60,8 +63,11 @@ export async function PATCH(
   return NextResponse.json(updatedWord);
 }
 
-export async function DELETE(_: Request, context: { params: { id: string } }) {
-  const { id } = context.params;
+export async function DELETE(
+  _: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
+  const { id } = await context.params;
   const wordId = parseInt(id);
   const deletedWord = await prisma.word.delete({
     where: { id: wordId },
