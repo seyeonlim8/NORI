@@ -10,10 +10,19 @@ interface FloatingIconsProps {
   icons?: ReactElement[];
 }
 
+const DEFAULT_COLORS = ["text-rose-300", "text-orange-300"];
+const DEFAULT_ICONS = [
+  <BookOpen key="book" />,
+  <Pencil key="pencil" />,
+  <Star key="star" />,
+  <Heart key="heart" />,
+  <Laugh key="laugh" />,
+];
+
 export function FloatingIcons({
   count = 30,
-  colors = ["text-rose-300", "text-orange-300"],
-  icons = [<BookOpen />, <Pencil />, <Star />, <Heart />, <Laugh />],
+  colors = DEFAULT_COLORS,
+  icons = DEFAULT_ICONS,
 }: FloatingIconsProps) {
   const [positions, setPositions] = useState<
     { left: string; top: string; size: string; color: string; icon: ReactElement; delay: number; duration: number }[]
@@ -43,7 +52,7 @@ export function FloatingIcons({
     });
 
     setPositions(generated);
-  }, []); // **여기서 빈 배열로 한 번만 실행**
+  }, [count, colors, icons]);
 
   return (
     <>
