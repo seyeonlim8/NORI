@@ -95,8 +95,8 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ message: "Verification email sent." });
-  } catch (err: any) {
-    console.error("❌ Signup API Error:", err, err?.message);
+  } catch (err) {
+    console.error("❌ Signup API Error:", err);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
@@ -136,8 +136,8 @@ export async function GET(req: Request) {
       { error: "username or email is required." },
       { status: 400 }
     );
-  } catch (err: any) {
-    console.error("Username check API Error:", err, err?.message);
+  } catch (err) {
+    console.error("Username check API Error:", err);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
