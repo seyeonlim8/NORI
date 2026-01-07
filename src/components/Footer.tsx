@@ -19,7 +19,7 @@ export default function Footer() {
       setSubscribed(true);
       setEmail("");
     } else {
-      alert("Subscription failed. Please try again.");
+      alert("Newsletter is under preparation. Please check back soon.");
     }
   };
 
@@ -101,7 +101,7 @@ export default function Footer() {
           <div className="flex gap-4">
             {[
               {
-                href: "#",
+                href: "https://www.linkedin.com/in/limseyeon/",
                 label: "LinkedIn",
                 icon: (
                   <svg
@@ -114,7 +114,7 @@ export default function Footer() {
                 ),
               },
               {
-                href: "#",
+                href: "https://github.com/seyeonlim8",
                 label: "GitHub",
                 icon: (
                   <svg
@@ -123,19 +123,6 @@ export default function Footer() {
                     viewBox="0 0 24 24"
                   >
                     <path d="M12 .3c-6.6 0-12 5.4-12 12 0 5.3 3.4 9.8 8.2 11.4.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.6-4-1.6-.5-1.2-1.2-1.5-1.2-1.5-1-.7.1-.7.1-.7 1 .1 1.6 1 1.6 1 .9 1.6 2.3 1.1 2.8.8.1-.7.4-1.1.7-1.4-2.7-.3-5.5-1.4-5.5-6.1 0-1.4.5-2.5 1.2-3.4-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.4 11.4 0 016 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.7.9 1.2 2 1.2 3.4 0 4.7-2.8 5.8-5.5 6.1.4.3.7.9.7 1.8v2.7c0 .3.2.7.8.6 4.8-1.6 8.2-6.1 8.2-11.4C24 5.7 18.6.3 12 .3z" />
-                  </svg>
-                ),
-              },
-              {
-                href: "#",
-                label: "Instagram",
-                icon: (
-                  <svg
-                    className="w-4 h-4"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M7.5 2h9A5.5 5.5 0 0122 7.5v9A5.5 5.5 0 0116.5 22h-9A5.5 5.5 0 012 16.5v-9A5.5 5.5 0 017.5 2zm0 2A3.5 3.5 0 004 7.5v9A3.5 3.5 0 007.5 20h9a3.5 3.5 0 003.5-3.5v-9A3.5 3.5 0 0016.5 4h-9zm4.5 3a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6zm5-2a1 1 0 110 2 1 1 0 010-2z" />
                   </svg>
                 ),
               },
@@ -155,7 +142,7 @@ export default function Footer() {
 
       {/* Bottom Copyright */}
       <div className="pt-6 text-center text-xs text-gray-500 font-outfit mb-10">
-        © 2025 NORI. All rights reserved. |
+        © 2026 NORI. All rights reserved. |
         <Link href="/privacy" className="hover:text-rose-400">
           {" "}
           Privacy Policy
