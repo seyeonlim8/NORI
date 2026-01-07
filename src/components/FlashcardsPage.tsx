@@ -18,6 +18,12 @@ type Word = {
     example_sentence_meaning: string;
   }[];
 };
+type StudyProgressRow = {
+  wordId: number;
+  completed: boolean;
+  lastSeen: string | Date;
+  currentIndex?: number | null;
+};
 
 const shuffle = <T,>(items: T[]): T[] => {
   const arr = [...items];
@@ -209,14 +215,14 @@ const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
         { credentials: "include" }
       );
       if (res.ok) {
-        const data = await res.json();
+        const data = (await res.json()) as StudyProgressRow[];
         const mapped: Record<number, boolean> = {};
-        data.forEach((p: any) => (mapped[p.wordId] = p.completed));
+        data.forEach((p) => (mapped[p.wordId] = p.completed));
         setProgress(mapped);
 
         if (!reviewMode && fullDeck.length > 0) {
           if (data.length > 0) {
-            const lastSeenRow = data.reduce((latest: any, cur: any) =>
+            const lastSeenRow = data.reduce((latest, cur) =>
               new Date(cur.lastSeen) > new Date(latest.lastSeen) ? cur : latest
             );
             const resumeIndex = Math.min(
