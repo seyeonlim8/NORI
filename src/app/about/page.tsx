@@ -32,13 +32,40 @@ function useCountUp(end: number, duration = 1500) {
   return count;
 }
 
-export default function AboutPage() {
-  const testimonials = [
-    { name: "Alice (N3)", text: "NORI made studying fun and effective!" },
-    { name: "Brian (N2)", text: "The progress tracking kept me motivated." },
-    { name: "Cathy (N4)", text: "I finally feel confident for my JLPT!" },
-  ];
+const testimonials = [
+  { name: "Alice (N3)", text: "NORI made studying fun and effective!" },
+  { name: "Brian (N2)", text: "The progress tracking kept me motivated." },
+  { name: "Cathy (N4)", text: "I finally feel confident for my JLPT!" },
+];
 
+function StatCard({
+  end,
+  label,
+  delay,
+}: {
+  end: number;
+  label: string;
+  delay: number;
+}) {
+  const count = useCountUp(end);
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay, duration: 0.8 }}
+      className="flex flex-col items-center gap-4 relative"
+    >
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-36 h-36 bg-orange-200 rounded-full blur-sm opacity-90 pointer-events-none"></div>
+      <span className="text-5xl font-bold text-[#F27D88] z-10">
+        {count.toLocaleString()}+
+      </span>
+      <span className="text-gray-700 z-10">{label}</span>
+    </motion.div>
+  );
+}
+
+export default function AboutPage() {
   const [index, setIndex] = useState(0);
 
   // Switch testimonials
@@ -248,7 +275,7 @@ export default function AboutPage() {
                 className="absolute inset-0 flex flex-col justify-center items-center"
               >
                 <p className="text-2xl italic text-gray-700 max-w-2xl">
-                  "{testimonials[index].text}"
+                  &ldquo;{testimonials[index].text}&rdquo;
                 </p>
                 <span className="mt-4 font-bold text-[#F27D88] text-lg">
                   {testimonials[index].name}
@@ -266,25 +293,14 @@ export default function AboutPage() {
             { end: 10000, label: "Words in Our Database" },
             { end: 5, label: "JLPT Levels Supported" },
             { end: 1000, label: "Active Learners" },
-          ].map((stat, idx) => {
-            const count = useCountUp(stat.end);
-            return (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.2, duration: 0.8 }}
-                className="flex flex-col items-center gap-4 relative"
-              >
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-36 h-36 bg-orange-200 rounded-full blur-sm opacity-90 pointer-events-none"></div>
-                <span className="text-5xl font-bold text-[#F27D88] z-10">
-                  {count.toLocaleString()}+
-                </span>
-                <span className="text-gray-700 z-10">{stat.label}</span>
-              </motion.div>
-            );
-          })}
+          ].map((stat, idx) => (
+            <StatCard
+              key={stat.label}
+              end={stat.end}
+              label={stat.label}
+              delay={idx * 0.2}
+            />
+          ))}
         </div>
       </section>
 
