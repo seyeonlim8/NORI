@@ -2,6 +2,13 @@
 
 NORI is a Japanese learning web app focused on JLPT vocabulary and kanji. It delivers bite-sized study flows (flashcards, quizzes, fill-in-the-blank) with accounts, progress tracking, and favorites to help learners build consistent momentum.
 
+## Screenshots
+
+![Main](src/data/main.png)
+![Quiz](src/data/qui.png)
+![Flashcards](src/data/fc.png)
+![Fill in the Blank](src/data/fib.png)
+
 ## What It Does
 
 - JLPT-focused study modes: flashcards, quizzes, and fill-in-the-blank practice
