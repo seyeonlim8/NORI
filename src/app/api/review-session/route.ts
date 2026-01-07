@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { Prisma } from "@prisma/client";
 import { prisma } from "../../../../lib/prisma";
 import { getUserId } from "@/lib/auth"; 
 
@@ -55,8 +56,11 @@ export async function POST(req: Request) {
       create: { userId, type, level, wordIds, currentIndex },
     });
     return NextResponse.json(session);
-  } catch (error: any) {
-    if (error?.code === "P2002") {
+  } catch (error) {
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === "P2002"
+    ) {
       const session = await prisma.reviewSession.update({
         where: { userId_type_level: { userId, type, level } },
         data: { wordIds, currentIndex },
