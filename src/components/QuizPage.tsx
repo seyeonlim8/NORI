@@ -45,6 +45,7 @@ export default function QuizPage({
   const [progress, setProgress] = useState<Record<number, boolean>>({});
   const [reviewMode, setReviewMode] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
+  const [progressLoaded, setProgressLoaded] = useState(false);
   const progressType = `quiz-${type}`;
   const baseSessionType = `${progressType}-base`;
 
@@ -95,6 +96,7 @@ export default function QuizPage({
   useEffect(() => {
     const loadWords = async () => {
       setLoading(true);
+      setProgressLoaded(false);
       try {
         const res = await fetch(`/api/words?level=${level}`);
         const data: Word[] = await res.json();
@@ -194,34 +196,39 @@ export default function QuizPage({
   }, [level, progressType, baseSessionType]);
 
   useEffect(() => {
+    if (loading) return;
     const fetchProgress = async () => {
-      const res = await fetch(
-        `/api/study-progress?type=${progressType}&level=${level}`,
-        {
-          credentials: "include",
+      try {
+        const res = await fetch(
+          `/api/study-progress?type=${progressType}&level=${level}`,
+          {
+            credentials: "include",
+          }
+        );
+        if (!res.ok) return;
+
+        const data = (await res.json()) as StudyProgressRow[];
+        const mapped: Record<number, boolean> = {};
+        data.forEach((p) => (mapped[p.wordId] = p.completed));
+        setProgress(mapped);
+
+        if (!reviewMode && fullDeck.length > 0 && data.length > 0) {
+          const lastSeenRow = data.reduce((latest, cur) =>
+            new Date(cur.lastSeen) > new Date(latest.lastSeen) ? cur : latest
+          );
+          const resumeIndex = Math.min(
+            lastSeenRow.currentIndex ?? 0,
+            fullDeck.length - 1
+          );
+          setCurrentIndex(Math.max(0, resumeIndex));
         }
-      );
-      if (!res.ok) return;
-
-      const data = (await res.json()) as StudyProgressRow[];
-      const mapped: Record<number, boolean> = {};
-      data.forEach((p) => (mapped[p.wordId] = p.completed));
-      setProgress(mapped);
-
-      if (!reviewMode && fullDeck.length > 0 && data.length > 0) {
-        const lastSeenRow = data.reduce((latest, cur) =>
-          new Date(cur.lastSeen) > new Date(latest.lastSeen) ? cur : latest
-        );
-        const resumeIndex = Math.min(
-          lastSeenRow.currentIndex ?? 0,
-          fullDeck.length - 1
-        );
-        setCurrentIndex(Math.max(0, resumeIndex));
+      } finally {
+        setProgressLoaded(true);
       }
     };
 
     fetchProgress();
-  }, [level, progressType, reviewMode, fullDeck]);
+  }, [level, progressType, reviewMode, fullDeck, loading]);
 
   const generateOptions = (word: Word, source: Word[]) => {
     const correct = type === "kanji-to-furigana" ? word.furigana : word.kanji;
@@ -389,7 +396,9 @@ export default function QuizPage({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [options, selected, handleAnswer]);
 
-  if (loading) return <div className="text-center mt-40">Loading...</div>;
+  if (loading || !progressLoaded) {
+    return <div className="text-center mt-40">Loading...</div>;
+  }
   if (deck.length === 0)
     return <div className="text-center mt-40">No words.</div>;
 
