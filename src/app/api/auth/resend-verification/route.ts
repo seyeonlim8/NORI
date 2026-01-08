@@ -6,11 +6,28 @@ import sendEmail from "../../../../../lib/email";
 export async function POST(req: Request) {
   try {
     const { email } = await req.json();
+    const cooldownMs = 60 * 1000;
 
     // Find user by email
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
       return NextResponse.json({ error: "User not found." }, { status: 404 });
+    }
+    if (user.verificationEmailSentAt) {
+      const elapsedMs =
+        Date.now() - user.verificationEmailSentAt.getTime();
+      if (elapsedMs < cooldownMs) {
+        const retryAfterSeconds = Math.ceil(
+          (cooldownMs - elapsedMs) / 1000
+        );
+        return NextResponse.json(
+          {
+            error: `Please wait ${retryAfterSeconds}s before resending.`,
+            retryAfterSeconds,
+          },
+          { status: 429 }
+        );
+      }
     }
 
     // Generate a new verification token
@@ -21,6 +38,7 @@ export async function POST(req: Request) {
       where: { email },
       data: {
         verifyToken,
+        verificationEmailSentAt: new Date(),
       },
     });
 
