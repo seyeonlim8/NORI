@@ -22,6 +22,7 @@ export async function POST(req: Request) {
 
     // Create token
     const verifyToken = crypto.randomBytes(32).toString("hex");
+    const verifyTokenExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
     // Save to DB
     await prisma.user.create({
@@ -32,6 +33,7 @@ export async function POST(req: Request) {
         isVerified: false,
         verifyToken,
         verificationEmailSentAt: new Date(),
+        verifyTokenExpiresAt,
       },
     });
 
