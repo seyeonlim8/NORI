@@ -11,12 +11,16 @@ export async function POST(req: Request) {
   if (!user) {
     return NextResponse.json({ error: "Incorrect token." }, { status: 400 });
   }
+  if (user.verifyTokenExpiresAt && user.verifyTokenExpiresAt < new Date()) {
+    return NextResponse.json({ error: "expired" }, { status: 410 });
+  }
 
   await prisma.user.update({
     where: { id: user.id },
     data: {
       isVerified: true,
       verifyToken: null,
+      verifyTokenExpiresAt: null,
     },
   });
 
