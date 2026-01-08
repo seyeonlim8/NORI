@@ -48,6 +48,7 @@ export default function FlashcardsPage({ level }: { level: string }) {
   const [reviewMode, setReviewMode] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [progressLoaded, setProgressLoaded] = useState(level === "favorites");
 
   const router = useRouter();
   const persistBaseDeck = async (deckWords: Word[], currentIdx = 0) => {
@@ -67,22 +68,22 @@ export default function FlashcardsPage({ level }: { level: string }) {
       console.error("Failed to persist base flashcards order", error);
     }
   };
-const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
-  try {
-    await fetch("/api/review-session", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({
-        type: "flashcards",
-        level,
-        wordIds,
-        currentIndex: nextIndex,
-      }),
-    });
-  } catch (error) {
-    console.error("Failed to persist review session", error);
-  }
+  const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
+    try {
+      await fetch("/api/review-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          type: "flashcards",
+          level,
+          wordIds,
+          currentIndex: nextIndex,
+        }),
+      });
+    } catch (error) {
+      console.error("Failed to persist review session", error);
+    }
   };
 
   // Check login
@@ -98,6 +99,7 @@ const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
+      setProgressLoaded(level === "favorites");
 
       if (level === "favorites") {
         const res = await fetch("/api/favorites", { credentials: "include" });
@@ -113,6 +115,7 @@ const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
         setFavoritedWords(shuffledFavorites);
         setTotalCount(shuffledFavorites.length);
         setLoading(false);
+        setProgressLoaded(true);
       } else {
         const res = await fetch(`/api/words?level=${level}`);
         const words: Word[] = await res.json();
@@ -185,7 +188,10 @@ const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
               setCards(deck);
               setTotalCount(baseDeck.length);
               setReviewMode(true);
-              const idx = typeof session.currentIndex === "number" ? session.currentIndex : 0;
+              const idx =
+                typeof session.currentIndex === "number"
+                  ? session.currentIndex
+                  : 0;
               const resumeIndex = Math.min(Math.max(0, idx), deck.length - 1);
               setCurrentIndex(resumeIndex);
               setLoading(false);
@@ -205,36 +211,58 @@ const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
     loadData();
   }, [level, router]);
 
+  useEffect(() => {
+    if (level === "favorites") return;
+    const loadFavorites = async () => {
+      const res = await fetch("/api/favorites", { credentials: "include" });
+      if (res.status === 401) {
+        router.push(`/login?redirect=${window.location.pathname}`);
+        return;
+      }
+      if (res.ok) {
+        const data = await res.json();
+        setFavoritedWords(data);
+      }
+    };
+    loadFavorites();
+  }, [level, router]);
+
   // Get study progress - exclude favorites
   useEffect(() => {
     if (level === "favorites" || loading) return;
 
     const fetchProgress = async () => {
-      const res = await fetch(
-        `/api/study-progress?type=flashcards&level=${level}`,
-        { credentials: "include" }
-      );
-      if (res.ok) {
-        const data = (await res.json()) as StudyProgressRow[];
-        const mapped: Record<number, boolean> = {};
-        data.forEach((p) => (mapped[p.wordId] = p.completed));
-        setProgress(mapped);
+      try {
+        const res = await fetch(
+          `/api/study-progress?type=flashcards&level=${level}`,
+          { credentials: "include" }
+        );
+        if (res.ok) {
+          const data = (await res.json()) as StudyProgressRow[];
+          const mapped: Record<number, boolean> = {};
+          data.forEach((p) => (mapped[p.wordId] = p.completed));
+          setProgress(mapped);
 
-        if (!reviewMode && fullDeck.length > 0) {
-          if (data.length > 0) {
-            const lastSeenRow = data.reduce((latest, cur) =>
-              new Date(cur.lastSeen) > new Date(latest.lastSeen) ? cur : latest
-            );
-            const resumeIndex = Math.min(
-              lastSeenRow.currentIndex ?? 0,
-              fullDeck.length - 1
-            );
-            setCurrentIndex(Math.max(0, resumeIndex));
-          } else {
-            const nextIndex = fullDeck.findIndex((w) => !mapped[w.id]);
-            setCurrentIndex(nextIndex >= 0 ? nextIndex : 0);
+          if (!reviewMode && fullDeck.length > 0) {
+            if (data.length > 0) {
+              const lastSeenRow = data.reduce((latest, cur) =>
+                new Date(cur.lastSeen) > new Date(latest.lastSeen)
+                  ? cur
+                  : latest
+              );
+              const resumeIndex = Math.min(
+                lastSeenRow.currentIndex ?? 0,
+                fullDeck.length - 1
+              );
+              setCurrentIndex(Math.max(0, resumeIndex));
+            } else {
+              const nextIndex = fullDeck.findIndex((w) => !mapped[w.id]);
+              setCurrentIndex(nextIndex >= 0 ? nextIndex : 0);
+            }
           }
         }
+      } finally {
+        setProgressLoaded(true);
       }
     };
 
@@ -275,7 +303,9 @@ const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
       if (cards.length === 0) return;
 
       if (level === "favorites") {
-        setCurrentIndex((prev) => (cards.length > 0 ? (prev + 1) % cards.length : 0));
+        setCurrentIndex((prev) =>
+          cards.length > 0 ? (prev + 1) % cards.length : 0
+        );
         return;
       }
 
@@ -329,10 +359,13 @@ const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
         }
 
         // On reset, clear the session
-        await fetch(`/api/study-progress/reset?type=flashcards&level=${level}`, {
-          method: "POST",
-          credentials: "include",
-        });
+        await fetch(
+          `/api/study-progress/reset?type=flashcards&level=${level}`,
+          {
+            method: "POST",
+            credentials: "include",
+          }
+        );
         await fetch(`/api/review-session?type=flashcards&level=${level}`, {
           method: "DELETE",
           credentials: "include",
@@ -373,14 +406,14 @@ const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
       ? (reviewCompletedCount / cards.length) * 100
       : 0;
   const studyProgressPercentage =
-    !reviewMode && totalCount > 0
-      ? (completedCount / totalCount) * 100
-      : 0;
+    !reviewMode && totalCount > 0 ? (completedCount / totalCount) * 100 : 0;
   const progressPercentage = reviewMode
     ? reviewProgressPercentage
     : studyProgressPercentage;
 
-  if (loading) return <div className="text-center mt-40">Loading...</div>;
+  if (loading || (!progressLoaded && level !== "favorites")) {
+    return <div className="text-center mt-40">Loading...</div>;
+  }
   if (cards.length === 0)
     return <div className="text-center mt-40">No words to load.</div>;
 
@@ -443,9 +476,16 @@ const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
               onClick={toggleFavorite}
             >
               {isFavorited ? (
-                <span className="text-orange-300 text-4xl">★</span>
+                <span
+                  data-testid="star-btn"
+                  className="text-orange-300 text-4xl"
+                >
+                  ★
+                </span>
               ) : (
-                <span className="text-gray-300 text-4xl">☆</span>
+                <span data-testid="star-btn" className="text-gray-300 text-4xl">
+                  ☆
+                </span>
               )}
             </div>
 
@@ -466,17 +506,26 @@ const saveReviewSession = async (wordIds: number[], nextIndex: number) => {
               {card.kanji}
             </div>
             {showMeaning && (
-              <div className="text-center text-lg text-rose-400 font-outfit">
+              <div
+                data-testid="meaning"
+                className="text-center text-lg text-rose-400 font-outfit"
+              >
                 {englishMeaning?.word_meaning ?? ""}
               </div>
             )}
             {showExample && (
-              <div className="text-center text-xl text-gray-600 font-noto-sans-jp">
+              <div
+                data-testid="ex-sentence"
+                className="text-center text-xl text-gray-600 font-noto-sans-jp"
+              >
                 {card.example_sentence}
                 {showMeaning && englishMeaning?.example_sentence_meaning && (
                   <>
                     <br />
-                    <span className="text-gray-400 text-base font-outfit">
+                    <span
+                      data-testid="ex-translation"
+                      className="text-gray-400 text-base font-outfit"
+                    >
                       {englishMeaning.example_sentence_meaning}
                     </span>
                   </>
