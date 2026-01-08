@@ -1,11 +1,10 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Header from "./Header";
 
 export default function SignupPage() {
-  const verificationCooldownMs = 60 * 1000;
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,35 +12,10 @@ export default function SignupPage() {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isResending, setIsResending] = useState(false);
-  const [usernameAvailable, setUsernameAvailable] = useState<null | boolean>(
-    null
-  );
-  const [usernameCheckLoading, setUsernameCheckLoading] = useState(false);
   const [emailTouched, setEmailTouched] = useState(false);
-  const [emailAvailable, setEmailAvailable] = useState<null | boolean>(null);
-  const [emailCheckLoading, setEmailCheckLoading] = useState(false);
   const [signupComplete, setSignupComplete] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [statusIsSuccess, setStatusIsSuccess] = useState(false);
-  const [canResendVerification, setCanResendVerification] = useState(false);
-  const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
-
-  useEffect(() => {
-    if (!cooldownUntil) {
-      setCanResendVerification(false);
-      return;
-    }
-    const remainingMs = cooldownUntil - Date.now();
-    if (remainingMs <= 0) {
-      setCanResendVerification(true);
-      return;
-    }
-    setCanResendVerification(false);
-    const timer = window.setTimeout(() => {
-      setCanResendVerification(true);
-    }, remainingMs);
-    return () => window.clearTimeout(timer);
-  }, [cooldownUntil]);
 
   const passwordValidations = {
     hasUpperCase: /[A-Z]/.test(password),
@@ -63,47 +37,6 @@ export default function SignupPage() {
     username.length >= 4 &&
     username.length <= 19 &&
     /^[a-zA-Z0-9]+$/.test(username);
-
-  useEffect(() => {
-    if (!usernameValid) {
-      setUsernameAvailable(null);
-      return;
-    }
-    setUsernameCheckLoading(true);
-    const controller = new AbortController();
-    fetch(`/api/auth/signup?username=${encodeURIComponent(username)}`, {
-      method: "GET",
-      signal: controller.signal,
-    })
-      .then(async (res) => {
-        const data = await res.json();
-        setUsernameAvailable(res.ok && data.available);
-      })
-      .catch(() => setUsernameAvailable(null))
-      .finally(() => setUsernameCheckLoading(false));
-    return () => controller.abort();
-  }, [username, usernameValid]);
-
-  // Email availability check
-  useEffect(() => {
-    if (!emailValid) {
-      setEmailAvailable(null);
-      return;
-    }
-    setEmailCheckLoading(true);
-    const controller = new AbortController();
-    fetch(`/api/auth/signup?email=${encodeURIComponent(email)}`, {
-      method: "GET",
-      signal: controller.signal,
-    })
-      .then(async (res) => {
-        const data = await res.json();
-        setEmailAvailable(res.ok && data.available);
-      })
-      .catch(() => setEmailAvailable(null))
-      .finally(() => setEmailCheckLoading(false));
-    return () => controller.abort();
-  }, [email, emailValid]);
 
   const handleSubmit = async () => {
     const newErrors: { [key: string]: string } = {};
@@ -136,7 +69,6 @@ export default function SignupPage() {
           "Account created! Please check your email to verify your account."
         );
         setStatusIsSuccess(true);
-        setCooldownUntil(Date.now() + verificationCooldownMs);
       } else {
         const data = await res.json();
         setStatusMessage(
@@ -167,11 +99,9 @@ export default function SignupPage() {
       if (res.ok) {
         setStatusMessage("Verification email resent! Please check your inbox.");
         setStatusIsSuccess(true);
-        setCooldownUntil(Date.now() + verificationCooldownMs);
       } else if (res.status === 429 && data.retryAfterSeconds) {
         setStatusMessage(data.error || "Please wait before resending.");
         setStatusIsSuccess(false);
-        setCooldownUntil(Date.now() + data.retryAfterSeconds * 1000);
       } else {
         setStatusMessage(
           data.error || "Failed to resend verification email."
@@ -231,15 +161,9 @@ export default function SignupPage() {
                 <span className="text-red-500">
                   Username must be 4-19 characters, letters and numbers only.
                 </span>
-              ) : usernameCheckLoading ? (
-                <span className="text-gray-500">Checking username...</span>
-              ) : usernameAvailable === false ? (
-                <span className="text-red-500">
-                  Username is already in use.
-                </span>
-              ) : usernameAvailable === true ? (
-                <span className="text-green-600">Username available!</span>
-              ) : null}
+              ) : (
+                <span className="text-green-600">Username looks good.</span>
+              )}
             </p>
           )}
           {errors.username && (
@@ -262,13 +186,9 @@ export default function SignupPage() {
             <p data-testid="email-feedback" className="text-sm mt-[-2px]">
               {!emailValid ? (
                 <span className="text-red-500">Invalid email format.</span>
-              ) : emailCheckLoading ? (
-                <span className="text-gray-500">Checking email...</span>
-              ) : emailAvailable === false ? (
-                <span className="text-red-500">Email is already in use.</span>
-              ) : emailAvailable === true ? (
-                <span className="text-green-600">Email available!</span>
-              ) : null}
+              ) : (
+                <span className="text-green-600">Email looks good.</span>
+              )}
             </p>
           )}
           {errors.email && !emailTouched && (
@@ -373,18 +293,14 @@ export default function SignupPage() {
             isSubmitting ||
             signupComplete ||
             !usernameValid ||
-            usernameAvailable !== true ||
             !emailValid ||
-            emailAvailable !== true ||
             !passwordsMatch
           }
           className={`text-white font-bold py-3 rounded-md uppercase tracking-wide font-(family-name:--font-outfit) ${
             isPasswordStrong &&
             !isSubmitting &&
             usernameValid &&
-            usernameAvailable === true &&
             emailValid &&
-            emailAvailable === true &&
             passwordsMatch
               ? "cursor-pointer"
               : "cursor-not-allowed opacity-50"
@@ -397,24 +313,18 @@ export default function SignupPage() {
         {signupComplete && (
           <div className="text-center text-sm text-gray-600">
             <p>Didn&apos;t get the email?</p>
-            {canResendVerification ? (
-              <button
-                data-testid="resend-verification-btn"
-                onClick={handleResendVerification}
-                disabled={isResending}
-                className={`text-[#F27D88] font-bold hover:underline ${
-                  isResending ? "opacity-60 cursor-not-allowed" : ""
-                }`}
-              >
-                {isResending
-                  ? "Resending verification email..."
-                  : "Resend verification email"}
-              </button>
-            ) : (
-              <p className="text-xs text-gray-500">
-                Resend available after 60 seconds.
-              </p>
-            )}
+            <button
+              data-testid="resend-verification-btn"
+              onClick={handleResendVerification}
+              disabled={isResending}
+              className={`text-[#F27D88] font-bold hover:underline ${
+                isResending ? "opacity-60 cursor-not-allowed" : ""
+              }`}
+            >
+              {isResending
+                ? "Resending verification email..."
+                : "Resend verification email"}
+            </button>
           </div>
         )}
 
