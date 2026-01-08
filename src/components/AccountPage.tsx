@@ -40,6 +40,10 @@ export default function AccountPage() {
   const [newPassword, setNewPassword] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [usernameAvailable, setUsernameAvailable] = useState<null | boolean>(
+    null
+  );
+  const [usernameCheckLoading, setUsernameCheckLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<"progress" | "account">(
     "progress"
   );
@@ -52,6 +56,24 @@ export default function AccountPage() {
     hasMinLength: newPassword.length >= 8,
   };
   const isPasswordStrong = Object.values(passwordValidations).every(Boolean);
+  const normalizedUsername = newUsername.trim();
+  const usernameValid =
+    normalizedUsername.length >= 4 &&
+    normalizedUsername.length <= 19 &&
+    /^[a-zA-Z0-9]+$/.test(normalizedUsername);
+  const isSameUsername =
+    normalizedUsername.length > 0 && normalizedUsername === user?.username;
+  const hasUsernameChange = normalizedUsername.length > 0;
+  const hasPasswordChange = newPassword.length > 0;
+  const usernameReady =
+    !hasUsernameChange ||
+    (usernameValid &&
+      !isSameUsername &&
+      usernameAvailable === true &&
+      !usernameCheckLoading);
+  const passwordReady = !hasPasswordChange || isPasswordStrong;
+  const canSave =
+    (hasUsernameChange || hasPasswordChange) && usernameReady && passwordReady;
 
   // Load user info
   useEffect(() => {
@@ -65,6 +87,35 @@ export default function AccountPage() {
     };
     fetchUser();
   }, []);
+
+  useEffect(() => {
+    if (!normalizedUsername) {
+      setUsernameAvailable(null);
+      setUsernameCheckLoading(false);
+      return;
+    }
+    if (!usernameValid || isSameUsername) {
+      setUsernameAvailable(false);
+      setUsernameCheckLoading(false);
+      return;
+    }
+    setUsernameCheckLoading(true);
+    const controller = new AbortController();
+    fetch(
+      `/api/auth/signup?username=${encodeURIComponent(normalizedUsername)}`,
+      {
+        method: "GET",
+        signal: controller.signal,
+      }
+    )
+      .then(async (res) => {
+        const data = await res.json();
+        setUsernameAvailable(res.ok && data.available);
+      })
+      .catch(() => setUsernameAvailable(null))
+      .finally(() => setUsernameCheckLoading(false));
+    return () => controller.abort();
+  }, [normalizedUsername, usernameValid, isSameUsername]);
 
   // Calculate total progress
   useEffect(() => {
@@ -303,16 +354,48 @@ export default function AccountPage() {
                   Current username: {user?.username}
                 </p>
                 <input
+                  data-testid="username-field"
                   type="text"
                   placeholder="New username"
                   className="border border-rose-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-rose-300"
                   value={newUsername}
                   onChange={(e) => setNewUsername(e.target.value)}
                 />
+                {normalizedUsername.length > 0 && (
+                  <p data-testid="username-check" className="text-sm mt-[-2px]">
+                    {!usernameValid ? (
+                      <span className="text-red-500">
+                        Username must be 4-19 characters, letters and numbers
+                        only.
+                      </span>
+                    ) : isSameUsername ? (
+                      <span className="text-red-500">
+                        That&apos;s already your current username.
+                      </span>
+                    ) : usernameCheckLoading ? (
+                      <span className="text-gray-500">
+                        Checking username...
+                      </span>
+                    ) : usernameAvailable === true ? (
+                      <span className="text-green-600">
+                        Username available!
+                      </span>
+                    ) : usernameAvailable === false ? (
+                      <span className="text-red-500">
+                        Username is already in use.
+                      </span>
+                    ) : (
+                      <span className="text-gray-500">
+                        Unable to verify username right now.
+                      </span>
+                    )}
+                  </p>
+                )}
               </div>
               <div className="flex flex-col gap-3">
                 <label className="font-semibold text-gray-700">Password</label>
                 <input
+                  data-testid="pw-field"
                   type="password"
                   placeholder="New password"
                   className="border border-rose-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-rose-300"
@@ -320,7 +403,10 @@ export default function AccountPage() {
                   onChange={(e) => setNewPassword(e.target.value)}
                 />
                 {newPassword && (
-                  <ul className="text-sm mt-2 text-gray-600 space-y-1">
+                  <ul
+                    data-testid="pw-check"
+                    className="text-sm mt-2 text-gray-600 space-y-1"
+                  >
                     {Object.entries(passwordValidations).map(
                       ([rule, valid]) => (
                         <li
@@ -343,9 +429,13 @@ export default function AccountPage() {
               </div>
               <div className="flex justify-between items-center mt-6">
                 <button
+                  data-testid="save-btn"
                   onClick={async () => {
                     setError("");
                     setMessage("");
+                    if (!canSave) {
+                      return;
+                    }
                     if (newPassword && !isPasswordStrong) {
                       setError("Password does not meet the requirements.");
                       return;
@@ -355,7 +445,7 @@ export default function AccountPage() {
                       headers: { "Content-Type": "application/json" },
                       credentials: "include",
                       body: JSON.stringify({
-                        username: newUsername || undefined,
+                        username: normalizedUsername || undefined,
                         password: newPassword || undefined,
                       }),
                     });
@@ -370,11 +460,17 @@ export default function AccountPage() {
                       setError("Failed to update account.");
                     }
                   }}
-                  className="px-6 py-3 rounded-lg bg-[#F27D88] text-white font-bold hover:scale-105 transition-transform"
+                  disabled={!canSave}
+                  className={`px-6 py-3 rounded-lg text-white font-bold transition-transform ${
+                    canSave
+                      ? "bg-[#F27D88] hover:scale-105"
+                      : "bg-gray-300 cursor-not-allowed"
+                  }`}
                 >
                   Save Changes
                 </button>
                 <button
+                  data-testid="delete-btn"
                   onClick={async () => {
                     if (
                       !confirm(
@@ -397,10 +493,20 @@ export default function AccountPage() {
                 </button>
               </div>
               {error && (
-                <p className="text-center text-red-500 mt-2">{error}</p>
+                <p
+                  data-testid="error-msg"
+                  className="text-center text-red-500 mt-2"
+                >
+                  {error}
+                </p>
               )}
               {message && (
-                <p className="text-center text-green-500 mt-2">{message}</p>
+                <p
+                  data-testid="success-msg"
+                  className="text-center text-green-500 mt-2"
+                >
+                  {message}
+                </p>
               )}
             </motion.div>
           )}
