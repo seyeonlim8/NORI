@@ -49,6 +49,7 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
   const [progress, setProgress] = useState<Record<number, boolean>>({});
   const [reviewMode, setReviewMode] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
+  const [progressLoaded, setProgressLoaded] = useState(false);
   const confettiFired = useRef(false);
   const router = useRouter();
   const baseSessionType = "fill-base";
@@ -99,6 +100,7 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
   useEffect(() => {
     const loadWords = async () => {
       setLoading(true);
+      setProgressLoaded(false);
       try {
         const res = await fetch(`/api/words?level=${level}`);
         const data: Word[] = await res.json();
@@ -202,30 +204,37 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
   useEffect(() => {
     if (loading) return;
     const fetchProgress = async () => {
-      const res = await fetch(`/api/study-progress?type=fill&level=${level}`, {
-        credentials: "include",
-      });
-      if (!res.ok) return;
+      try {
+        const res = await fetch(
+          `/api/study-progress?type=fill&level=${level}`,
+          {
+            credentials: "include",
+          }
+        );
+        if (!res.ok) return;
 
-      const data = (await res.json()) as StudyProgressRow[];
-      const mapped: Record<number, boolean> = {};
-      data.forEach((p) => (mapped[p.wordId] = p.completed));
-      setProgress(mapped);
+        const data = (await res.json()) as StudyProgressRow[];
+        const mapped: Record<number, boolean> = {};
+        data.forEach((p) => (mapped[p.wordId] = p.completed));
+        setProgress(mapped);
 
-      if (!reviewMode && fullDeck.length > 0) {
-        if (data.length > 0) {
-          const lastSeenRow = data.reduce((latest, cur) =>
-            new Date(cur.lastSeen) > new Date(latest.lastSeen) ? cur : latest
-          );
-          const resumeIndex = Math.min(
-            lastSeenRow.currentIndex ?? 0,
-            fullDeck.length - 1
-          );
-          setCurrentIndex(Math.max(0, resumeIndex));
-        } else {
-          const nextIndex = fullDeck.findIndex((w) => !mapped[w.id]);
-          setCurrentIndex(nextIndex >= 0 ? nextIndex : 0);
+        if (!reviewMode && fullDeck.length > 0) {
+          if (data.length > 0) {
+            const lastSeenRow = data.reduce((latest, cur) =>
+              new Date(cur.lastSeen) > new Date(latest.lastSeen) ? cur : latest
+            );
+            const resumeIndex = Math.min(
+              lastSeenRow.currentIndex ?? 0,
+              fullDeck.length - 1
+            );
+            setCurrentIndex(Math.max(0, resumeIndex));
+          } else {
+            const nextIndex = fullDeck.findIndex((w) => !mapped[w.id]);
+            setCurrentIndex(nextIndex >= 0 ? nextIndex : 0);
+          }
         }
+      } finally {
+        setProgressLoaded(true);
       }
     };
 
@@ -369,7 +378,9 @@ export default function FillInTheBlankPage({ level }: { level: string }) {
     if (e.key === "Enter") handleCheck();
   };
 
-  if (loading) return <div className="text-center mt-40">Loading...</div>;
+  if (loading || !progressLoaded) {
+    return <div className="text-center mt-40">Loading...</div>;
+  }
   if (deck.length === 0)
     return <div className="text-center mt-40">No words.</div>;
 
