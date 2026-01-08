@@ -2,7 +2,7 @@
 import Header from "@/components/Header";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Footer from "./Footer";
 
 type Word = {
@@ -46,8 +46,10 @@ export default function QuizPage({
   const [reviewMode, setReviewMode] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const [progressLoaded, setProgressLoaded] = useState(false);
+  const answerLockRef = useRef(false);
   const progressType = `quiz-${type}`;
   const baseSessionType = `${progressType}-base`;
+  const feedbackDelayMs = 600;
 
   const persistBaseDeck = useCallback(async (deckWords: Word[], currentIdx = 0) => {
     try {
@@ -263,11 +265,12 @@ export default function QuizPage({
     }
   }, [deck, fullDeck, currentIndex, type]);
 
-  const handleAnswer = useCallback(async (choice: string) => {
-    if (selected || deck.length === 0) return;
+  const handleAnswer = useCallback((choice: string) => {
+    if (answerLockRef.current || selected || deck.length === 0) return;
 
     const currentWord = deck[currentIndex];
     if (!currentWord) return;
+    answerLockRef.current = true;
 
     const correct =
       type === "kanji-to-furigana" ? currentWord.furigana : currentWord.kanji;
@@ -278,7 +281,7 @@ export default function QuizPage({
     const nextIndex = currentIndex + 1;
     const nextProgress = { ...progress, [currentWord.id]: isCorrect };
 
-    await fetch("/api/study-progress", {
+    fetch("/api/study-progress", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -289,6 +292,8 @@ export default function QuizPage({
         type: progressType,
         level,
       }),
+    }).catch((error) => {
+      console.error("Failed to update quiz progress", error);
     });
 
     setProgress(nextProgress);
@@ -297,66 +302,74 @@ export default function QuizPage({
     let canceledReviewPrompt = false;
 
     setTimeout(async () => {
-      setSelected(null);
+      try {
+        setSelected(null);
 
-      if (nextIndex >= deck.length) {
-        const unlearned = deck.filter(
-          (w) => !nextProgress[w.id] && w.id !== currentWord.id
-        );
-        if (!isCorrect) unlearned.push(currentWord);
-
-        if (unlearned.length > 0) {
-          const proceed = confirm(
-            `${unlearned.length} words need review. Continue?\nIf you don't enter Review Mode now, your progress will be reset.`
+        if (nextIndex >= deck.length) {
+          const unlearned = deck.filter(
+            (w) => !nextProgress[w.id] && w.id !== currentWord.id
           );
-          if (proceed) {
-            const randomizedReviewDeck = shuffle<Word>(unlearned);
-            const reviewIds = randomizedReviewDeck.map((w) => w.id);
-            setDeck(randomizedReviewDeck);
-            setCurrentIndex(0);
-            setReviewMode(true);
-            await saveReviewSession(reviewIds, 0);
+          if (!isCorrect) unlearned.push(currentWord);
+
+          if (unlearned.length > 0) {
+            const proceed = confirm(
+              `${unlearned.length} words need review. Continue?\nIf you don't enter Review Mode now, your progress will be reset.`
+            );
+            if (proceed) {
+              const randomizedReviewDeck = shuffle<Word>(unlearned);
+              const reviewIds = randomizedReviewDeck.map((w) => w.id);
+              setDeck(randomizedReviewDeck);
+              setCurrentIndex(0);
+              setReviewMode(true);
+              await saveReviewSession(reviewIds, 0);
+              return;
+            } else {
+              canceledReviewPrompt = true;
+            }
+          }
+
+          await fetch(
+            `/api/study-progress/reset?type=${progressType}&level=${level}`,
+            {
+              method: "POST",
+              credentials: "include",
+            }
+          );
+          await fetch(
+            `/api/review-session?type=${progressType}&level=${level}`,
+            {
+              method: "DELETE",
+              credentials: "include",
+            }
+          );
+
+          setProgress({});
+          setReviewMode(false);
+
+          const baseDeck = fullDeck.length > 0 ? fullDeck : deck;
+          const reshuffledFullDeck = shuffle<Word>(baseDeck);
+          setFullDeck(reshuffledFullDeck);
+          setDeck(reshuffledFullDeck);
+          setTotalCount(reshuffledFullDeck.length);
+          setCurrentIndex(0);
+          await persistBaseDeck(reshuffledFullDeck, 0);
+          if (canceledReviewPrompt) {
+            router.push("/study/quiz");
             return;
-          } else {
-            canceledReviewPrompt = true;
+          }
+          alert("Quiz completed! Progress reset.");
+        } else {
+          setCurrentIndex(nextIndex);
+          if (reviewMode) {
+            await saveReviewSession(deckWordIds, nextIndex);
           }
         }
-
-        await fetch(
-          `/api/study-progress/reset?type=${progressType}&level=${level}`,
-          {
-            method: "POST",
-            credentials: "include",
-          }
-        );
-        await fetch(`/api/review-session?type=${progressType}&level=${level}`, {
-          method: "DELETE",
-          credentials: "include",
-        });
-
-        setProgress({});
-        setReviewMode(false);
-
-        const baseDeck = fullDeck.length > 0 ? fullDeck : deck;
-        const reshuffledFullDeck = shuffle<Word>(baseDeck);
-        setFullDeck(reshuffledFullDeck);
-        setDeck(reshuffledFullDeck);
-        setTotalCount(reshuffledFullDeck.length);
-        setCurrentIndex(0);
-        await persistBaseDeck(reshuffledFullDeck, 0);
-        if (canceledReviewPrompt) {
-          router.push("/study/quiz");
-          return;
-        }
-        alert("Quiz completed! Progress reset.");
-      } else {
-        setCurrentIndex(nextIndex);
-        if (reviewMode) {
-          await saveReviewSession(deckWordIds, nextIndex);
-        }
+      } finally {
+        answerLockRef.current = false;
       }
-    }, 500);
+    }, feedbackDelayMs);
   }, [
+    answerLockRef,
     selected,
     deck,
     currentIndex,
@@ -368,19 +381,25 @@ export default function QuizPage({
     router,
     persistBaseDeck,
     saveReviewSession,
+    feedbackDelayMs,
   ]);
 
-  const completedCount = Object.values(progress).filter(Boolean).length;
+  const hasProgress = (wordId: number) =>
+    Object.prototype.hasOwnProperty.call(progress, wordId);
+  const attemptedCount = deck.reduce(
+    (acc, w) => acc + (hasProgress(w.id) ? 1 : 0),
+    0
+  );
   const reviewProgressPercentage =
-    reviewMode && deck.length > 0 ? (currentIndex / deck.length) * 100 : 0;
+    reviewMode && deck.length > 0 ? (attemptedCount / deck.length) * 100 : 0;
   const studyProgressPercentage =
-    !reviewMode && totalCount > 0 ? (completedCount / totalCount) * 100 : 0;
+    !reviewMode && totalCount > 0 ? (attemptedCount / totalCount) * 100 : 0;
   const progressPercentage = reviewMode
     ? reviewProgressPercentage
     : studyProgressPercentage;
   const progressText = reviewMode
-    ? `${Math.min(currentIndex, deck.length)} / ${deck.length}`
-    : `${completedCount} / ${totalCount}`;
+    ? `${attemptedCount} / ${deck.length}`
+    : `${attemptedCount} / ${totalCount}`;
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
