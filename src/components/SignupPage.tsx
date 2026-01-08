@@ -1,17 +1,18 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Header from "./Header";
 
 export default function SignupPage() {
+  const verificationCooldownMs = 60 * 1000;
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isResending, setIsResending] = useState(false);
   const [usernameAvailable, setUsernameAvailable] = useState<null | boolean>(
     null
   );
@@ -19,8 +20,28 @@ export default function SignupPage() {
   const [emailTouched, setEmailTouched] = useState(false);
   const [emailAvailable, setEmailAvailable] = useState<null | boolean>(null);
   const [emailCheckLoading, setEmailCheckLoading] = useState(false);
+  const [signupComplete, setSignupComplete] = useState(false);
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [statusIsSuccess, setStatusIsSuccess] = useState(false);
+  const [canResendVerification, setCanResendVerification] = useState(false);
+  const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
 
-  const router = useRouter();
+  useEffect(() => {
+    if (!cooldownUntil) {
+      setCanResendVerification(false);
+      return;
+    }
+    const remainingMs = cooldownUntil - Date.now();
+    if (remainingMs <= 0) {
+      setCanResendVerification(true);
+      return;
+    }
+    setCanResendVerification(false);
+    const timer = window.setTimeout(() => {
+      setCanResendVerification(true);
+    }, remainingMs);
+    return () => window.clearTimeout(timer);
+  }, [cooldownUntil]);
 
   const passwordValidations = {
     hasUpperCase: /[A-Z]/.test(password),
@@ -100,6 +121,8 @@ export default function SignupPage() {
 
     try {
       setIsSubmitting(true); // Start loading
+      setStatusMessage(null);
+      setStatusIsSuccess(false);
 
       const res = await fetch("/api/auth/signup", {
         method: "POST",
@@ -108,17 +131,58 @@ export default function SignupPage() {
       });
 
       if (res.ok) {
-        alert("✅ Please check your email to verify your account.");
+        setSignupComplete(true);
+        setStatusMessage(
+          "Account created! Please check your email to verify your account."
+        );
+        setStatusIsSuccess(true);
+        setCooldownUntil(Date.now() + verificationCooldownMs);
       } else {
         const data = await res.json();
-        alert(`❌ Signup failed: ${data?.error || "Unknown error"}`);
+        setStatusMessage(
+          `Signup failed: ${data?.error || "Unknown error"}`
+        );
+        setStatusIsSuccess(false);
       }
     } catch (err) {
       console.error("Sign Up error: ", err);
-      alert("❌ Something went wrong during signup.");
+      setStatusMessage("Something went wrong during signup.");
+      setStatusIsSuccess(false);
     } finally {
       setIsSubmitting(false); // Stop loading
-      router.push("/login"); // Redirect to login page
+    }
+  };
+
+  const handleResendVerification = async () => {
+    if (!email || isResending) return;
+    setIsResending(true);
+    try {
+      const res = await fetch("/api/auth/resend-verification", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        setStatusMessage("Verification email resent! Please check your inbox.");
+        setStatusIsSuccess(true);
+        setCooldownUntil(Date.now() + verificationCooldownMs);
+      } else if (res.status === 429 && data.retryAfterSeconds) {
+        setStatusMessage(data.error || "Please wait before resending.");
+        setStatusIsSuccess(false);
+        setCooldownUntil(Date.now() + data.retryAfterSeconds * 1000);
+      } else {
+        setStatusMessage(
+          data.error || "Failed to resend verification email."
+        );
+        setStatusIsSuccess(false);
+      }
+    } catch {
+      setStatusMessage("Something went wrong. Please try again.");
+      setStatusIsSuccess(false);
+    } finally {
+      setIsResending(false);
     }
   };
 
@@ -140,6 +204,17 @@ export default function SignupPage() {
           Create Your NORI Account
         </h2>
 
+        {statusMessage && (
+          <div
+            data-testid="signup-status"
+            className={`text-center text-sm font-semibold ${
+              statusIsSuccess ? "text-green-600" : "text-red-500"
+            }`}
+          >
+            {statusMessage}
+          </div>
+        )}
+
         <div className="flex flex-col gap-1">
           <input
             type="text"
@@ -147,6 +222,7 @@ export default function SignupPage() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             data-testid="username-input"
+            disabled={signupComplete}
             className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300"
           />
           {username.length > 0 && (
@@ -179,6 +255,7 @@ export default function SignupPage() {
             onChange={(e) => setEmail(e.target.value)}
             onBlur={() => setEmailTouched(true)}
             data-testid="email-input"
+            disabled={signupComplete}
             className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300"
           />
           {email.length > 0 && (
@@ -206,6 +283,7 @@ export default function SignupPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             data-testid="password-input"
+            disabled={signupComplete}
             className="p-3 border rounded-md w-full focus:outline-none focus:ring-2 focus:ring-rose-300"
           />
           <input
@@ -214,6 +292,7 @@ export default function SignupPage() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             data-testid="confirm-password-input"
+            disabled={signupComplete}
             className="p-3 border rounded-md w-full mt-2 focus:outline-none focus:ring-2 focus:ring-rose-300"
           />
           {confirmPassword.length > 0 && !passwordsMatch && (
@@ -292,6 +371,7 @@ export default function SignupPage() {
           disabled={
             !isPasswordStrong ||
             isSubmitting ||
+            signupComplete ||
             !usernameValid ||
             usernameAvailable !== true ||
             !emailValid ||
@@ -313,6 +393,30 @@ export default function SignupPage() {
         >
           {isSubmitting ? "Creating account..." : "Sign Up"}
         </motion.button>
+
+        {signupComplete && (
+          <div className="text-center text-sm text-gray-600">
+            <p>Didn&apos;t get the email?</p>
+            {canResendVerification ? (
+              <button
+                data-testid="resend-verification-btn"
+                onClick={handleResendVerification}
+                disabled={isResending}
+                className={`text-[#F27D88] font-bold hover:underline ${
+                  isResending ? "opacity-60 cursor-not-allowed" : ""
+                }`}
+              >
+                {isResending
+                  ? "Resending verification email..."
+                  : "Resend verification email"}
+              </button>
+            ) : (
+              <p className="text-xs text-gray-500">
+                Resend available after 60 seconds.
+              </p>
+            )}
+          </div>
+        )}
 
         <p className="text-center text-sm text-gray-700 mt-4">
           Already have an account?{" "}
