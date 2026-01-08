@@ -384,22 +384,15 @@ export default function QuizPage({
     feedbackDelayMs,
   ]);
 
-  const hasProgress = (wordId: number) =>
-    Object.prototype.hasOwnProperty.call(progress, wordId);
-  const attemptedCount = deck.reduce(
-    (acc, w) => acc + (hasProgress(w.id) ? 1 : 0),
+  const completedCount = deck.reduce(
+    (acc, w) => acc + (progress[w.id] ? 1 : 0),
     0
   );
-  const reviewProgressPercentage =
-    reviewMode && deck.length > 0 ? (attemptedCount / deck.length) * 100 : 0;
-  const studyProgressPercentage =
-    !reviewMode && totalCount > 0 ? (attemptedCount / totalCount) * 100 : 0;
-  const progressPercentage = reviewMode
-    ? reviewProgressPercentage
-    : studyProgressPercentage;
-  const progressText = reviewMode
-    ? `${attemptedCount} / ${deck.length}`
-    : `${attemptedCount} / ${totalCount}`;
+  const progressTotal = reviewMode ? deck.length : totalCount;
+  const progressCount = Math.min(completedCount, progressTotal);
+  const progressPercentage =
+    progressTotal > 0 ? (progressCount / progressTotal) * 100 : 0;
+  const progressText = `${progressCount} / ${progressTotal}`;
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
