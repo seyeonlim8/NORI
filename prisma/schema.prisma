@@ -20,6 +20,7 @@ model User {
   username    String
   isVerified  Boolean  @default(false)
   verifyToken String? // Token for email verification
+  verifyTokenExpiresAt DateTime? @map("token_expires_at")
   verificationEmailSentAt DateTime?
   createdAt   DateTime @default(now())
 
