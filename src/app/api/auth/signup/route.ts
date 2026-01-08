@@ -31,6 +31,7 @@ export async function POST(req: Request) {
         username,
         isVerified: false,
         verifyToken,
+        verificationEmailSentAt: new Date(),
       },
     });
 
