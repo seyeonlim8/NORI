@@ -1,10 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Header from "./Header";
 
 export default function SignupPage() {
+  const verificationCooldownSeconds = 60;
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,6 +17,16 @@ export default function SignupPage() {
   const [signupComplete, setSignupComplete] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [statusIsSuccess, setStatusIsSuccess] = useState(false);
+  const [resendAvailableAt, setResendAvailableAt] = useState<number | null>(
+    null
+  );
+  const [resendRemainingSeconds, setResendRemainingSeconds] = useState<
+    number | null
+  >(null);
+  const [usernameAvailable, setUsernameAvailable] = useState<null | boolean>(
+    null
+  );
+  const [usernameCheckLoading, setUsernameCheckLoading] = useState(false);
 
   const passwordValidations = {
     hasUpperCase: /[A-Z]/.test(password),
@@ -37,6 +48,53 @@ export default function SignupPage() {
     username.length >= 4 &&
     username.length <= 19 &&
     /^[a-zA-Z0-9]+$/.test(username);
+
+  useEffect(() => {
+    if (!usernameValid) {
+      setUsernameAvailable(null);
+      setUsernameCheckLoading(false);
+      return;
+    }
+    setUsernameCheckLoading(true);
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => {
+      fetch(`/api/auth/signup?username=${encodeURIComponent(username)}`, {
+        method: "GET",
+        signal: controller.signal,
+      })
+        .then(async (res) => {
+          const data = await res.json();
+          setUsernameAvailable(res.ok && data.available);
+        })
+        .catch(() => setUsernameAvailable(null))
+        .finally(() => setUsernameCheckLoading(false));
+    }, 300);
+    return () => {
+      window.clearTimeout(timer);
+      controller.abort();
+    };
+  }, [username, usernameValid]);
+
+  const startResendCooldown = (seconds: number) => {
+    const availableAt = Date.now() + seconds * 1000;
+    setResendAvailableAt(availableAt);
+    setResendRemainingSeconds(seconds);
+  };
+
+  useEffect(() => {
+    if (!resendAvailableAt) return;
+    const updateRemaining = () => {
+      const remainingMs = resendAvailableAt - Date.now();
+      const remainingSeconds = Math.max(0, Math.ceil(remainingMs / 1000));
+      setResendRemainingSeconds(remainingSeconds);
+      if (remainingSeconds <= 0) {
+        window.clearInterval(timer);
+      }
+    };
+    const timer = window.setInterval(updateRemaining, 1000);
+    updateRemaining();
+    return () => window.clearInterval(timer);
+  }, [resendAvailableAt]);
 
   const handleSubmit = async () => {
     const newErrors: { [key: string]: string } = {};
@@ -69,6 +127,7 @@ export default function SignupPage() {
           "Account created! Please check your email to verify your account."
         );
         setStatusIsSuccess(true);
+        startResendCooldown(verificationCooldownSeconds);
       } else {
         const data = await res.json();
         setStatusMessage(
@@ -99,9 +158,11 @@ export default function SignupPage() {
       if (res.ok) {
         setStatusMessage("Verification email resent! Please check your inbox.");
         setStatusIsSuccess(true);
+        startResendCooldown(verificationCooldownSeconds);
       } else if (res.status === 429 && data.retryAfterSeconds) {
         setStatusMessage(data.error || "Please wait before resending.");
         setStatusIsSuccess(false);
+        startResendCooldown(data.retryAfterSeconds);
       } else {
         setStatusMessage(
           data.error || "Failed to resend verification email."
@@ -161,8 +222,16 @@ export default function SignupPage() {
                 <span className="text-red-500">
                   Username must be 4-19 characters, letters and numbers only.
                 </span>
+              ) : usernameCheckLoading ? (
+                <span className="text-gray-500">Checking username...</span>
+              ) : usernameAvailable === true ? (
+                <span className="text-green-600">Username available!</span>
+              ) : usernameAvailable === false ? (
+                <span className="text-red-500">Username is already in use.</span>
               ) : (
-                <span className="text-green-600">Username looks good.</span>
+                <span className="text-gray-500">
+                  Unable to verify username right now.
+                </span>
               )}
             </p>
           )}
@@ -293,6 +362,7 @@ export default function SignupPage() {
             isSubmitting ||
             signupComplete ||
             !usernameValid ||
+            usernameAvailable !== true ||
             !emailValid ||
             !passwordsMatch
           }
@@ -300,6 +370,7 @@ export default function SignupPage() {
             isPasswordStrong &&
             !isSubmitting &&
             usernameValid &&
+            usernameAvailable === true &&
             emailValid &&
             passwordsMatch
               ? "cursor-pointer"
@@ -313,10 +384,17 @@ export default function SignupPage() {
         {signupComplete && (
           <div className="text-center text-sm text-gray-600">
             <p>Didn&apos;t get the email?</p>
+            {resendRemainingSeconds !== null &&
+            resendRemainingSeconds > 0 && (
+              <p className="text-xs text-gray-500">
+                Resend available in {resendRemainingSeconds}s.
+              </p>
+            )}
             <button
-              data-testid="resend-verification-btn"
+              data-testid="resend-btn"
               onClick={handleResendVerification}
-              disabled={isResending}
+              disabled={isResending || (resendRemainingSeconds ?? 0) > 0}
+              hidden={(resendRemainingSeconds ?? 0) > 0}
               className={`text-[#F27D88] font-bold hover:underline ${
                 isResending ? "opacity-60 cursor-not-allowed" : ""
               }`}
