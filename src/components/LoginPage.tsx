@@ -13,25 +13,65 @@ export default function LoginPage() {
   const [isSuccess, setIsSuccess] = useState(false); // New state for success message
   const [attemptsLeft, setAttemptsLeft] = useState(5);
   const [isLocked, setIsLocked] = useState(false);
+  const [lockoutEndMs, setLockoutEndMs] = useState<number | null>(null);
+  const [lockoutRemainingMs, setLockoutRemainingMs] = useState<number | null>(
+    null
+  );
   const [needsVerification, setNeedsVerification] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get("redirect") || "/"; // redirect to main by default
 
   useEffect(() => {
-    const lockoutEnd = localStorage.getItem("lockoutEnd");
+    const storedLockoutEnd = Number(localStorage.getItem("lockoutEnd"));
     const currentTime = Date.now();
 
-    if (lockoutEnd && currentTime < Number(lockoutEnd)) {
+    if (storedLockoutEnd && currentTime < storedLockoutEnd) {
       setIsLocked(true);
-      const remainingTime = Number(lockoutEnd) - currentTime;
-      const minutes = Math.ceil(remainingTime / 60000);
-      setError(`Login is unavailable for ${minutes} minutes.`);
+      setLockoutEndMs(storedLockoutEnd);
+      setLockoutRemainingMs(storedLockoutEnd - currentTime);
     } else {
       setIsLocked(false);
+      setLockoutEndMs(null);
+      setLockoutRemainingMs(null);
       setAttemptsLeft(Number(localStorage.getItem("attemptsLeft")) || 5);
     }
   }, []);
+
+  useEffect(() => {
+    if (!lockoutEndMs) return;
+    const tick = () => {
+      const remaining = lockoutEndMs - Date.now();
+      if (remaining <= 0) {
+        setIsLocked(false);
+        setLockoutEndMs(null);
+        setLockoutRemainingMs(null);
+        localStorage.removeItem("lockoutEnd");
+        setAttemptsLeft(Number(localStorage.getItem("attemptsLeft")) || 5);
+        return;
+      }
+      setLockoutRemainingMs(remaining);
+    };
+    tick();
+    const timer = window.setInterval(tick, 1000);
+    return () => window.clearInterval(timer);
+  }, [lockoutEndMs]);
+
+  const formatRemaining = (ms: number) => {
+    const totalSeconds = Math.ceil(ms / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    if (minutes <= 0) return `${totalSeconds}s`;
+    return `${minutes}m ${seconds}s`;
+  };
+
+  const lockoutMessage =
+    isLocked && lockoutRemainingMs !== null
+      ? `Too many attempts. Please try again in ${formatRemaining(
+          lockoutRemainingMs
+        )}.`
+      : null;
+  const displayError = lockoutMessage ?? error;
 
   const handleLogin = async () => {
     if (isLocked) return;
@@ -60,15 +100,12 @@ export default function LoginPage() {
             localStorage.setItem("attemptsLeft", newAttempts.toString());
             if (newAttempts <= 0) {
               const lockoutDuration = 15 * 60 * 1000; // 15 minutes
-              localStorage.setItem(
-                "lockoutEnd",
-                (Date.now() + lockoutDuration).toString()
-              );
+              const lockoutUntil = Date.now() + lockoutDuration;
+              localStorage.setItem("lockoutEnd", lockoutUntil.toString());
               setIsLocked(true);
-              const remainingTime = Math.ceil(lockoutDuration / 60000); // Convert to minutes
-              setError(
-                `Too many attempts. Please try again later.\nRemaining lockout time: ${remainingTime} minutes.`
-              );
+              setLockoutEndMs(lockoutUntil);
+              setLockoutRemainingMs(lockoutDuration);
+              setIsSuccess(false);
             }
             return newAttempts;
           });
@@ -136,12 +173,12 @@ export default function LoginPage() {
           Login to NORI
         </h2>
 
-        {error && (
+        {displayError && (
           <div
             data-testid="credentials-error"
             className={`text-center text-sm font-semibold ${isSuccess ? "text-green-500" : "text-red-500"}`}
           >
-            {error}
+            {displayError}
           </div>
         )}
 
@@ -191,7 +228,7 @@ export default function LoginPage() {
             <p className="text-center text-sm text-gray-600">
               Your email is not verified.{" "}
               <button
-                data-testid="resend-verification-btn"
+                data-testid="resend-btn"
                 onClick={handleResendVerification}
                 className="text-[#F27D88] font-bold hover:underline"
               >
