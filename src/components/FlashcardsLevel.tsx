@@ -5,7 +5,7 @@ import LevelCards from "./LevelCards";
 import Footer from "./Footer";
 
 export default function FlashcardsLevel() {
-  const levels = ["N1", "N2", "N3", "N4", "N5", "favorites", "TEST"];
+  const levels = ["N1", "N2", "N3", "N4", "N5", "favorites"];
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-b from-rose-100 via-orange-100 to-rose-50 flex flex-col items-center overflow-hidden">
