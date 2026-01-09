@@ -142,15 +142,7 @@ export default function Footer() {
 
       {/* Bottom Copyright */}
       <div className="pt-6 text-center text-xs text-gray-500 font-outfit mb-10">
-        © 2026 NORI. All rights reserved. |
-        <Link href="/privacy" className="hover:text-rose-400">
-          {" "}
-          Privacy Policy
-        </Link>{" "}
-        |{" "}
-        <Link href="/terms" className="hover:text-rose-400">
-          Terms of Service
-        </Link>
+        © 2026 NORI. All rights reserved. 
       </div>
     </footer>
   );
